@@ -68,6 +68,12 @@ body {
     max-width: 550px;
 }
 
+.promo-text {
+    margin-top: 40px;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
 .button-container {
     display: flex;
     flex-direction: column;
@@ -84,7 +90,7 @@ body {
     max-width: 350px;
     padding: 18px 20px;
     font-size: 1.1rem;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.5px;
     border-radius: 23px;
     text-decoration: none;
@@ -117,7 +123,7 @@ body {
 }
 
 .support-note {
-    margin-top: 40px;
+    margin-top: 15px;
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.9rem;
     font-weight: 400;
