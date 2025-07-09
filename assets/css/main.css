@@ -27,7 +27,7 @@ body, html {
     background-color: var(--bg-color);
     color: var(--text-color);
     overflow-x: hidden;
-    zoom: 1.15; /* Увеличиваем общий масштаб страницы */
+    /* zoom: 1.15; */ /* Убираем zoom, он плохо работает на iOS */
 }
 
 body {
@@ -224,22 +224,65 @@ body {
 @media (max-width: 768px) {
     .services-section {
         overflow-x: auto;
+        scroll-snap-type: x mandatory;
     }
-    
+
+    .dots-container {
+        display: block; /* Показываем на мобильных */
+    }
+
     .services-grid {
         grid-auto-flow: column;
         grid-template-columns: none; 
-        grid-auto-columns: 340px;
+        grid-auto-columns: 85vw; /* Делаем карточки чуть уже, чтобы они помещались с отступами */
+        padding: 0 30px; /* Добавляем отступы по бокам внутри скролл-зоны */
+        gap: 20px;
         padding-bottom: 20px; /* Space for scrollbar */
+    }
+
+    .service-card {
+        scroll-snap-align: center; /* Главное изменение: прилипание к центру */
+    }
+
+    .footer-content {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px; /* Увеличим отступ для мобильных */
+    }
+
+    .footer-links {
+        justify-content: center;
+        flex-wrap: wrap; /* Разрешаем перенос ссылок */
+    }
+
+    .footer-links a {
+        margin: 0 5px; /* Уменьшим отступы для ссылок */
     }
 }
 
 @media (max-width: 480px) {
-    .hero h1 {
-        font-size: 2.5rem;
+    html {
+        font-size: 16px; /* Возвращаем стандартный размер шрифта для мобильных */
     }
+
+    .hero h1 {
+        font-size: 2.2rem;
+    }
+
     .btn {
         max-width: 280px;
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+
+    .site-logo {
+        left: 20px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .lang-switcher {
+        right: 20px;
     }
 }
 
@@ -294,6 +337,27 @@ body {
 
 .site-logo:hover img {
     transform: scale(1.1);
+}
+
+/* Dots Pagination */
+.dots-container {
+    text-align: center;
+    padding-top: 10px;
+    display: none; /* Скрыто по умолчанию */
+}
+
+.dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    margin: 0 4px;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background: var(--text-color);
 }
 
 /* Footer */
