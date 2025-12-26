@@ -3,109 +3,847 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Necl Solutions | AI & Автоматизация</title>
+    <title>NeCL | AI-продукты для бизнеса</title>
     <link rel="icon" type="image/png" href="../assets/images/favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <meta property="og:title" content="Necl Solutions | AI & Автоматизация" />
-    <meta property="og:description" content="Создаем мощных Telegram-ботов и AI-автоматизации, которые работают 24/7. Начните сейчас!" />
-    <meta property="og:image" content="https://NeclSolutions/assets/images/lavanda_bg.png" />
-    <meta property="og:url" content="https://NeclSolutions/ru/" />
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="keywords" content="AI автоматизация, Telegram боты, Python разработка, чат-боты, голосовые ассистенты, API интеграции">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('../assets/images/lavanda_bg.png') center center/cover no-repeat fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Unified font family for all elements */
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Animations and Dynamic Effects */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+            }
+        }
+
+        /* Navigation */
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            animation: slideInFromTop 0.8s ease-out;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            margin: 0 2rem;
+            left: 2rem;
+            right: 2rem;
+            width: auto;
+        }
+
+        @keyframes slideInFromTop {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            animation: glow 3s ease-in-out infinite;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logo::before {
+            content: 'NeCL';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(8px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00d4ff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-switch a {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .lang-switch a.active {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 2rem 2rem;
+            background: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content {
+            max-width: 550px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            animation: slideInFromBottom 1.2s ease-out;
+            transform: translateY(0);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+            animation: slideInFromLeft 1.5s ease-out 0.3s both;
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            color: #ffffff;
+            margin-bottom: 1.5rem;
+            animation: slideInFromRight 1.5s ease-out 0.6s both;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1.5s ease-out 0.9s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: #00d4ff;
+            color: #000;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .btn-primary:hover {
+            background: #00a8cc;
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 212, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #ffffff;
+            border: 1px solid #25D366;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .btn-email {
+            background: #EA4335;
+            color: #ffffff;
+            border: 1px solid #EA4335;
+        }
+
+        .btn-email:hover {
+            background: #D33B2C;
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            color: #ffffff;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00d4ff;
+            display: block;
+        }
+
+        /* Sections */
+        .section {
+            padding: 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: none;
+            animation: slideInFromBottom 1s ease-out;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #ffffff;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            text-shadow: none;
+            animation: slideInFromBottom 1s ease-out 0.2s both;
+        }
+
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.5s ease;
+            cursor: pointer;
+            animation: slideInFromBottom 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .product-card:hover::before {
+            opacity: 1;
+            animation: shimmer 1.5s ease-in-out;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.2s; }
+        .product-card:nth-child(2) { animation-delay: 0.4s; }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .product-subtitle {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            padding: 0.3rem 0;
+            color: #cccccc;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .product-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #00ff88;
+            color: #000;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Business Solutions */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .business-card {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+        }
+
+        .business-card .btn {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .business-card h3 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .business-card p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .contact h2 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            color: #ffffff;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #cccccc;
+            background: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <a href="https://t.me/necl_company" target="_blank" class="site-logo">
-        <img src="../assets/images/necl_logo.png" alt="NeCL Solutions Logo">
-    </a>
-    <div class="lang-switcher">
-        <a href="../index.html">EN</a>
-        <span>|</span>
-        <a href="index.html" class="active">RU</a>
-    </div>
-    <div class="overlay"></div>
-    <main class="content">
-        <header class="hero">
-            <h1>AI & Автоматизация</h1>
-            <p class="subtitle">AI-решения, боты и автоматизация — от идеи до запуска</p>
-            <div class="button-container">
-                <a href="https://t.me/adjacent_ai" target="_blank" class="btn btn-telegram">Перейти в Telegram</a>
-                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" target="_blank" class="btn btn-whatsapp">Перейти в WhatsApp</a>
-                <a href="mailto:neclcompany@gmail.com" class="btn btn-email">Написать на Email</a>
-            </div>
-            <p class="promo-text">Готовы улучшить свой бизнес? Получите бесплатную консультацию.</p>
-            <p class="support-note">Полный цикл работы: создаем, внедряем и поддерживаем</p>
-        </header>
-
-        <div class="separator"></div>
-
-        <section id="services" class="services-section">
-            <div class="services-grid" id="services-grid">
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-robot"></i></div>
-                    <h3 class="service-title">Telegram/WhatsApp<br>Discord/Instagram боты</h3>
-                    <ul class="service-description">
-                        <li>Более 30 проектов: боты с CRM, ML и индивидуальными сценариями.</li>
-                        <li>Полная кастомизация под ваши задачи.</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fab fa-python"></i></div>
-                    <h3 class="service-title">Интеграции на Python</h3>
-                    <ul class="service-description">
-                        <li>Создаем чистые и поддерживаемые скрипты для автоматизации.</li>
-                        <li>Простой, масштабируемый и готовый к работе код.</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3 class="service-title">Разработка API</h3>
-                    <ul class="service-description">
-                        <li>Интеграция с OpenAI, Replicate, ElevenLabs, Hugging Face и другими.</li>
-                        <li>Быстрые, надежные и масштабируемые AI-интеграции.</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-comments"></i></div>
-                    <h3 class="service-title">Чат-интерфейсы</h3>
-                    <ul class="service-description">
-                        <li>Веб-чаты, RAG-ассистенты и интерактивные сценарии на базе GPT для вовлечения пользователей.</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-headset"></i></div>
-                    <h3 class="service-title">Голосовые AI-решения</h3>
-                    <ul class="service-description">
-                        <li>Голосовые ассистенты, SIP-серверы (Asterisk), транскрибация и автоматизация с распознаванием речи.</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-brain"></i></div>
-                    <h3 class="service-title">AI-автоматизация</h3>
-                    <ul class="service-description">
-                        <li>Продвинутые пайплайны, генеративные модели и умные системы автоматизации на базе передового AI.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="dots-container" id="dots-container"></div>
-        </section>
-    </main>
-    <footer class="site-footer">
-        <div class="footer-content">
-            <p>© 2025 NeCL Solutions. Все права защищены.</p>
-            <div class="footer-links">
-                <a href="https://t.me/necl_company" target="_blank">Канал Telegram</a>
-                <span>|</span>
-                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" target="_blank">WhatsApp</a>
-                <span>|</span>
-                <a href="mailto:neclcompany@gmail.com">Email</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">NeCL</div>
+            <ul class="nav-links">
+                <li><a href="#products">Продукты</a></li>
+                <li><a href="#solutions">Решения</a></li>
+                <li><a href="#contact">Контакты</a></li>
+            </ul>
+            <div class="lang-switch">
+                <a href="../">EN</a>
+                <a href="#" class="active">RU</a>
             </div>
         </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AI-продукты для бизнеса</h1>
+            <p class="subtitle">Внедряйте проверенные AI-решения за недели, а не месяцы. От RAG-поддержки до генерации лидов — выбирайте ваше конкурентное преимущество.</p>
+            
+            <div class="cta-buttons">
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary">Получить консультацию</a>
+                <a href="#products" class="btn btn-secondary">Смотреть продукты</a>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">600+</span>
+                    <span>Активных пользователей</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">1-3</span>
+                    <span>Месяца ROI</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">7</span>
+                    <span>Продуктов</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ready Products -->
+    <section id="products" class="section">
+        <h2 class="section-title">Готовые продукты</h2>
+        <p class="section-subtitle">Работающие продукты с доказанной монетизацией</p>
+        
+        <div class="products-grid">
+            <div class="product-card featured" onclick="window.open('https://t.me/pickachuai_bot', '_blank')">
+                <h3 class="product-title">Pickachu AI</h3>
+                <p class="product-subtitle">Нейроредактор фото</p>
+                <ul class="product-features">
+                    <li>Голосовые команды и пакетная обработка</li>
+                    <li>Интерфейс Telegram + Web</li>
+                    <li>White Label доступен</li>
+                </ul>
+                <div class="product-price">От $0.30/правка</div>
+                <span class="product-status">Работает и приносит доход</span>
+            </div>
+            
+            <div class="product-card featured" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
+                <h3 class="product-title">Slowpoke Bot</h3>
+                <p class="product-subtitle">Мульти-AI ассистент</p>
+                <ul class="product-features">
+                    <li>Умный выбор модели (GPT + Gemini)</li>
+                    <li>Интегрированы крипто-платежи</li>
+                    <li>600+ активных пользователей</li>
+                </ul>
+                <div class="product-price">$7/200 запросов</div>
+                <span class="product-status">600+ пользователей</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Solutions -->
+    <section id="solutions" class="section">
+        <h2 class="section-title">Решения для бизнеса</h2>
+        <p class="section-subtitle">Кастомные AI-внедрения для предприятий</p>
+        
+        <div class="business-grid">
+            <div class="business-card">
+                <h3>AI Поддержка</h3>
+                <p>RAG-техподдержка. Снижение нагрузки на 80%.</p>
+                <div class="product-price">От $800</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Поиск Клиентов</h3>
+                <p>Парсер лидов из Telegram. Находим клиентов пока вы спите.</p>
+                <div class="product-price">От $25/месяц</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Бот Записи</h3>
+                <p>Система записи 24/7. Заменяет администратора.</p>
+                <div class="product-price">От $400</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Автопостинг</h3>
+                <p>AI-генерация контента + мульти-платформенный постинг.</p>
+                <div class="product-price">Индивидуально</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Мониторинг Новостей</h3>
+                <p>AI-мониторинг новостей из любых источников.</p>
+                <div class="product-price">От $50/месяц</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Под ключ</h3>
+                <p>Индивидуальные AI-решения для вашего бизнеса</p>
+                <ul style="list-style: none; padding: 0; margin: 1rem 0; color: #cccccc;">
+                    <li style="margin-bottom: 0.5rem;">• Анализ и проектирование</li>
+                    <li style="margin-bottom: 0.5rem;">• Разработка и внедрение</li>
+                    <li style="margin-bottom: 0.5rem;">• Поддержка и масштабирование</li>
+                </ul>
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary" style="display: inline-block; margin-top: 0.5rem;">Написать</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+        <div class="contact">
+            <h2>Готовы к внедрению?</h2>
+            <p>Получите бесплатную консультацию и расчет ROI для вашего бизнеса</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary">Telegram</a>
+                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-whatsapp">WhatsApp</a>
+                <a href="mailto:neclcompany@gmail.com" class="btn btn-email">Email</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 NeCL. Все права защищены. | Корпоративные AI-решения</p>
     </footer>
-    <script src="../assets/js/script.js"></script>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections and cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll('.section, .product-card, .business-card');
+            elementsToAnimate.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+
+            // Dynamic stats counter
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const finalNumber = stat.textContent;
+                const isPlus = finalNumber.includes('+');
+                const isDollar = finalNumber.includes('$');
+                const number = parseInt(finalNumber.replace(/[^0-9]/g, ''));
+                
+                let current = 0;
+                const increment = number / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= number) {
+                        current = number;
+                        clearInterval(timer);
+                    }
+                    let displayNumber = Math.floor(current);
+                    if (isDollar) displayNumber = '$' + displayNumber;
+                    if (isPlus) displayNumber += '+';
+                    stat.textContent = displayNumber;
+                }, 50);
+            });
+
+            // Interactive particle effect on hover
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('mouseenter', createParticles);
+            });
+
+            function createParticles(e) {
+                const card = e.currentTarget;
+                for (let i = 0; i < 5; i++) {
+                    const particle = document.createElement('div');
+                    particle.style.cssText = `
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background: #00d4ff;
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 1000;
+                        animation: particle-float 2s ease-out forwards;
+                    `;
+                    
+                    const rect = card.getBoundingClientRect();
+                    particle.style.left = Math.random() * rect.width + 'px';
+                    particle.style.top = Math.random() * rect.height + 'px';
+                    
+                    card.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 2000);
+                }
+            }
+
+            // Add particle animation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes particle-float {
+                    0% {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: translateY(-100px) scale(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
 </body>
-</html> 
+</html>

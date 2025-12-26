@@ -1,110 +1,769 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Necl Solutions | AI & Automation</title>
+    <title>NeCL | AI Products for Business</title>
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <meta property="og:title" content="AI Bots that Work for You" />
-    <meta property="og:description" content="We build powerful Telegram bots & AI automations that work 24/7. Join us now!" />
-    <meta property="og:image" content="https://NeclSolutions/assets/images/lavanda_bg.png" />
-    <meta property="og:url" content="https://NeclSolutions/" />
-    <meta name="twitter:card" content="summary_large_image">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('assets/images/lavanda_bg.png') center center/cover no-repeat fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Unified font family for all elements */
+        * {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Animations and Dynamic Effects */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromBottom {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInFromRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-top: none;
+            border-radius: 0 0 20px 20px;
+            margin: 0 2rem;
+            left: 2rem;
+            right: 2rem;
+            width: auto;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 50%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            animation: glow 3s ease-in-out infinite;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .logo::before {
+            content: 'NeCL';
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: blur(8px);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .lang-switch {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .lang-switch a {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .lang-switch a.active {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 2rem 2rem 2rem;
+            background: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content {
+            max-width: 550px;
+            background: rgba(0, 0, 0, 0.15);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            animation: slideInFromBottom 1.2s ease-out;
+            transform: translateY(0);
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ffffff;
+        }
+
+        .hero .subtitle {
+            font-size: 1rem;
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #00d4ff;
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: #00a8cc;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: #ffffff;
+            border: 1px solid #25D366;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            transform: translateY(-2px);
+        }
+
+        .btn-email {
+            background: #EA4335;
+            color: #ffffff;
+            border: 1px solid #EA4335;
+        }
+
+        .btn-email:hover {
+            background: #D33B2C;
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            color: #cccccc;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00d4ff;
+            display: block;
+        }
+
+        /* Sections */
+        .section {
+            padding: 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-shadow: none;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #cccccc;
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            text-shadow: none;
+        }
+
+        /* Product Cards */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .product-card {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            padding: 2rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+        }
+
+        .product-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #ffffff;
+        }
+
+        .product-subtitle {
+            color: #00d4ff;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .product-features li {
+            padding: 0.3rem 0;
+            color: #cccccc;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .product-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #00d4ff;
+            margin-bottom: 1rem;
+        }
+
+        .product-status {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: #00ff88;
+            color: #000;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Business Solutions */
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .business-card {
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 15px;
+            padding: 1.5rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.3s;
+        }
+
+        .business-card .btn {
+            padding: 0.7rem 1.5rem;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .business-card h3 {
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .business-card p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact */
+        .contact {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.15);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .contact h2 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+        }
+
+        .contact p {
+            color: #cccccc;
+            margin-bottom: 2rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: #cccccc;
+            background: rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(8px);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 3rem 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    <a href="https://t.me/necl_company" target="_blank" class="site-logo">
-        <img src="assets/images/necl_logo.png" alt="NeCL Solutions Logo">
-    </a>
-    <div class="lang-switcher">
-        <a href="index.html" class="active">EN</a>
-        <span>|</span>
-        <a href="ru/index.html">RU</a>
-    </div>
-    <div class="overlay"></div>
-    <main class="content">
-        <header class="hero">
-            <h1>AI & Automation</h1>
-            <p class="subtitle">AI solutions, bots, and automation — from idea to launch</p>
-            <div class="button-container">
-                <a href="https://t.me/adjacent_ai" target="_blank" class="btn btn-telegram">GO TO TELEGRAM</a>
-                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" target="_blank" class="btn btn-whatsapp">GO TO WHATSAPP</a>
-                <a href="mailto:neclcompany@gmail.com" class="btn btn-email">EMAIL</a>
-            </div>
-            <p class="promo-text">Ready to upgrade your business? Get a free consultation.</p>
-            <p class="support-note">Fully managed - we build, deploy, and support</p>
-        </header>
-
-        <div class="separator"></div>
-
-        <section id="services" class="services-section">
-            <div class="services-grid" id="services-grid">
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-robot"></i></div>
-                    <h3 class="service-title">Telegram/Watsapp<br>Discord/Instagram bots</h3>
-                    <ul class="service-description">
-                        <li>30+ projects: bots with CRM, ML, bypass systems, and tailored workflows</li>
-                        <li>Every project is fully customized to client needs</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fab fa-python"></i></div>
-                    <h3 class="service-title">Python integrations</h3>
-                    <ul class="service-description">
-                        <li>We build clean, maintainable Python automation scripts.</li>
-                        <li>Simple, scalable, and production-ready code</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-laptop-code"></i></div>
-                    <h3 class="service-title">API Development</h3>
-                    <ul class="service-description">
-                        <li>We integrate with OpenAI, Replicate, ElevenLabs, Hugging Face, and more</li>
-                        <li>Fast, reliable, and scalable AI integrations</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-comments"></i></div>
-                    <h3 class="service-title">Chat interfaces</h3>
-                    <ul class="service-description">
-                        <li>Web and messenger-based chat UIs, RAG assistants, and interactive GPT-powered flows — built for engagement.</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-headset"></i></div>
-                    <h3 class="service-title">AI Voice</h3>
-                    <ul class="service-description">
-                        <li>Voice assistants, SIP servers (Asterisk), real-time transcription, and speech-enabled automation.</li>
-                    </ul>
-                </div>
-                <div class="service-card">
-                    <div class="service-icon"><i class="fas fa-brain"></i></div>
-                    <h3 class="service-title">AI - Automation</h3>
-                    <ul class="service-description">
-                        <li>Advanced pipelines, generative models, and smart automation systems powered by state-of-the-art AI</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="dots-container" id="dots-container"></div>
-        </section>
-    </main>
-    <footer class="site-footer">
-        <div class="footer-content">
-            <p>© 2025 NeCL Solutions. All rights reserved.</p>
-            <div class="footer-links">
-                <a href="https://t.me/necl_company" target="_blank">Telegram Channel</a>
-                <span>|</span>
-                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" target="_blank">WhatsApp</a>
-                <span>|</span>
-                <a href="mailto:neclcompany@gmail.com">Email</a>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">NeCL</div>
+            <ul class="nav-links">
+                <li><a href="#products">Products</a></li>
+                <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="lang-switch">
+                <a href="#" class="active">EN</a>
+                <a href="ru/">RU</a>
             </div>
         </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>AI Products for Business</h1>
+            <p class="subtitle">Deploy proven AI solutions in weeks, not months. From RAG support to lead generation — choose your competitive advantage.</p>
+            
+            <div class="cta-buttons">
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary">Get Consultation</a>
+                <a href="#products" class="btn btn-secondary">View Products</a>
+            </div>
+            
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">600+</span>
+                    <span>Active Users</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">1-3</span>
+                    <span>Months ROI</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">7</span>
+                    <span>Products</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Ready Products -->
+    <section id="products" class="section">
+        <h2 class="section-title">Ready Products</h2>
+        <p class="section-subtitle">Live products with proven monetization</p>
+        
+        <div class="products-grid">
+            <div class="product-card featured" onclick="window.open('https://t.me/pickachuai_bot', '_blank')">
+                <h3 class="product-title">Pickachu AI</h3>
+                <p class="product-subtitle">Neural Photo Editor</p>
+                <ul class="product-features">
+                    <li>Voice commands & batch processing</li>
+                    <li>Telegram + Web interface</li>
+                    <li>White Label available</li>
+                </ul>
+                <div class="product-price">From $30/edit</div>
+                <span class="product-status">Live & Earning</span>
+            </div>
+            
+            <div class="product-card featured" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
+                <h3 class="product-title">Slowpoke Bot</h3>
+                <p class="product-subtitle">Multi-AI Assistant</p>
+                <ul class="product-features">
+                    <li>Smart model routing (GPT + Gemini)</li>
+                    <li>Crypto payments integrated</li>
+                    <li>600+ active users</li>
+                </ul>
+                <div class="product-price">$7/200 requests</div>
+                <span class="product-status">600+ Users</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Business Solutions -->
+    <section id="solutions" class="section">
+        <h2 class="section-title">Business Solutions</h2>
+        <p class="section-subtitle">Custom AI implementations for enterprise</p>
+        
+        <div class="business-grid">
+            <div class="business-card">
+                <h3>AI Support</h3>
+                <p>RAG-powered tech support. 80% load reduction.</p>
+                <div class="product-price">From $1,500</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Lead Finder</h3>
+                <p>Telegram lead parser. Find clients while you sleep.</p>
+                <div class="product-price">From $2,500/month</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Booking Bot</h3>
+                <p>24/7 booking system. Replace your admin.</p>
+                <div class="product-price">From $40,000</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Auto Posting</h3>
+                <p>AI content generation + multi-platform posting.</p>
+                <div class="product-price">Custom pricing</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>News Monitor</h3>
+                <p>AI-powered monitoring from any sources.</p>
+                <div class="product-price">From $5,000/month</div>
+            </div>
+            
+            <div class="business-card">
+                <h3>Turnkey Solutions</h3>
+                <p>Custom AI solutions for your business</p>
+                <ul style="list-style: none; padding: 0; margin: 1rem 0; color: #cccccc;">
+                    <li style="margin-bottom: 0.5rem;">• Analysis & Design</li>
+                    <li style="margin-bottom: 0.5rem;">• Development & Implementation</li>
+                    <li style="margin-bottom: 0.5rem;">• Support & Scaling</li>
+                </ul>
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary" style="display: inline-block; margin-top: 0.5rem;">Write Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="section">
+        <div class="contact">
+            <h2>Ready to Deploy?</h2>
+            <p>Get a free consultation and ROI calculation for your business</p>
+            <div class="cta-buttons">
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary">Telegram</a>
+                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-whatsapp">WhatsApp</a>
+                <a href="mailto:neclcompany@gmail.com" class="btn btn-email">Email</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 NeCL. All rights reserved. | Enterprise AI Solutions</p>
     </footer>
-    <script src="assets/js/script.js"></script>
+
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections and cards
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = document.querySelectorAll('.section, .product-card, .business-card');
+            elementsToAnimate.forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+
+            // Dynamic stats counter
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const finalNumber = stat.textContent;
+                const isPlus = finalNumber.includes('+');
+                const isDollar = finalNumber.includes('$');
+                const number = parseInt(finalNumber.replace(/[^0-9]/g, ''));
+                
+                let current = 0;
+                const increment = number / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= number) {
+                        current = number;
+                        clearInterval(timer);
+                    }
+                    let displayNumber = Math.floor(current);
+                    if (isDollar) displayNumber = '$' + displayNumber;
+                    if (isPlus) displayNumber += '+';
+                    stat.textContent = displayNumber;
+                }, 50);
+            });
+
+            // Interactive particle effect on hover
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('mouseenter', createParticles);
+            });
+
+            function createParticles(e) {
+                const card = e.currentTarget;
+                for (let i = 0; i < 5; i++) {
+                    const particle = document.createElement('div');
+                    particle.style.cssText = `
+                        position: absolute;
+                        width: 4px;
+                        height: 4px;
+                        background: #00d4ff;
+                        border-radius: 50%;
+                        pointer-events: none;
+                        z-index: 1000;
+                        animation: particle-float 2s ease-out forwards;
+                    `;
+                    
+                    const rect = card.getBoundingClientRect();
+                    particle.style.left = Math.random() * rect.width + 'px';
+                    particle.style.top = Math.random() * rect.height + 'px';
+                    
+                    card.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 2000);
+                }
+            }
+
+            // Add particle animation CSS
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes particle-float {
+                    0% {
+                        opacity: 1;
+                        transform: translateY(0) scale(1);
+                    }
+                    100% {
+                        opacity: 0;
+                        transform: translateY(-100px) scale(0);
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
 </body>
-</html> 
+</html>
