@@ -143,36 +143,15 @@
 
         .logo {
             font-size: 1.8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 50%, #ffffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            position: relative;
-            animation: glow 3s ease-in-out infinite;
+            font-weight: 700;
+            color: #00d4ff;
             text-decoration: none;
             display: inline-block;
-        }
-
-        .logo::before {
-            content: 'NeCL';
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: linear-gradient(135deg, #00d4ff 0%, #00a8cc 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            filter: blur(8px);
-            opacity: 0.5;
-            z-index: -1;
+            transition: opacity 0.3s ease;
         }
 
         .logo:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease;
+            opacity: 0.8;
         }
 
         .nav-links {
@@ -515,7 +494,7 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">NeCL</div>
+            <a href="https://t.me/necl_company" class="logo" target="_blank">NeCL</a>
             <ul class="nav-links">
                 <li><a href="#products">Products</a></li>
                 <li><a href="#solutions">Solutions</a></li>
