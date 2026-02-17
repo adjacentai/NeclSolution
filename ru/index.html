@@ -272,6 +272,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
 
         .btn::before {
@@ -483,6 +484,32 @@
             font-weight: 600;
         }
 
+        .product-card-image {
+            max-height: 120px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .product-card--image-right {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .product-card--image-right .product-card__body {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .product-card--image-right .product-card-image {
+            flex-shrink: 0;
+            max-height: 160px;
+            margin-bottom: 0;
+            order: 2;
+        }
+
         /* Business Solutions */
         .business-grid {
             display: grid;
@@ -491,6 +518,8 @@
         }
 
         .business-card {
+            display: flex;
+            flex-direction: column;
             background: rgba(0, 0, 0, 0.15);
             border-radius: 15px;
             padding: 1.5rem;
@@ -499,10 +528,15 @@
             transition: all 0.3s;
         }
 
+        .business-card .product-price {
+            margin-top: auto;
+            margin-bottom: 0;
+        }
+
         .business-card .btn {
             padding: 0.7rem 1.5rem;
             font-size: 0.9rem;
-            margin-top: 1rem;
+            margin-top: auto;
         }
 
         .business-card h3 {
@@ -617,6 +651,20 @@
         <p class="section-subtitle">Работающие продукты с доказанной монетизацией</p>
         
         <div class="products-grid">
+            <div class="product-card featured product-card--image-right" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
+                <div class="product-card__body">
+                    <h3 class="product-title">Slowpoke Bot</h3>
+                    <p class="product-subtitle">Мульти-AI ассистент</p>
+                    <ul class="product-features">
+                        <li>Умный выбор модели (GPT + Gemini)</li>
+                        <li>Интегрированы крипто-платежи</li>
+                        <li>600+ активных пользователей</li>
+                    </ul>
+                    <span class="product-status">600+ пользователей</span>
+                </div>
+                <img src="../assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="product-card-image">
+            </div>
+            
             <div class="product-card featured" onclick="window.open('https://t.me/pickachuai_bot', '_blank')">
                 <h3 class="product-title">Pickachu AI</h3>
                 <p class="product-subtitle">Нейроредактор фото</p>
@@ -626,17 +674,6 @@
                     <li>White Label доступен</li>
                 </ul>
                 <span class="product-status">Работает и приносит доход</span>
-            </div>
-            
-            <div class="product-card featured" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
-                <h3 class="product-title">Slowpoke Bot</h3>
-                <p class="product-subtitle">Мульти-AI ассистент</p>
-                <ul class="product-features">
-                    <li>Умный выбор модели (GPT + Gemini)</li>
-                    <li>Интегрированы крипто-платежи</li>
-                    <li>600+ активных пользователей</li>
-                </ul>
-                <span class="product-status">600+ пользователей</span>
             </div>
         </div>
     </section>
