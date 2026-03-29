@@ -459,6 +459,11 @@
             margin-top: auto;
         }
 
+        .business-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 212, 255, 0.5);
+        }
+
         .business-card h3 {
             color: #ffffff;
             margin-bottom: 0.5rem;
@@ -566,7 +571,9 @@
             <a href="https://t.me/necl_company" class="logo" target="_blank">NeCL</a>
             <ul class="nav-links">
                 <li><a href="#products">Products</a></li>
+                <li><a href="#agents">AI Agents</a></li>
                 <li><a href="#solutions">Solutions</a></li>
+                <li><a href="#cases">Cases</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
             <div class="lang-switch">
@@ -580,31 +587,35 @@
     <section class="hero">
         <div class="hero-content">
             <h1>AI Products for Business</h1>
-            <p class="subtitle">Deploy proven AI solutions in weeks, not months. From RAG support to lead generation — choose your competitive advantage.</p>
-            
+            <p class="subtitle">Deploy proven AI solutions in weeks, not months. From RAG support to content automation — choose your competitive advantage.</p>
+
             <div class="cta-buttons">
                 <a href="https://t.me/adjacent_ai" class="btn btn-primary">Get Consultation</a>
                 <a href="#products" class="btn btn-secondary">View Products</a>
             </div>
-            
+
             <div class="hero-stats">
                 <div class="stat">
                     <span class="stat-number">1200+</span>
                     <span>Active Users</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number">70+</span>
+                    <span class="stat-number">12+</span>
                     <span>Products</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">5+</span>
+                    <span>Cases</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Ready Products -->
+    <!-- Flagship Products -->
     <section id="products" class="section">
         <h2 class="section-title">Ready Products</h2>
         <p class="section-subtitle">Live products with proven monetization</p>
-        
+
         <div class="products-grid">
             <div class="product-card featured product-card--image-right" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
                 <div class="product-card__body">
@@ -619,7 +630,7 @@
                 </div>
                 <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="product-card-image">
             </div>
-            
+
             <div class="product-card featured" onclick="window.open('https://t.me/pickachuai_bot', '_blank')">
                 <h3 class="product-title">Pickachu AI</h3>
                 <p class="product-subtitle">Neural Photo Editor</p>
@@ -631,41 +642,172 @@
                 <span class="product-status">Live & Earning</span>
             </div>
         </div>
+
+        <!-- Pipeline Products Grid -->
+        <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem;">White Label Pipelines</h3>
+        <p class="section-subtitle">Ready-to-deploy bots & automations. Your brand, our engine.</p>
+
+        <div class="business-grid">
+            <div class="business-card">
+                <h3>RAG Support Bot</h3>
+                <p>Smart chat with your knowledge base. Answers from docs, FAQ, Google Sheets. Escalates to humans when needed.</p>
+                <div class="product-price">From $200</div>
+            </div>
+
+            <div class="business-card">
+                <h3>Voice AI Assistant</h3>
+                <p>24/7 assistant in Telegram or WhatsApp. Transcribes voice, answers questions, qualifies hot leads.</p>
+                <div class="product-price">From $500</div>
+            </div>
+
+            <div class="business-card">
+                <h3>Carousel Post Bot</h3>
+                <p>Send text — get 8 branded Instagram slides 1080x1080. No designer needed.</p>
+                <div class="product-price">From $600</div>
+            </div>
+
+            <div class="business-card">
+                <h3>SEO Rewriter</h3>
+                <p>3 text variants per keyword set. Uniqueness check + Google Docs export in one click.</p>
+                <div class="product-price">$49-99/mo</div>
+            </div>
+
+            <div class="business-card">
+                <h3>Auto Publishing</h3>
+                <p>Schedule & publish to Telegram, VK, Instagram, websites. Optional AI-generated content.</p>
+                <div class="product-price">From $400</div>
+            </div>
+
+            <div class="business-card">
+                <h3>AI News Digest</h3>
+                <p>Monitors sources, summarizes with AI, publishes to your channel. Saves 3-5 hours/week.</p>
+                <div class="product-price">From $700</div>
+            </div>
+
+            <div class="business-card">
+                <h3>AI Video Generator</h3>
+                <p>Prompt to 9:16 video for TikTok/Reels/Shorts. Choose model: Grok, Runway, Kling.</p>
+                <div class="product-price">From $800</div>
+            </div>
+
+            <div class="business-card">
+                <h3>Proposal Generator</h3>
+                <p>Send a brief (text or voice) — get a branded PDF proposal with pricing and ROI in 2 minutes.</p>
+                <div class="product-price">From $500</div>
+            </div>
+        </div>
     </section>
 
-    <!-- Business Solutions -->
+    <!-- AI Agents -->
+    <section id="agents" class="section">
+        <h2 class="section-title">AI Agents</h2>
+        <p class="section-subtitle">Autonomous agents that work for your business 24/7</p>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <h3 class="product-title">Inbound Sales Agent</h3>
+                <p class="product-subtitle">AI Salesperson in Telegram</p>
+                <ul class="product-features">
+                    <li>RAG on your docs: prices, cases, FAQ</li>
+                    <li>Qualifies leads: budget, task, urgency</li>
+                    <li>Escalates hot leads with full summary</li>
+                    <li>Analytics: what clients ask, where they drop</li>
+                </ul>
+                <div class="product-price">From $400</div>
+            </div>
+
+            <div class="product-card">
+                <h3 class="product-title">Content Auto-Poster</h3>
+                <p class="product-subtitle">Content Machine on Autopilot</p>
+                <ul class="product-features">
+                    <li>Generates posts for 3+ platforms at once</li>
+                    <li>Customizable templates & brand voice</li>
+                    <li>Review via Telegram: approve / edit / skip</li>
+                    <li>Publishing calendar with scheduling</li>
+                </ul>
+                <div class="product-price">From $600</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cases -->
+    <section id="cases" class="section">
+        <h2 class="section-title">Proven Results</h2>
+        <p class="section-subtitle">Real numbers from real clients</p>
+
+        <div class="business-grid">
+            <div class="business-card" style="border-left: 3px solid #00d4ff;">
+                <h3>Due Diligence Automation</h3>
+                <p style="color: #00ff88; font-weight: 600; margin-bottom: 0.5rem;">2 months → 20 minutes</p>
+                <p>Investment fund. PDF parsing + Vector Search + LLM Scoring. Local LLM for privacy. Instant ROI payback.</p>
+            </div>
+
+            <div class="business-card" style="border-left: 3px solid #00d4ff;">
+                <h3>AI Customer Support</h3>
+                <p style="color: #00ff88; font-weight: 600; margin-bottom: 0.5rem;">3.5h → 30 sec response</p>
+                <p>SaaS with 250 clients. First Contact Resolution from 45% to 85%. Paid for itself in 1 month.</p>
+            </div>
+
+            <div class="business-card" style="border-left: 3px solid #00d4ff;">
+                <h3>Content Automation</h3>
+                <p style="color: #00ff88; font-weight: 600; margin-bottom: 0.5rem;">3h/day → 30 min, +200% reach</p>
+                <p>Media company. AI-generated posts, scheduled publishing, analytics. ROI in 1.5 months.</p>
+            </div>
+
+            <div class="business-card" style="border-left: 3px solid #00d4ff;">
+                <h3>Lead Qualification</h3>
+                <p style="color: #00ff88; font-weight: 600; margin-bottom: 0.5rem;">40h/mo → 4h, 92% accuracy</p>
+                <p>Marketing agency. AI analyzes requests, fills CRM, prioritizes deals. ROI in 1.5 months.</p>
+            </div>
+
+            <div class="business-card" style="border-left: 3px solid #00d4ff;">
+                <h3>Bot Ecosystem</h3>
+                <p style="color: #00ff88; font-weight: 600; margin-bottom: 0.5rem;">2.6M users managed</p>
+                <p>Media holding. Anti-spam, giveaways, analytics, payment processing — full bot infrastructure.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enterprise Solutions -->
     <section id="solutions" class="section">
-        <h2 class="section-title">Enterprise AI Solutions</h2>
-        <p class="section-subtitle">High-load infrastructure & Secure RAG systems</p>
-        
+        <h2 class="section-title">Enterprise Solutions</h2>
+        <p class="section-subtitle">High-load infrastructure & secure AI systems</p>
+
         <div class="business-grid">
             <div class="business-card">
                 <h3>Secure RAG System</h3>
-                <p>On-premise Knowledge Base. 0% Data Leak Risk. Local LLMs.</p>
+                <p>On-premise Knowledge Base. 0% Data Leak Risk. Local LLMs (Llama, Mistral). Your data stays on your servers.</p>
                 <div class="product-price">From $1,000</div>
             </div>
-            
-            <div class="business-card">
-                <h3>AI Tools for Creators</h3>
-                <p>Setup &amp; integration of AI tools for content creators. Automate workflows, connect APIs, scale your creative pipeline.</p>
-                <div class="product-price">From $500</div>
-            </div>
-            
+
             <div class="business-card">
                 <h3>AI Architecture Audit</h3>
-                <p>Optimize costs, reduce latency, and scale your AI backend.</p>
-                <div class="product-price">$100/hour</div>
+                <p>Optimize costs, reduce latency, scale your AI backend. Cut OpenAI bill by 50% with smart model routing.</p>
+                <div class="product-price">From $300</div>
             </div>
-            
+
+            <div class="business-card">
+                <h3>OpenClaw Personal AI</h3>
+                <p>Your private Jarvis. Local LLM agent deployed on your infrastructure. Full data control. Integrates with Telegram, Notion, Google Workspace.</p>
+                <div class="product-price">From $2,000</div>
+            </div>
+
             <div class="business-card">
                 <h3>Custom Engineering</h3>
-                <p>End-to-end development of complex AI pipelines.</p>
-                <ul style="list-style: none; padding: 0; margin: 1rem 0; color: #cccccc;">
-                    <li style="margin-bottom: 0.5rem;">• Python/FastAPI/K8s</li>
-                    <li style="margin-bottom: 0.5rem;">• Local LLM Deployment</li>
-                    <li style="margin-bottom: 0.5rem;">• High-load Systems</li>
-                </ul>
-                <a href="https://t.me/adjacent_ai" class="btn btn-primary" style="display: inline-block; margin-top: 0.5rem;">Contact Engineer</a>
+                <p>End-to-end AI pipeline development. Python/FastAPI/K8s. Local LLM deployment. High-load systems.</p>
+                <div class="product-price">$100/hour</div>
+            </div>
+
+            <div class="business-card">
+                <h3>Web Development</h3>
+                <p>From landing pages to full web apps with AI inside. Mobile-first, SEO-ready, delivered with source code.</p>
+                <div class="product-price">From $150</div>
+            </div>
+
+            <div class="business-card">
+                <h3>AI Automation Audit</h3>
+                <p>We study your business and show where you're losing money & time — and how AI can fix it. PDF report + roadmap.</p>
+                <div class="product-price">From $300</div>
             </div>
         </div>
     </section>
@@ -685,7 +827,7 @@
 
     <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025 NeCL. All rights reserved. | Enterprise AI Solutions</p>
+        <p>&copy; 2025-2026 NeCL. All rights reserved. | Enterprise AI Solutions</p>
     </footer>
 
     <script>
