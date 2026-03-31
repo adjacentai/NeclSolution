@@ -272,8 +272,10 @@
         /* === PRODUCTS === */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
             gap: 1.5rem;
+            max-width: 650px;
+            margin: 0 auto;
         }
 
         .product-card {
@@ -484,10 +486,10 @@
             .stat-number { font-size: 1.8rem; }
             .section { padding: 3rem 1.2rem; }
             .section-title { font-size: 1.8rem; }
-            .products-grid,
             .services-grid,
             .services-grid--bottom,
             .cases-grid { grid-template-columns: 1fr; }
+            .products-grid { max-width: 100%; }
             .product-card--image-right { flex-direction: column; }
             .product-card-image { max-height: 120px; }
             .cta-buttons,
@@ -558,7 +560,7 @@
                 <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="product-card-image">
             </div>
 
-            <div class="card product-card" onclick="window.open('https://t.me/pickachuai_bot', '_blank')">
+            <div class="card product-card">
                 <h3 class="product-name">Pickachu AI</h3>
                 <p class="product-type">Neural Photo Editor</p>
                 <ul class="feature-list">
@@ -567,6 +569,17 @@
                     <li>White Label available</li>
                 </ul>
                 <span class="badge">Live & Earning</span>
+            </div>
+
+            <div class="card product-card">
+                <h3 class="product-name">AI Video Generator</h3>
+                <p class="product-type">Text to Video Pipeline</p>
+                <ul class="feature-list">
+                    <li>Prompt to 9:16 video in one click</li>
+                    <li>Choose model: Grok, Runway, Kling, Minimax</li>
+                    <li>Audio overlay + auto-publish to TikTok</li>
+                </ul>
+                <span class="badge">~$0.50 per video</span>
             </div>
         </div>
     </section>
