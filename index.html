@@ -3,138 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeCL | AI Products for Business</title>
+    <title>NeCL | AI Engineering Studio</title>
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        * {
+        *, *::before, *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        :root {
+            --accent: #00d4ff;
+            --accent-dim: rgba(0, 212, 255, 0.15);
+            --glass: rgba(10, 10, 30, 0.4);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-border-hover: rgba(0, 212, 255, 0.4);
+            --text: #f0f0f5;
+            --text-dim: rgba(255, 255, 255, 0.6);
+            --green: #34d399;
+            --radius: 16px;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, sans-serif;
             background: url('assets/images/lavanda_bg.png') center center/cover no-repeat fixed;
-            color: #ffffff;
+            color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
-            margin: 0;
-            padding: 0;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Unified font family for all elements */
-        * {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Animations and Dynamic Effects */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInFromBottom {
-            from {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideInFromLeft {
-            from {
-                opacity: 0;
-                transform: translateX(-50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes slideInFromRight {
-            from {
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes pulse {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.05);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-
-        @keyframes glow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 30px rgba(0, 212, 255, 0.6);
-            }
-        }
-
-        @keyframes shimmer {
-            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
-        }
-
-        /* Navigation */
+        /* === NAV === */
         .navbar {
             position: fixed;
             top: 0;
-            left: 0;
-            right: 0;
-            padding: 1rem 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
+            left: 1.5rem;
+            right: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 1000;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid var(--glass-border);
             border-top: none;
-            border-radius: 0 0 20px 20px;
-            margin: 0 2rem;
-            left: 2rem;
-            right: 2rem;
-            width: auto;
+            border-radius: 0 0 var(--radius) var(--radius);
         }
 
         .nav-container {
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
@@ -142,16 +60,11 @@
         }
 
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: #00d4ff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent);
             text-decoration: none;
-            display: inline-block;
-            transition: opacity 0.3s ease;
-        }
-
-        .logo:hover {
-            opacity: 0.8;
+            letter-spacing: -0.5px;
         }
 
         .nav-links {
@@ -161,417 +74,436 @@
         }
 
         .nav-links a {
-            color: #ffffff;
+            color: var(--text-dim);
             text-decoration: none;
+            font-size: 0.85rem;
             font-weight: 500;
+            transition: color 0.2s;
+            letter-spacing: 0.3px;
         }
 
-        .nav-links a:hover {
-            color: #00d4ff;
-        }
+        .nav-links a:hover { color: var(--text); }
 
         .lang-switch {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.3rem;
         }
 
         .lang-switch a {
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
+            padding: 0.35rem 0.8rem;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
             text-decoration: none;
-            color: #ffffff;
+            color: var(--text-dim);
+            font-size: 0.8rem;
             font-weight: 500;
+            transition: all 0.2s;
         }
 
         .lang-switch a.active {
-            background: #00d4ff;
+            background: var(--accent);
+            border-color: var(--accent);
             color: #000;
         }
 
-        /* Hero Section */
+        /* === HERO === */
         .hero {
-            min-height: 70vh;
+            min-height: 85vh;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 6rem 2rem 2rem 2rem;
-            background: transparent;
-            animation: fadeInUp 1s ease-out;
+            padding: 8rem 2rem 4rem;
         }
 
         .hero-content {
-            max-width: 550px;
-            background: rgba(0, 0, 0, 0.15);
-            padding: 2rem;
-            border-radius: 20px;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            animation: slideInFromBottom 1.2s ease-out;
-            transform: translateY(0);
+            max-width: 600px;
         }
 
         .hero h1 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #ffffff;
+            font-size: 3.2rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.2rem;
+            letter-spacing: -1.5px;
         }
 
         .hero .subtitle {
-            font-size: 1rem;
-            color: #cccccc;
-            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+            color: var(--text-dim);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+            font-weight: 300;
         }
 
         .cta-buttons {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 1.5rem;
+            margin-bottom: 3rem;
         }
 
         .btn {
-            padding: 1rem 2rem;
+            padding: 0.85rem 2rem;
             border: none;
-            border-radius: 50px;
+            border-radius: 10px;
             font-weight: 600;
             text-decoration: none;
-            font-size: 1rem;
-            transition: all 0.3s;
+            font-size: 0.9rem;
+            transition: all 0.25s ease;
             text-align: center;
+            cursor: pointer;
         }
 
         .btn-primary {
-            background: #00d4ff;
+            background: var(--accent);
             color: #000;
         }
 
         .btn-primary:hover {
-            background: #00a8cc;
-            transform: translateY(-2px);
+            background: #33dfff;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            border: 1px solid var(--glass-border);
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.25);
         }
 
         .btn-whatsapp {
-            background: #25D366;
-            color: #ffffff;
-            border: 1px solid #25D366;
+            background: rgba(37, 211, 102, 0.15);
+            color: #25D366;
+            border: 1px solid rgba(37, 211, 102, 0.3);
         }
 
         .btn-whatsapp:hover {
-            background: #128C7E;
-            transform: translateY(-2px);
+            background: rgba(37, 211, 102, 0.25);
         }
 
         .btn-email {
-            background: #EA4335;
-            color: #ffffff;
-            border: 1px solid #EA4335;
+            background: rgba(234, 67, 53, 0.12);
+            color: #ff6b5b;
+            border: 1px solid rgba(234, 67, 53, 0.3);
         }
 
         .btn-email:hover {
-            background: #D33B2C;
-            transform: translateY(-2px);
+            background: rgba(234, 67, 53, 0.22);
         }
 
         .hero-stats {
             display: flex;
-            gap: 2rem;
+            gap: 3rem;
             justify-content: center;
-            flex-wrap: wrap;
-            color: #cccccc;
         }
 
-        .stat {
-            text-align: center;
-        }
+        .stat { text-align: center; }
 
         .stat-number {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #00d4ff;
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: var(--text);
             display: block;
+            letter-spacing: -1px;
         }
 
-        /* Sections */
-        .section {
-            padding: 2rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 3.5rem;
-            text-align: center;
-            margin-bottom: 1rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-shadow: none;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #ffffff;
-            margin-bottom: 2rem;
-            font-size: 1.2rem;
-            text-shadow: none;
-        }
-
-        /* Product Cards */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .product-card {
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 15px;
-            padding: 2rem;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 30px rgba(0, 212, 255, 0.2);
-            border-color: #00d4ff;
-        }
-
-        .product-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: #ffffff;
-        }
-
-        .product-subtitle {
-            color: #00d4ff;
-            margin-bottom: 1rem;
+        .stat span:last-child {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             font-weight: 500;
         }
 
-        .product-features {
-            list-style: none;
-            margin-bottom: 1.5rem;
+        /* === SECTIONS === */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
         }
 
-        .product-features li {
-            padding: 0.3rem 0;
-            color: #cccccc;
-            position: relative;
-            padding-left: 1.5rem;
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
         }
 
-        .product-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #00ff88;
-            font-weight: bold;
-        }
-
-        .product-price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #00d4ff;
-            margin-bottom: 1rem;
-        }
-
-        .product-status {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: #00ff88;
-            color: #000;
-            border-radius: 15px;
-            font-size: 0.9rem;
+        .section-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
             font-weight: 600;
+            margin-bottom: 0.8rem;
+            display: block;
         }
 
-        .product-card-image {
-            max-height: 120px;
-            width: auto;
-            object-fit: contain;
-            margin-bottom: 1rem;
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+        }
+
+        /* === CARDS (shared) === */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: var(--glass-border-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        /* === PRODUCTS === */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .product-card {
+            cursor: pointer;
         }
 
         .product-card--image-right {
             display: flex;
-            flex-direction: row;
             align-items: center;
             gap: 1.5rem;
         }
 
-        .product-card--image-right .product-card__body {
-            flex: 1;
-            min-width: 0;
-        }
+        .product-card--image-right .product-card__body { flex: 1; min-width: 0; }
 
-        .product-card--image-right .product-card-image {
+        .product-card-image {
+            max-height: 140px;
+            width: auto;
+            object-fit: contain;
             flex-shrink: 0;
-            max-height: 160px;
-            margin-bottom: 0;
-            order: 2;
         }
 
-        /* Business Solutions */
-        .business-grid {
+        .product-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .product-type {
+            font-size: 0.8rem;
+            color: var(--accent);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list li {
+            padding: 0.25rem 0;
+            color: var(--text-dim);
+            font-size: 0.88rem;
+            padding-left: 1.2rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.65rem;
+            width: 5px;
+            height: 5px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            background: var(--accent-dim);
+            color: var(--accent);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        /* === SERVICES === */
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+        }
+
+        .services-grid--bottom {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        .service-name {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .service-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .service-price {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-top: auto;
+        }
+
+        /* === CASES === */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
         }
 
-        .business-card {
-            display: flex;
-            flex-direction: column;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 15px;
-            padding: 1.5rem;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            transition: all 0.3s;
+        .case-card {
+            position: relative;
+            overflow: hidden;
         }
 
-        .business-card .product-price {
-            margin-top: auto;
-            margin-bottom: 0;
+        .case-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--green));
+            border-radius: var(--radius) var(--radius) 0 0;
         }
 
-        .business-card .btn {
-            padding: 0.7rem 1.5rem;
-            font-size: 0.9rem;
-            margin-top: auto;
-        }
-
-        .business-card:hover {
-            transform: translateY(-5px);
-            border-color: rgba(0, 212, 255, 0.5);
-        }
-
-        .business-card h3 {
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-
-        .business-card p {
-            color: #cccccc;
+        .case-industry {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            font-weight: 500;
             margin-bottom: 1rem;
         }
 
-        /* Contact */
-        .contact {
+        .case-metric {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--text), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .case-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .case-roi {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* === CONTACT === */
+        .contact-section {
             text-align: center;
-            background: rgba(0, 0, 0, 0.15);
-            border-radius: 20px;
-            padding: 3rem;
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 4rem 2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
         }
 
-        .contact h2 {
-            color: #ffffff;
-            margin-bottom: 1rem;
+        .contact-section h2 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.5px;
         }
 
-        .contact p {
-            color: #cccccc;
+        .contact-section p {
+            color: var(--text-dim);
             margin-bottom: 2rem;
+            font-weight: 300;
         }
 
-        /* Footer */
+        .contact-buttons {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* === FOOTER === */
         .footer {
             text-align: center;
             padding: 2rem;
-            color: #cccccc;
-            background: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(8px);
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            border-top: 1px solid var(--glass-border);
         }
 
-        /* Responsive */
+        /* === RESPONSIVE === */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .navbar {
-                margin: 0 0.5rem;
-            }
-            
-            .hero-content {
-                padding: 2rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .section {
-                padding: 2rem 1rem;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-            
-            .product-card--image-right {
-                flex-direction: column;
-            }
-            
-            .product-card--image-right .product-card__body {
-                order: 1;
-            }
-            
-            .product-card--image-right .product-card-image {
-                order: 2;
-                max-height: 140px;
-                margin-top: 0.5rem;
-            }
-            
-            .business-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .contact {
-                padding: 2rem 1.5rem;
-            }
+            .navbar { left: 0.5rem; right: 0.5rem; padding: 0.8rem 1rem; }
+            .nav-links { display: none; }
+            .hero { min-height: 75vh; padding: 6rem 1.5rem 3rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero-stats { gap: 2rem; }
+            .stat-number { font-size: 1.8rem; }
+            .section { padding: 3rem 1.2rem; }
+            .section-title { font-size: 1.8rem; }
+            .products-grid,
+            .services-grid,
+            .services-grid--bottom,
+            .cases-grid { grid-template-columns: 1fr; }
+            .product-card--image-right { flex-direction: column; }
+            .product-card-image { max-height: 120px; }
+            .cta-buttons,
+            .contact-buttons { flex-direction: column; align-items: center; }
+            .case-metric { font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav class="navbar">
         <div class="nav-container">
-            <a href="https://t.me/necl_company" class="logo" target="_blank">NeCL</a>
+            <a href="https://t.me/necl_company" class="logo" target="_blank" rel="noopener noreferrer">NeCL</a>
             <ul class="nav-links">
                 <li><a href="#products">Products</a></li>
-                <li><a href="#services">What We Build</a></li>
+                <li><a href="#services">Services</a></li>
                 <li><a href="#cases">Cases</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
@@ -582,14 +514,13 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h1>AI That Works<br>For Your Business</h1>
-            <p class="subtitle">We build AI pipelines, bots, and agents that save time and make money. Deployed in weeks, not months.</p>
+            <p class="subtitle">We build AI pipelines, bots, and autonomous agents. Deployed in weeks, not months. Real ROI from day one.</p>
 
             <div class="cta-buttons">
-                <a href="https://t.me/adjacent_ai" class="btn btn-primary">Get Consultation</a>
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Consultation</a>
                 <a href="#products" class="btn btn-secondary">See Products</a>
             </div>
 
@@ -606,232 +537,165 @@
         </div>
     </section>
 
-    <!-- Flagship Products -->
     <section id="products" class="section">
-        <h2 class="section-title">Live Products</h2>
-        <p class="section-subtitle">Running in production, earning revenue</p>
+        <div class="section-header">
+            <span class="section-label">Products</span>
+            <h2 class="section-title">Live in Production</h2>
+        </div>
 
         <div class="products-grid">
-            <div class="product-card featured product-card--image-right" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
+            <div class="card product-card product-card--image-right" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
                 <div class="product-card__body">
-                    <h3 class="product-title">Slowpoke Bot</h3>
-                    <p class="product-subtitle">Multi-AI Assistant</p>
-                    <ul class="product-features">
+                    <h3 class="product-name">Slowpoke Bot</h3>
+                    <p class="product-type">Multi-AI Assistant</p>
+                    <ul class="feature-list">
                         <li>Smart model routing (GPT + Gemini)</li>
                         <li>Crypto payments integrated</li>
                         <li>600+ active users</li>
                     </ul>
-                    <span class="product-status">600+ Users</span>
+                    <span class="badge">600+ Users</span>
                 </div>
                 <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="product-card-image">
             </div>
 
-            <div class="product-card featured" onclick="window.open('https://t.me/pickachuai_bot', '_blank')">
-                <h3 class="product-title">Pickachu AI</h3>
-                <p class="product-subtitle">Neural Photo Editor</p>
-                <ul class="product-features">
+            <div class="card product-card" onclick="window.open('https://t.me/pickachuai_bot', '_blank')">
+                <h3 class="product-name">Pickachu AI</h3>
+                <p class="product-type">Neural Photo Editor</p>
+                <ul class="feature-list">
                     <li>Voice commands & batch processing</li>
                     <li>Telegram + Web interface</li>
                     <li>White Label available</li>
                 </ul>
-                <span class="product-status">Live & Earning</span>
+                <span class="badge">Live & Earning</span>
             </div>
         </div>
     </section>
 
-    <!-- What We Build -->
     <section id="services" class="section">
-        <h2 class="section-title">What We Build</h2>
-        <p class="section-subtitle">White label ready. Your brand, our engine.</p>
+        <div class="section-header">
+            <span class="section-label">Services</span>
+            <h2 class="section-title">What We Build</h2>
+        </div>
 
-        <div class="business-grid">
-            <div class="business-card">
-                <h3>Telegram & WhatsApp Bots</h3>
-                <p>Support bots, sales agents, voice assistants, content generators. From simple FAQ to complex AI pipelines.</p>
-                <div class="product-price">From $200</div>
+        <div class="services-grid">
+            <div class="card" style="display:flex;flex-direction:column;">
+                <h3 class="service-name">Bots & Assistants</h3>
+                <p class="service-desc">Telegram, WhatsApp, web. Support, sales, voice. From simple FAQ to complex AI pipelines.</p>
+                <span class="service-price">From $200</span>
             </div>
 
-            <div class="business-card">
-                <h3>RAG & Knowledge Systems</h3>
-                <p>Your AI that actually knows your business. Answers from docs, CRM, Google Sheets. On-premise option for sensitive data.</p>
-                <div class="product-price">From $500</div>
+            <div class="card" style="display:flex;flex-direction:column;">
+                <h3 class="service-name">RAG & Knowledge</h3>
+                <p class="service-desc">AI that knows your business. Docs, CRM, Sheets. On-premise for sensitive data.</p>
+                <span class="service-price">From $500</span>
             </div>
 
-            <div class="business-card">
-                <h3>Content Automation</h3>
-                <p>AI-generated posts, carousels, video. Auto-publishing to Telegram, Instagram, LinkedIn, Twitter. Schedule & forget.</p>
-                <div class="product-price">From $400</div>
+            <div class="card" style="display:flex;flex-direction:column;">
+                <h3 class="service-name">Content Automation</h3>
+                <p class="service-desc">AI posts, carousels, video. Auto-publishing across platforms. Schedule & forget.</p>
+                <span class="service-price">From $400</span>
+            </div>
+        </div>
+
+        <div class="services-grid--bottom">
+            <div class="card" style="display:flex;flex-direction:column;">
+                <h3 class="service-name">AI Agents</h3>
+                <p class="service-desc">Autonomous agents that sell, qualify leads, and generate proposals 24/7.</p>
+                <span class="service-price">From $400</span>
             </div>
 
-            <div class="business-card">
-                <h3>AI Agents</h3>
-                <p>Autonomous agents that sell, qualify leads, generate proposals, and post content 24/7. No human in the loop.</p>
-                <div class="product-price">From $400</div>
-            </div>
-
-            <div class="business-card">
-                <h3>Custom AI Pipelines</h3>
-                <p>End-to-end development. Python, FastAPI, LangGraph, Docker. From MVP to production in 2 weeks.</p>
-                <div class="product-price">$100/hour</div>
+            <div class="card" style="display:flex;flex-direction:column;">
+                <h3 class="service-name">Custom Pipelines</h3>
+                <p class="service-desc">End-to-end development. Python, FastAPI, LangGraph, Docker. MVP in 2 weeks.</p>
+                <span class="service-price">$100/hour</span>
             </div>
         </div>
     </section>
 
-    <!-- Cases -->
     <section id="cases" class="section">
-        <h2 class="section-title">Results</h2>
-        <p class="section-subtitle">Real numbers from real projects</p>
+        <div class="section-header">
+            <span class="section-label">Case Studies</span>
+            <h2 class="section-title">Proven Results</h2>
+        </div>
 
-        <div class="products-grid">
-            <div class="product-card" style="border-left: 3px solid #00ff88;">
-                <p class="product-subtitle">Investment Fund</p>
-                <h3 class="product-title" style="font-size: 2rem; margin-bottom: 0.8rem;">2 months → 20 min</h3>
-                <p style="color: #cccccc;">Due diligence automation. PDF parsing + Vector Search + LLM. Local deployment for data privacy.</p>
-                <span class="product-status" style="margin-top: 1rem;">Instant ROI</span>
+        <div class="cases-grid">
+            <div class="card case-card">
+                <p class="case-industry">Investment Fund</p>
+                <h3 class="case-metric">2 months &rarr; 20 min</h3>
+                <p class="case-desc">Due diligence pipeline. AI parses 500+ page PDF reports, scores startups by 40 criteria, and generates investment memos. Deployed on-premise &mdash; zero data leaves the building.</p>
+                <span class="case-roi">Replaced a 3-person analyst team</span>
             </div>
 
-            <div class="product-card" style="border-left: 3px solid #00ff88;">
-                <p class="product-subtitle">SaaS, 250 clients</p>
-                <h3 class="product-title" style="font-size: 2rem; margin-bottom: 0.8rem;">45% → 85% FCR</h3>
-                <p style="color: #cccccc;">AI customer support. Response time from 3.5 hours to 30 seconds. First Contact Resolution doubled.</p>
-                <span class="product-status" style="margin-top: 1rem;">ROI in 1 month</span>
+            <div class="card case-card">
+                <p class="case-industry">SaaS Startup</p>
+                <h3 class="case-metric">MVP in 9 days</h3>
+                <p class="case-desc">Full SaaS product: Telegram bot + web dashboard + Stripe billing + RAG knowledge base. From idea to first paying customer in under two weeks.</p>
+                <span class="case-roi">$2K MRR in first month</span>
             </div>
 
-            <div class="product-card" style="border-left: 3px solid #00ff88;">
-                <p class="product-subtitle">Media Company</p>
-                <h3 class="product-title" style="font-size: 2rem; margin-bottom: 0.8rem;">+200% reach</h3>
-                <p style="color: #cccccc;">Content automation. From 3 hours/day to 30 minutes. AI posts, scheduled publishing, analytics.</p>
-                <span class="product-status" style="margin-top: 1rem;">ROI in 6 weeks</span>
+            <div class="card case-card">
+                <p class="case-industry">Media &middot; 2.6M users</p>
+                <h3 class="case-metric">5 bots, 1 ecosystem</h3>
+                <p class="case-desc">Bot infrastructure for a media holding: anti-spam, giveaway engine, analytics dashboard, payment processing, and content moderation. All running 24/7.</p>
+                <span class="case-roi">Handles 50K+ messages/day</span>
             </div>
         </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" class="section">
-        <div class="contact">
-            <h2>Let's Build Something</h2>
+    <section id="contact">
+        <div class="contact-section">
+            <h2>Let's build something</h2>
             <p>Free consultation. We'll find the highest-ROI automation for your business.</p>
-            <div class="cta-buttons">
-                <a href="https://t.me/adjacent_ai" class="btn btn-primary">Telegram</a>
-                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-whatsapp">WhatsApp</a>
+            <div class="contact-buttons">
+                <a href="https://t.me/adjacent_ai" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Telegram</a>
+                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
                 <a href="mailto:neclcompany@gmail.com" class="btn btn-email">Email</a>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="footer">
-        <p>&copy; 2025-2026 NeCL. All rights reserved. | AI Engineering Studio</p>
+        <p>&copy; 2025-2026 NeCL. AI Engineering Studio.</p>
     </footer>
 
     <script>
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+                const t = document.querySelector(a.getAttribute('href'));
+                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         });
 
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    e.target.style.opacity = '1';
+                    e.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
-        // Observe all sections and cards
         document.addEventListener('DOMContentLoaded', () => {
-            const elementsToAnimate = document.querySelectorAll('.section, .product-card, .business-card');
-            elementsToAnimate.forEach(el => {
+            document.querySelectorAll('.card, .section-header').forEach(el => {
                 el.style.opacity = '0';
-                el.style.transform = 'translateY(30px)';
-                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-                observer.observe(el);
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                obs.observe(el);
             });
 
-            // Dynamic stats counter
-            const stats = document.querySelectorAll('.stat-number');
-            stats.forEach(stat => {
-                const finalNumber = stat.textContent;
-                const isPlus = finalNumber.includes('+');
-                const isDollar = finalNumber.includes('$');
-                const number = parseInt(finalNumber.replace(/[^0-9]/g, ''));
-                
-                let current = 0;
-                const increment = number / 50;
-                const timer = setInterval(() => {
-                    current += increment;
-                    if (current >= number) {
-                        current = number;
-                        clearInterval(timer);
-                    }
-                    let displayNumber = Math.floor(current);
-                    if (isDollar) displayNumber = '$' + displayNumber;
-                    if (isPlus) displayNumber += '+';
-                    stat.textContent = displayNumber;
-                }, 50);
+            document.querySelectorAll('.stat-number').forEach(stat => {
+                const raw = stat.textContent;
+                const plus = raw.includes('+');
+                const num = parseInt(raw.replace(/\D/g, ''));
+                let cur = 0;
+                const inc = num / 40;
+                const t = setInterval(() => {
+                    cur += inc;
+                    if (cur >= num) { cur = num; clearInterval(t); }
+                    stat.textContent = Math.floor(cur).toLocaleString() + (plus ? '+' : '');
+                }, 40);
             });
-
-            // Interactive particle effect on hover
-            document.querySelectorAll('.product-card').forEach(card => {
-                card.addEventListener('mouseenter', createParticles);
-            });
-
-            function createParticles(e) {
-                const card = e.currentTarget;
-                for (let i = 0; i < 5; i++) {
-                    const particle = document.createElement('div');
-                    particle.style.cssText = `
-                        position: absolute;
-                        width: 4px;
-                        height: 4px;
-                        background: #00d4ff;
-                        border-radius: 50%;
-                        pointer-events: none;
-                        z-index: 1000;
-                        animation: particle-float 2s ease-out forwards;
-                    `;
-                    
-                    const rect = card.getBoundingClientRect();
-                    particle.style.left = Math.random() * rect.width + 'px';
-                    particle.style.top = Math.random() * rect.height + 'px';
-                    
-                    card.appendChild(particle);
-                    
-                    setTimeout(() => particle.remove(), 2000);
-                }
-            }
-
-            // Add particle animation CSS
-            const style = document.createElement('style');
-            style.textContent = `
-                @keyframes particle-float {
-                    0% {
-                        opacity: 1;
-                        transform: translateY(0) scale(1);
-                    }
-                    100% {
-                        opacity: 0;
-                        transform: translateY(-100px) scale(0);
-                    }
-                }
-            `;
-            document.head.appendChild(style);
         });
     </script>
 </body>
