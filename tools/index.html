@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Tools | NeCL</title>
+    <meta name="description" content="Free AI tools: prompt generator, ROI calculator, and more. No signup required.">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #00d4ff; --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --r: 14px; }
+        body { font-family: 'Inter', sans-serif; background: #e8a0b4; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+        .nav { position: fixed; top: 0; left: 2rem; right: 2rem; padding: 0.5rem 1.4rem; background: var(--dark); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 100; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+        .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        main { flex: 1; max-width: 800px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-dim); margin-bottom: 3rem; font-weight: 300; }
+        .tools-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        .tool { background: var(--dark); backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 2rem; transition: all 0.25s; text-decoration: none; color: var(--text); display: flex; flex-direction: column; }
+        .tool:hover { border-color: rgba(0,212,255,0.35); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
+        .tool-icon { font-size: 2rem; margin-bottom: 1rem; }
+        .tool-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .tool-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.2rem; }
+        .tool-cta { font-size: 0.82rem; color: var(--accent); font-weight: 600; margin-top: auto; }
+        .badge-soon { display: inline-block; padding: 0.2rem 0.6rem; background: rgba(255,255,255,0.08); color: var(--text-dim); border-radius: 5px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.5px; margin-top: auto; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            .nav { left: 0.5rem; right: 0.5rem; }
+            main { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.8rem; }
+            .tools-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">NeCL</a>
+            <a href="/" class="nav-back">&larr; Home</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Free AI Tools</h1>
+        <p class="subtitle">No signup. No limits. Just use it.</p>
+
+        <div class="tools-grid">
+            <a href="/tools/prompt-generator" class="tool">
+                <span class="tool-icon">&gt;_</span>
+                <h2 class="tool-name">AI Prompt Generator</h2>
+                <p class="tool-desc">Describe your task in plain language — get an optimized prompt for GPT, Claude, or Gemini.</p>
+                <span class="tool-cta">Try free &rarr;</span>
+            </a>
+
+            <a href="/tools/roi-calculator" class="tool">
+                <span class="tool-icon">#</span>
+                <h2 class="tool-name">ROI Calculator</h2>
+                <p class="tool-desc">How much can AI automation save your business? Enter your numbers, get the answer.</p>
+                <span class="tool-cta">Calculate &rarr;</span>
+            </a>
+
+            <div class="tool" style="cursor: default;">
+                <span class="tool-icon">@</span>
+                <h2 class="tool-name">Bot Cost Estimator</h2>
+                <p class="tool-desc">Get an instant price estimate for your Telegram/WhatsApp bot based on features and complexity.</p>
+                <span class="badge-soon">Coming soon</span>
+            </div>
+
+            <div class="tool" style="cursor: default;">
+                <span class="tool-icon">&lt;/&gt;</span>
+                <h2 class="tool-name">AI Stack Picker</h2>
+                <p class="tool-desc">Answer 5 questions about your project — get a recommended AI tech stack with cost breakdown.</p>
+                <span class="badge-soon">Coming soon</span>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL – Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>

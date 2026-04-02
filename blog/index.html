@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | NeCL</title>
+    <meta name="description" content="AI engineering insights, case studies, and practical guides from NeCL team.">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #00d4ff; --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --r: 14px; }
+        body { font-family: 'Inter', sans-serif; background: #e8a0b4; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+        .nav { position: fixed; top: 0; left: 2rem; right: 2rem; padding: 0.5rem 1.4rem; background: var(--dark); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 100; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
+        .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        main { flex: 1; max-width: 800px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.5rem; }
+        .subtitle { color: var(--text-dim); margin-bottom: 3rem; font-weight: 300; }
+        .posts { display: flex; flex-direction: column; gap: 1.5rem; }
+        .post { background: var(--dark); backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.25s; text-decoration: none; color: var(--text); display: block; }
+        .post:hover { border-color: rgba(0,212,255,0.35); transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; display: block; }
+        .post-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .post-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            .nav { left: 0.5rem; right: 0.5rem; }
+            main { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">NeCL</a>
+            <a href="/" class="nav-back">&larr; Home</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Blog</h1>
+        <p class="subtitle">AI engineering insights, case studies, and no-BS guides.</p>
+
+        <div class="posts">
+            <a href="/blog/stop-using-gpt4-for-everything" class="post">
+                <span class="post-tag">Engineering</span>
+                <h2 class="post-title">Stop using GPT-4 for everything</h2>
+                <p class="post-desc">How semantic routing cuts your OpenAI bill by 60% without losing quality. We break down the exact pipeline we use in production.</p>
+            </a>
+
+            <a href="/blog/fund-due-diligence-case" class="post">
+                <span class="post-tag">Case Study</span>
+                <h2 class="post-title">How we saved a fund 2 months of work</h2>
+                <p class="post-desc">PDF parsing, vector search, LLM scoring — the full due diligence pipeline that replaced a 3-person analyst team.</p>
+            </a>
+
+            <a href="/blog/no-code-trap" class="post">
+                <span class="post-tag">Opinion</span>
+                <h2 class="post-title">No-code is great until it isn't</h2>
+                <p class="post-desc">When Zapier and n8n stop working and you need real engineering. Security limits, cost scaling, vendor lock-in.</p>
+            </a>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL – Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>

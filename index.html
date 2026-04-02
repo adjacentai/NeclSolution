@@ -3,713 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeCL | AI Engineering Studio</title>
+    <title>NeCL | AI Bots, Agents & Pipelines for Business</title>
+    <meta name="description" content="We build AI pipelines, Telegram bots, RAG systems, and autonomous agents. Deployed in weeks. Real ROI from day one.">
     <link rel="icon" type="image/png" href="assets/images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
     <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --accent: #00d4ff;
-            --accent-dim: rgba(0, 212, 255, 0.15);
-            --glass: rgba(10, 10, 30, 0.4);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --glass-border-hover: rgba(0, 212, 255, 0.4);
+            --accent: #e8a0b4;
+            --accent-dim: rgba(0, 212, 255, 0.12);
             --text: #f0f0f5;
-            --text-dim: rgba(255, 255, 255, 0.6);
+            --text-dim: rgba(255, 255, 255, 0.55);
+            --dark: rgba(10, 10, 30, 0.45);
+            --border: rgba(255, 255, 255, 0.1);
             --green: #34d399;
-            --radius: 16px;
+            --r: 14px;
         }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: url('assets/images/lavanda_bg.png') center center/cover no-repeat fixed;
+            background: #2d1b4e;
             color: var(--text);
             line-height: 1.6;
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* === NAV === */
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 1.5rem;
-            right: 1.5rem;
-            padding: 0.8rem 2rem;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 1000;
-            border: 1px solid var(--glass-border);
-            border-top: none;
-            border-radius: 0 0 var(--radius) var(--radius);
-        }
+        /* NAV */
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding-top: 0.5rem; pointer-events: none; }
+        .nav-inner { display: flex; align-items: center; gap: 1.8rem; padding: 0.35rem 1.4rem; background: var(--dark); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 10px; pointer-events: auto; }
+        .nav-logo { font-size: 1.3rem; font-weight: 800; color: var(--accent); text-decoration: none; letter-spacing: -0.5px; }
+        .nav-menu { display: flex; gap: 1.3rem; list-style: none; }
+        .nav-menu a { color: var(--text-dim); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+        .nav-menu a:hover { color: var(--text); }
+        .nav-lang { display: flex; gap: 0.2rem; }
+        .nav-lang a { padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text-dim); font-size: 0.8rem; }
+        .nav-lang a.active { background: var(--accent); border-color: var(--accent); color: #000; font-weight: 600; }
 
-        .nav-container {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        /* HAMBURGER */
+        .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 0.3rem; }
+        .nav-burger span { display: block; width: 20px; height: 2px; background: var(--text); margin: 4px 0; transition: all 0.3s; border-radius: 2px; }
+        .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5,5,20,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+        .nav-mobile.open { display: flex; }
+        .nav-mobile a { color: var(--text); text-decoration: none; font-size: 1.3rem; font-weight: 600; }
+        .nav-mobile a:hover { color: var(--accent); }
+        .nav-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--text); font-size: 1.8rem; cursor: pointer; }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--accent);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
+        /* LAYOUT */
+        main { flex: 1; }
+        .s { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
+        .s + .s { padding-top: 2rem; }
+        .s-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 600; margin-bottom: 0.6rem; }
+        .s-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 1.5rem; }
 
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
+        /* HERO */
+        .hero { min-height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 2rem; }
+        .hero-inner { max-width: 620px; }
+        .hero h1 { font-size: 3.4rem; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1.2rem; }
+        .hero p { font-size: 1.05rem; color: var(--text-dim); font-weight: 300; line-height: 1.7; margin-bottom: 2.5rem; }
+        .hero-cta { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
 
-        .nav-links a {
-            color: var(--text-dim);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            transition: color 0.2s;
-            letter-spacing: 0.3px;
-        }
+        /* BTNS */
+        .btn { padding: 0.85rem 2rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+        .btn-p { background: var(--accent); color: #000; }
+        .btn-p:hover { background: #33dfff; box-shadow: 0 6px 24px rgba(0,212,255,0.3); transform: translateY(-1px); }
+        .btn-s { background: rgba(255,255,255,0.06); color: var(--text); border: 1px solid var(--border); }
+        .btn-s:hover { background: rgba(255,255,255,0.1); }
+        .btn-wa { background: #25D366; color: #fff; border: none; }
+        .btn-wa:hover { background: #1fb855; }
+        .btn-em { background: #EA4335; color: #fff; border: none; }
+        .btn-em:hover { background: #d33a2d; }
 
-        .nav-links a:hover { color: var(--text); }
+        /* STATS */
+        .stats { display: flex; gap: 3rem; justify-content: center; padding: 0 2rem 3rem; max-width: 1000px; margin: 0 auto; }
+        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; }
+        .stat-l { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
 
-        .lang-switch {
-            display: flex;
-            gap: 0.3rem;
-        }
+        /* CARD */
+        .card { background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.25s; }
+        .card:hover { border-color: rgba(0,212,255,0.35); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
 
-        .lang-switch a {
-            padding: 0.35rem 0.8rem;
-            background: transparent;
-            border: 1px solid var(--glass-border);
-            border-radius: 8px;
-            text-decoration: none;
-            color: var(--text-dim);
-            font-size: 0.8rem;
-            font-weight: 500;
-            transition: all 0.2s;
-        }
+        /* SERVICES */
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 1.2rem; }
+        .svc-t { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .svc-d { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
+        .svc-p { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-top: auto; }
 
-        .lang-switch a.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #000;
-        }
+        /* CASES */
+        .case::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: var(--r) var(--r) 0 0; }
+        .case { position: relative; overflow: hidden; }
+        .case-ind { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); font-weight: 500; margin-bottom: 0.8rem; }
+        .case-num { font-size: 1.9rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.7rem; background: linear-gradient(135deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .case-txt { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
+        .case-roi { font-size: 0.72rem; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* === HERO === */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 8rem 2rem 4rem;
-        }
+        /* BLOG PREVIEW */
+        .post { display: flex; flex-direction: column; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+        .post-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
+        .post-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
+        .post-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; margin-top: auto; }
+        .post-link:hover { text-decoration: underline; }
 
-        .hero-content {
-            max-width: 600px;
-        }
+        /* TOOLS PREVIEW */
+        .tool-icon { font-size: 1.8rem; margin-bottom: 0.8rem; display: block; }
+        .tool-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .tool-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
+        .tool-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; }
+        .tool-link:hover { text-decoration: underline; }
 
-        .hero h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.2rem;
-            letter-spacing: -1.5px;
-        }
+        /* CTA */
+        .cta-block { text-align: center; padding: 4rem 2rem; max-width: 550px; margin: 0 auto 2rem; }
+        .cta-block h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.8rem; }
+        .cta-block p { color: var(--text-dim); font-weight: 300; margin-bottom: 2rem; }
+        .cta-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
 
-        .hero .subtitle {
-            font-size: 1.05rem;
-            color: var(--text-dim);
-            margin-bottom: 2rem;
-            line-height: 1.7;
-            font-weight: 300;
-        }
+        /* FOOTER */
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
 
-        .cta-buttons {
-            display: flex;
-            gap: 0.8rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-bottom: 3rem;
-        }
-
-        .btn {
-            padding: 0.85rem 2rem;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.25s ease;
-            text-align: center;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: var(--accent);
-            color: #000;
-        }
-
-        .btn-primary:hover {
-            background: #33dfff;
-            transform: translateY(-1px);
-            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.3);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--text);
-            border: 1px solid var(--glass-border);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.25);
-        }
-
-        .btn-whatsapp {
-            background: rgba(37, 211, 102, 0.15);
-            color: #25D366;
-            border: 1px solid rgba(37, 211, 102, 0.3);
-        }
-
-        .btn-whatsapp:hover {
-            background: rgba(37, 211, 102, 0.25);
-        }
-
-        .btn-email {
-            background: rgba(234, 67, 53, 0.12);
-            color: #ff6b5b;
-            border: 1px solid rgba(234, 67, 53, 0.3);
-        }
-
-        .btn-email:hover {
-            background: rgba(234, 67, 53, 0.22);
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: 3rem;
-            justify-content: center;
-        }
-
-        .stat { text-align: center; }
-
-        .stat-number {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--text);
-            display: block;
-            letter-spacing: -1px;
-        }
-
-        .stat span:last-child {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 500;
-        }
-
-        /* === SECTIONS === */
-        .section {
-            padding: 5rem 2rem;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .section-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 0.8rem;
-            display: block;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            color: var(--text);
-        }
-
-        /* === CARDS (shared) === */
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .card:hover {
-            border-color: var(--glass-border-hover);
-            transform: translateY(-4px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        }
-
-        /* === PRODUCTS === */
-        .products-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            max-width: 650px;
-            margin: 0 auto;
-        }
-
-        .product-card {
-            cursor: pointer;
-        }
-
-        .product-card--image-right {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .product-card--image-right .product-card__body { flex: 1; min-width: 0; }
-
-        .product-card-image {
-            max-height: 140px;
-            width: auto;
-            object-fit: contain;
-            flex-shrink: 0;
-        }
-
-        .product-name {
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-
-        .product-type {
-            font-size: 0.8rem;
-            color: var(--accent);
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 1rem;
-        }
-
-        .feature-list {
-            list-style: none;
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-list li {
-            padding: 0.25rem 0;
-            color: var(--text-dim);
-            font-size: 0.88rem;
-            padding-left: 1.2rem;
-            position: relative;
-        }
-
-        .feature-list li::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0.65rem;
-            width: 5px;
-            height: 5px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 0.3rem 0.8rem;
-            background: var(--accent-dim);
-            color: var(--accent);
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        /* === SERVICES === */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.2rem;
-        }
-
-        .services-grid--bottom {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.2rem;
-            margin-top: 1.2rem;
-        }
-
-        .service-name {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .service-desc {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .service-price {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent);
-            margin-top: auto;
-        }
-
-        /* === CASES === */
-        .cases-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .case-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .case-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--accent), var(--green));
-            border-radius: var(--radius) var(--radius) 0 0;
-        }
-
-        .case-industry {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-dim);
-            font-weight: 500;
-            margin-bottom: 1rem;
-        }
-
-        .case-metric {
-            font-size: 2rem;
-            font-weight: 800;
-            letter-spacing: -1px;
-            margin-bottom: 0.8rem;
-            background: linear-gradient(135deg, var(--text), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .case-desc {
-            font-size: 0.85rem;
-            color: var(--text-dim);
-            line-height: 1.6;
-            margin-bottom: 1.2rem;
-        }
-
-        .case-roi {
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--green);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* === CONTACT === */
-        .contact-section {
-            text-align: center;
-            padding: 4rem 2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .contact-section h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 0.8rem;
-            letter-spacing: -0.5px;
-        }
-
-        .contact-section p {
-            color: var(--text-dim);
-            margin-bottom: 2rem;
-            font-weight: 300;
-        }
-
-        .contact-buttons {
-            display: flex;
-            gap: 0.8rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* === FOOTER === */
-        .footer {
-            text-align: center;
-            padding: 2rem;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            border-top: 1px solid var(--glass-border);
-        }
-
-        /* === RESPONSIVE === */
+        /* RESPONSIVE */
         @media (max-width: 768px) {
-            .navbar { left: 0.5rem; right: 0.5rem; padding: 0.8rem 1rem; }
-            .nav-links { display: none; }
-            .hero { min-height: 75vh; padding: 6rem 1.5rem 3rem; }
-            .hero h1 { font-size: 2.2rem; }
-            .hero-stats { gap: 2rem; }
-            .stat-number { font-size: 1.8rem; }
-            .section { padding: 3rem 1.2rem; }
-            .section-title { font-size: 1.8rem; }
-            .services-grid,
-            .services-grid--bottom,
-            .cases-grid { grid-template-columns: 1fr; }
-            .products-grid { max-width: 100%; }
-            .product-card--image-right { flex-direction: column; }
-            .product-card-image { max-height: 120px; }
-            .cta-buttons,
-            .contact-buttons { flex-direction: column; align-items: center; }
-            .case-metric { font-size: 1.6rem; }
+            .nav { padding-top: 0.3rem; }
+            .nav-inner { gap: 1rem; padding: 0.35rem 1rem; }
+            .nav-menu { display: none; }
+            .nav-burger { display: block; }
+            .hero { min-height: 80vh; padding: 5rem 1.5rem 2rem; }
+            .hero h1 { font-size: 2.2rem; letter-spacing: -1px; }
+            .stats { gap: 1.5rem; padding: 0 1.5rem 2rem; }
+            .stat-n { font-size: 1.8rem; }
+            .s { padding: 2.5rem 1.2rem; }
+            .s + .s { padding-top: 1.5rem; }
+            .s-title { font-size: 1.7rem; }
+            .grid-3, .grid-2 { grid-template-columns: 1fr; }
+            .hero-cta, .cta-btns { flex-direction: column; align-items: center; }
+            .case-num { font-size: 1.5rem; }
         }
     </style>
 </head>
 <body>
-
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="https://t.me/necl_company" class="logo" target="_blank" rel="noopener noreferrer">NeCL</a>
-            <ul class="nav-links">
-                <li><a href="#products">Products</a></li>
+    <!-- NAV -->
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">NeCL</a>
+            <ul class="nav-menu">
                 <li><a href="#services">Services</a></li>
                 <li><a href="#cases">Cases</a></li>
+                <li><a href="blog/">Blog</a></li>
+                <li><a href="tools/">Tools</a></li>
                 <li><a href="#contact">Contact</a></li>
             </ul>
-            <div class="lang-switch">
+            <div class="nav-lang">
                 <a href="#" class="active">EN</a>
                 <a href="ru/">RU</a>
             </div>
+            <button class="nav-burger" onclick="document.getElementById('mob').classList.add('open')">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>AI That Works<br>For Your Business</h1>
-            <p class="subtitle">We build AI pipelines, bots, and autonomous agents. Deployed in weeks, not months. Real ROI from day one.</p>
+    <div id="mob" class="nav-mobile">
+        <button class="nav-close" onclick="this.parentElement.classList.remove('open')">&times;</button>
+        <a href="#services" onclick="this.parentElement.classList.remove('open')">Services</a>
+        <a href="#cases" onclick="this.parentElement.classList.remove('open')">Cases</a>
+        <a href="blog/">Blog</a>
+        <a href="tools/">Tools</a>
+        <a href="#contact" onclick="this.parentElement.classList.remove('open')">Contact</a>
+    </div>
 
-            <div class="cta-buttons">
-                <a href="https://t.me/adjacent_ai" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Get Consultation</a>
-                <a href="#products" class="btn btn-secondary">See Products</a>
-            </div>
-
-            <div class="hero-stats">
-                <div class="stat">
-                    <span class="stat-number">12000+</span>
-                    <span>Active Users</span>
+    <main>
+        <!-- 1. HERO -->
+        <section class="hero">
+            <div class="hero-inner">
+                <h1>We build AI that makes you money</h1>
+                <p>Bots, agents, RAG systems, content pipelines. From idea to production in 2 weeks. No bullshit, no wrappers — real engineering.</p>
+                <div class="hero-cta">
+                    <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Talk to us</a>
+                    <a href="#cases" class="btn btn-s">See results</a>
                 </div>
-                <div class="stat">
-                    <span class="stat-number">70+</span>
-                    <span>Products</span>
+            </div>
+        </section>
+
+        <!-- 2. STATS -->
+        <div class="stats">
+            <div>
+                <span class="stat-n">12,000+</span>
+                <span class="stat-l">Users</span>
+            </div>
+            <div>
+                <span class="stat-n">70+</span>
+                <span class="stat-l">Products</span>
+            </div>
+            <div>
+                <span class="stat-n">2 wk</span>
+                <span class="stat-l">To MVP</span>
+            </div>
+        </div>
+
+        <!-- 3. SERVICES -->
+        <section id="services" class="s">
+            <p class="s-label">Services</p>
+            <h2 class="s-title">What we build</h2>
+
+            <div class="grid-3">
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">Bots & Assistants</h3>
+                    <p class="svc-d">Telegram, WhatsApp, web. Support, sales, voice. From FAQ bot to full AI pipeline.</p>
+                    <span class="svc-p">From $200</span>
+                </div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">RAG & Knowledge</h3>
+                    <p class="svc-d">AI that knows your business. Docs, CRM, Sheets. On-premise for sensitive data.</p>
+                    <span class="svc-p">From $500</span>
+                </div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">Content Automation</h3>
+                    <p class="svc-d">AI posts, carousels, video. Auto-publish across platforms. Schedule and forget.</p>
+                    <span class="svc-p">From $400</span>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <section id="products" class="section">
-        <div class="section-header">
-            <span class="section-label">Products</span>
-            <h2 class="section-title">Live in Production</h2>
-        </div>
-
-        <div class="products-grid">
-            <div class="card product-card product-card--image-right" onclick="window.open('https://t.me/ai_slowpoke_bot', '_blank')">
-                <div class="product-card__body">
-                    <h3 class="product-name">Slowpoke Bot</h3>
-                    <p class="product-type">Multi-AI Assistant</p>
-                    <ul class="feature-list">
-                        <li>Smart model routing (GPT + Gemini)</li>
-                        <li>Crypto payments integrated</li>
-                        <li>600+ active users</li>
-                    </ul>
-                    <span class="badge">600+ Users</span>
+            <div class="grid-2">
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">AI Agents</h3>
+                    <p class="svc-d">Autonomous agents that sell, qualify leads, and generate proposals 24/7.</p>
+                    <span class="svc-p">From $400</span>
                 </div>
-                <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="product-card-image">
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">Custom Pipelines</h3>
+                    <p class="svc-d">End-to-end. Python, FastAPI, LangGraph, Docker. Your idea — production in 2 weeks.</p>
+                    <span class="svc-p">$100/hour</span>
+                </div>
             </div>
+        </section>
 
-            <div class="card product-card">
-                <h3 class="product-name">Pickachu AI</h3>
-                <p class="product-type">Neural Photo Editor</p>
-                <ul class="feature-list">
-                    <li>Voice commands & batch processing</li>
-                    <li>Telegram + Web interface</li>
-                    <li>White Label available</li>
-                </ul>
-                <span class="badge">Live & Earning</span>
+        <!-- 4. CASES -->
+        <section id="cases" class="s">
+            <p class="s-label">Case Studies</p>
+            <h2 class="s-title">Proven results</h2>
+
+            <div class="grid-3">
+                <div class="card case">
+                    <p class="case-ind">Investment Fund</p>
+                    <h3 class="case-num">2 months &rarr; 20 min</h3>
+                    <p class="case-txt">Due diligence pipeline. AI parses 500+ page reports, scores startups, generates memos. On-premise — zero data leaks.</p>
+                    <span class="case-roi">Replaced 3-person team</span>
+                </div>
+                <div class="card case">
+                    <p class="case-ind">SaaS Startup</p>
+                    <h3 class="case-num">MVP in 9 days</h3>
+                    <p class="case-txt">Telegram bot + web dashboard + Stripe + RAG knowledge base. Idea to first paying customer in under two weeks.</p>
+                    <span class="case-roi">$2K MRR month one</span>
+                </div>
+                <div class="card case">
+                    <p class="case-ind">Media &middot; 2.6M users</p>
+                    <h3 class="case-num">5 bots, 1 ecosystem</h3>
+                    <p class="case-txt">Anti-spam, giveaways, analytics, payments, moderation. Full bot infrastructure running 24/7.</p>
+                    <span class="case-roi">50K+ messages/day</span>
+                </div>
             </div>
+        </section>
 
-            <div class="card product-card">
-                <h3 class="product-name">AI Video Generator</h3>
-                <p class="product-type">Text to Video Pipeline</p>
-                <ul class="feature-list">
-                    <li>Prompt to 9:16 video in one click</li>
-                    <li>Choose model: Grok, Runway, Kling, Minimax</li>
-                    <li>Audio overlay + auto-publish to TikTok</li>
-                </ul>
-                <span class="badge">~$0.50 per video</span>
+        <!-- 5. BLOG PREVIEW -->
+        <section class="s">
+            <p class="s-label">Blog</p>
+            <h2 class="s-title">Latest</h2>
+
+            <div class="grid-3">
+                <div class="card post">
+                    <span class="post-tag">Engineering</span>
+                    <h3 class="post-title">Stop using GPT-4 for everything</h3>
+                    <p class="post-desc">How semantic routing cuts your OpenAI bill by 60% without losing quality.</p>
+                    <a href="blog/stop-using-gpt4-for-everything" class="post-link">Read &rarr;</a>
+                </div>
+                <div class="card post">
+                    <span class="post-tag">Case Study</span>
+                    <h3 class="post-title">How we saved a fund 2 months of work</h3>
+                    <p class="post-desc">PDF parsing, vector search, LLM scoring — the full due diligence pipeline.</p>
+                    <a href="blog/fund-due-diligence-case" class="post-link">Read &rarr;</a>
+                </div>
+                <div class="card post">
+                    <span class="post-tag">Opinion</span>
+                    <h3 class="post-title">No-code is great until it isn't</h3>
+                    <p class="post-desc">When Zapier and n8n stop working and you need real engineering.</p>
+                    <a href="blog/no-code-trap" class="post-link">Read &rarr;</a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="services" class="section">
-        <div class="section-header">
-            <span class="section-label">Services</span>
-            <h2 class="section-title">What We Build</h2>
-        </div>
+        <!-- 6. TOOLS PREVIEW -->
+        <section class="s">
+            <p class="s-label">Free Tools</p>
+            <h2 class="s-title">Try it</h2>
 
-        <div class="services-grid">
-            <div class="card" style="display:flex;flex-direction:column;">
-                <h3 class="service-name">Bots & Assistants</h3>
-                <p class="service-desc">Telegram, WhatsApp, web. Support, sales, voice. From simple FAQ to complex AI pipelines.</p>
-                <span class="service-price">From $200</span>
+            <div class="grid-2">
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <span class="tool-icon">&gt;_</span>
+                    <h3 class="tool-name">AI Prompt Generator</h3>
+                    <p class="tool-desc">Describe your task — get an optimized prompt for GPT, Claude, or Gemini.</p>
+                    <a href="tools/prompt-generator" class="tool-link">Try free &rarr;</a>
+                </div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <span class="tool-icon">#</span>
+                    <h3 class="tool-name">ROI Calculator</h3>
+                    <p class="tool-desc">Find out how much AI automation can save your business per month.</p>
+                    <a href="tools/roi-calculator" class="tool-link">Calculate &rarr;</a>
+                </div>
             </div>
+        </section>
 
-            <div class="card" style="display:flex;flex-direction:column;">
-                <h3 class="service-name">RAG & Knowledge</h3>
-                <p class="service-desc">AI that knows your business. Docs, CRM, Sheets. On-premise for sensitive data.</p>
-                <span class="service-price">From $500</span>
+        <!-- 7. CTA -->
+        <section id="contact">
+            <div class="cta-block">
+                <h2>Let's build something</h2>
+                <p>Free consultation. We find the highest-ROI automation for your business.</p>
+                <div class="cta-btns">
+                    <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Telegram</a>
+                    <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-wa" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                    <a href="mailto:neclcompany@gmail.com" class="btn btn-em">Email</a>
+                </div>
             </div>
-
-            <div class="card" style="display:flex;flex-direction:column;">
-                <h3 class="service-name">Content Automation</h3>
-                <p class="service-desc">AI posts, carousels, video. Auto-publishing across platforms. Schedule & forget.</p>
-                <span class="service-price">From $400</span>
-            </div>
-        </div>
-
-        <div class="services-grid--bottom">
-            <div class="card" style="display:flex;flex-direction:column;">
-                <h3 class="service-name">AI Agents</h3>
-                <p class="service-desc">Autonomous agents that sell, qualify leads, and generate proposals 24/7.</p>
-                <span class="service-price">From $400</span>
-            </div>
-
-            <div class="card" style="display:flex;flex-direction:column;">
-                <h3 class="service-name">Custom Pipelines</h3>
-                <p class="service-desc">End-to-end development. Python, FastAPI, LangGraph, Docker. MVP in 2 weeks.</p>
-                <span class="service-price">$100/hour</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="cases" class="section">
-        <div class="section-header">
-            <span class="section-label">Case Studies</span>
-            <h2 class="section-title">Proven Results</h2>
-        </div>
-
-        <div class="cases-grid">
-            <div class="card case-card">
-                <p class="case-industry">Investment Fund</p>
-                <h3 class="case-metric">2 months &rarr; 20 min</h3>
-                <p class="case-desc">Due diligence pipeline. AI parses 500+ page PDF reports, scores startups by 40 criteria, and generates investment memos. Deployed on-premise &mdash; zero data leaves the building.</p>
-                <span class="case-roi">Replaced a 3-person analyst team</span>
-            </div>
-
-            <div class="card case-card">
-                <p class="case-industry">SaaS Startup</p>
-                <h3 class="case-metric">MVP in 9 days</h3>
-                <p class="case-desc">Full SaaS product: Telegram bot + web dashboard + Stripe billing + RAG knowledge base. From idea to first paying customer in under two weeks.</p>
-                <span class="case-roi">$2K MRR in first month</span>
-            </div>
-
-            <div class="card case-card">
-                <p class="case-industry">Media &middot; 2.6M users</p>
-                <h3 class="case-metric">5 bots, 1 ecosystem</h3>
-                <p class="case-desc">Bot infrastructure for a media holding: anti-spam, giveaway engine, analytics dashboard, payment processing, and content moderation. All running 24/7.</p>
-                <span class="case-roi">Handles 50K+ messages/day</span>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact">
-        <div class="contact-section">
-            <h2>Let's build something</h2>
-            <p>Free consultation. We'll find the highest-ROI automation for your business.</p>
-            <div class="contact-buttons">
-                <a href="https://t.me/adjacent_ai" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Telegram</a>
-                <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-whatsapp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                <a href="mailto:neclcompany@gmail.com" class="btn btn-email">Email</a>
-            </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <footer class="footer">
-        <p>&copy; 2025-2026 NeCL. AI Engineering Studio.</p>
+        <p>&copy; 2025-2026 NeCL – Neural Engineering &amp; Cognitive Logic.</p>
     </footer>
-
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(a => {
-            a.addEventListener('click', e => {
-                e.preventDefault();
-                const t = document.querySelector(a.getAttribute('href'));
-                if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        });
-
-        const obs = new IntersectionObserver(entries => {
-            entries.forEach(e => {
-                if (e.isIntersecting) {
-                    e.target.style.opacity = '1';
-                    e.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.card, .section-header').forEach(el => {
-                el.style.opacity = '0';
-                el.style.transform = 'translateY(20px)';
-                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                obs.observe(el);
-            });
-
-            document.querySelectorAll('.stat-number').forEach(stat => {
-                const raw = stat.textContent;
-                const plus = raw.includes('+');
-                const num = parseInt(raw.replace(/\D/g, ''));
-                let cur = 0;
-                const inc = num / 40;
-                const t = setInterval(() => {
-                    cur += inc;
-                    if (cur >= num) { cur = num; clearInterval(t); }
-                    stat.textContent = Math.floor(cur).toLocaleString() + (plus ? '+' : '');
-                }, 40);
-            });
-        });
-    </script>
 </body>
 </html>
