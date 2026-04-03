@@ -1,35 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeCL | AI Bots, Agents & Pipelines for Business</title>
-    <meta name="description" content="We build AI pipelines, Telegram bots, RAG systems, and autonomous agents. Deployed in weeks. Real ROI from day one.">
-    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    <title>NeCL | AI-боты, агенты и пайплайны для бизнеса</title>
+    <meta name="description" content="Строим AI-пайплайны, Telegram-ботов, RAG-системы и автономных агентов. Запуск за 2 недели. Реальный ROI с первого дня.">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --accent: #e8a0b4; --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --green: #34d399; --r: 14px; }
+        :root { --accent: #e8a0b4; --accent-dim: rgba(232,160,180,0.12); --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --green: #34d399; --r: 14px; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: #2d1b4e; color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
-
-        /* NAV */
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding-top: 0.5rem; pointer-events: none; }
         .nav-inner { display: flex; align-items: center; gap: 1.8rem; padding: 0.35rem 1.4rem; background: var(--dark); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 10px; pointer-events: auto; }
         .nav-logo { font-size: 1.3rem; font-weight: 800; color: var(--accent); text-decoration: none; }
         .nav-menu { display: flex; gap: 1.3rem; list-style: none; }
         .nav-menu a { color: var(--accent); text-decoration: none; font-size: 0.88rem; font-weight: 500; opacity: 0.7; transition: opacity 0.2s; }
         .nav-menu a:hover { opacity: 1; }
-
-        /* LANG DROPDOWN */
-        .nav-lang { position: relative; }
-        .nav-lang-btn { padding: 0.3rem 0.6rem; background: var(--accent); border: none; border-radius: 6px; color: #2d1b4e; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; }
-        .nav-lang-drop { display: none; position: absolute; top: 110%; right: 0; background: rgba(20,10,40,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0; min-width: 140px; z-index: 300; }
-        .nav-lang-drop.open { display: block; }
-        .nav-lang-drop a { display: block; padding: 0.4rem 1rem; color: var(--text-dim); text-decoration: none; font-size: 0.8rem; transition: background 0.15s; }
-        .nav-lang-drop a:hover { background: rgba(255,255,255,0.08); color: var(--text); }
-        .nav-lang-drop a.active { color: var(--accent); font-weight: 600; }
-
-        /* HAMBURGER */
+        .nav-lang { display: flex; gap: 0.2rem; }
+        .nav-lang a { padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text-dim); font-size: 0.8rem; }
+        .nav-lang a.active { background: var(--accent); border-color: var(--accent); color: #2d1b4e; font-weight: 600; }
         .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 0.3rem; }
         .nav-burger span { display: block; width: 20px; height: 2px; background: var(--accent); margin: 4px 0; border-radius: 2px; }
         .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5,5,20,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
@@ -37,84 +27,62 @@
         .nav-mobile a { color: var(--text); text-decoration: none; font-size: 1.3rem; font-weight: 600; }
         .nav-mobile a:hover { color: var(--accent); }
         .nav-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--text); font-size: 1.8rem; cursor: pointer; }
-
-        /* LAYOUT */
         main { flex: 1; }
         .s { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
         .s + .s { padding-top: 2rem; }
         .s-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 600; margin-bottom: 0.6rem; }
         .s-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 1.5rem; }
-
-        /* HERO */
         .hero { min-height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 2rem; }
-        .hero-inner { max-width: 680px; background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 20px; padding: 3rem 3.5rem; }
-        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1rem; color: var(--text); }
-        .hero p { font-size: 1rem; color: var(--text-dim); font-weight: 400; line-height: 1.7; margin-bottom: 1.5rem; }
+        .hero-inner { max-width: 680px; background: rgba(255,255,255,0.85); border-radius: 20px; padding: 3rem 3.5rem; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1rem; color: #1a1a2e; }
+        .hero p { font-size: 1rem; color: #333; font-weight: 400; line-height: 1.7; margin-bottom: 1.5rem; }
         .hero-stats { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 1.5rem; }
+        .hero-stats .stat-n { color: #1a1a2e; }
+        .hero-stats .stat-l { color: #666; }
         .hero-cta { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
-
-        /* BTNS */
-        .btn { padding: 0.85rem 2rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; display: inline-block; min-width: 140px; text-align: center; }
+        .btn { padding: 0.85rem 2rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
         .btn-p { background: var(--accent); color: #2d1b4e; }
         .btn-p:hover { background: #f0b0c4; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(232,160,180,0.4); }
-        .btn-s { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); }
-        .btn-s:hover { background: rgba(255,255,255,0.12); }
-        .btn-wa { background: #25D366; color: #fff; }
+        .btn-s { background: #2d1b4e; color: var(--text); }
+        .btn-s:hover { background: #3d2b5e; }
+        .btn-wa { background: #25D366; color: #fff; border: none; }
         .btn-wa:hover { background: #1fb855; }
-        .btn-em { background: #EA4335; color: #fff; }
+        .btn-em { background: #EA4335; color: #fff; border: none; }
         .btn-em:hover { background: #d33a2d; }
-
-        /* STATS */
-        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; color: var(--text); }
-        .stat-l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; color: var(--text-dim); }
-
-        /* CARD */
+        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; }
+        .stat-l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
         .card { background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.25s; }
         .card:hover { border-color: rgba(232,160,180,0.35); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
-
-        /* GRIDS */
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 1.2rem; }
         .svc-t { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
         .svc-d { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
         .svc-p { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-top: auto; }
-
-        /* CASES */
         .case::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: var(--r) var(--r) 0 0; }
         .case { position: relative; overflow: hidden; }
         .case-ind { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); font-weight: 500; margin-bottom: 0.8rem; }
         .case-num { font-size: 1.9rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.7rem; background: linear-gradient(135deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .case-txt { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
         .case-roi { font-size: 0.72rem; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 1px; }
-
-        /* BLOG */
         .post { display: flex; flex-direction: column; }
         .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
         .post-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
         .post-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
         .post-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; margin-top: auto; }
         .post-link:hover { text-decoration: underline; }
-
-        /* TOOLS */
         .tool-img { width: 100%; border-radius: 10px; margin-bottom: 1rem; object-fit: contain; max-height: 100px; }
         .tool-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
         .tool-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
         .tool-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; }
         .tool-link:hover { text-decoration: underline; }
-
-        /* CTA */
         .cta-block { text-align: center; padding: 4rem 2rem; max-width: 550px; margin: 0 auto 2rem; }
-        .cta-block h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
+        .cta-block h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.8rem; }
         .cta-block p { color: var(--text-dim); font-weight: 300; margin-bottom: 2rem; }
         .cta-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
-
-        /* FOOTER */
         .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
         .footer-socials { display: flex; gap: 1.2rem; justify-content: center; margin-bottom: 1rem; }
-        .footer-socials a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+        .footer-socials a { color: var(--text-dim); text-decoration: none; font-size: 1.2rem; transition: color 0.2s; }
         .footer-socials a:hover { color: var(--accent); }
-
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .nav { padding-top: 0.3rem; }
             .nav-inner { gap: 1rem; padding: 0.35rem 1rem; }
@@ -124,7 +92,6 @@
             .hero-inner { padding: 2rem 1.5rem; }
             .hero h1 { font-size: 2rem; }
             .hero p { font-size: 0.9rem; }
-            .hero-stats { gap: 1.5rem; }
             .stat-n { font-size: 1.8rem; }
             .s { padding: 2.5rem 1.2rem; }
             .s + .s { padding-top: 1.5rem; }
@@ -132,7 +99,6 @@
             .grid-3, .grid-2 { grid-template-columns: 1fr; }
             .hero-cta, .cta-btns { flex-direction: column; align-items: center; }
             .case-num { font-size: 1.5rem; }
-            .btn { width: 100%; max-width: 200px; }
         }
     </style>
 </head>
@@ -141,26 +107,15 @@
         <div class="nav-inner">
             <a href="/" class="nav-logo">NeCL</a>
             <ul class="nav-menu">
-                <li><a href="#services">Services</a></li>
-                <li><a href="#cases">Cases</a></li>
-                <li><a href="blog/">Blog</a></li>
-                <li><a href="tools/">Tools</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#services">Услуги</a></li>
+                <li><a href="#cases">Кейсы</a></li>
+                <li><a href="../blog/">Блог</a></li>
+                <li><a href="../tools/">Инструменты</a></li>
+                <li><a href="#contact">Контакты</a></li>
             </ul>
             <div class="nav-lang">
-                <button class="nav-lang-btn" onclick="this.nextElementSibling.classList.toggle('open')">EN</button>
-                <div class="nav-lang-drop">
-                    <a href="#" class="active">English</a>
-                    <a href="ru/">Russian</a>
-                    <a href="#">Spanish</a>
-                    <a href="#">German</a>
-                    <a href="#">French</a>
-                    <a href="#">Portuguese</a>
-                    <a href="#">Chinese</a>
-                    <a href="#">Japanese</a>
-                    <a href="#">Korean</a>
-                    <a href="#">Arabic</a>
-                </div>
+                <a href="../">EN</a>
+                <a href="#" class="active">RU</a>
             </div>
             <button class="nav-burger" onclick="document.getElementById('mob').classList.add('open')">
                 <span></span><span></span><span></span>
@@ -170,87 +125,137 @@
 
     <div id="mob" class="nav-mobile">
         <button class="nav-close" onclick="this.parentElement.classList.remove('open')">&times;</button>
-        <a href="#services" onclick="this.parentElement.classList.remove('open')">Services</a>
-        <a href="#cases" onclick="this.parentElement.classList.remove('open')">Cases</a>
-        <a href="blog/">Blog</a>
-        <a href="tools/">Tools</a>
-        <a href="#contact" onclick="this.parentElement.classList.remove('open')">Contact</a>
+        <a href="#services" onclick="this.parentElement.classList.remove('open')">Услуги</a>
+        <a href="#cases" onclick="this.parentElement.classList.remove('open')">Кейсы</a>
+        <a href="../blog/">Блог</a>
+        <a href="../tools/">Инструменты</a>
+        <a href="#contact" onclick="this.parentElement.classList.remove('open')">Контакты</a>
     </div>
 
     <main>
         <section class="hero">
             <div class="hero-inner">
-                <h1>We build AI that makes you money</h1>
-                <p>Bots, agents, RAG systems, content pipelines. From idea to production in 2 weeks. No bullshit, no wrappers — real engineering.</p>
+                <h1>Строим AI, который приносит деньги</h1>
+                <p>Боты, агенты, RAG-системы, контент-пайплайны. От идеи до продакшна за 2 недели. Без обёрток — настоящая инженерия.</p>
                 <div class="hero-stats">
-                    <div><span class="stat-n">12,000+</span><span class="stat-l">Users</span></div>
-                    <div><span class="stat-n">70+</span><span class="stat-l">Products</span></div>
-                    <div><span class="stat-n">2 wk</span><span class="stat-l">To MVP</span></div>
+                    <div><span class="stat-n">12 000+</span><span class="stat-l">Пользователей</span></div>
+                    <div><span class="stat-n">70+</span><span class="stat-l">Продуктов</span></div>
+                    <div><span class="stat-n">2 нед</span><span class="stat-l">До MVP</span></div>
                 </div>
                 <div class="hero-cta">
-                    <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Talk to us</a>
-                    <a href="#cases" class="btn btn-s">See results</a>
+                    <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Написать нам</a>
+                    <a href="#cases" class="btn btn-s">Смотреть кейсы</a>
                 </div>
             </div>
         </section>
 
         <section id="services" class="s">
-            <p class="s-label">Services</p>
-            <h2 class="s-title">What we build</h2>
+            <p class="s-label">Услуги</p>
+            <h2 class="s-title">Что мы делаем</h2>
             <div class="grid-3">
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">Bots & Assistants</h3><p class="svc-d">Telegram, WhatsApp, web. Support, sales, voice. From FAQ bot to full AI pipeline.</p><span class="svc-p">From $200</span></div>
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">RAG & Knowledge</h3><p class="svc-d">AI that knows your business. Docs, CRM, Sheets. On-premise for sensitive data.</p><span class="svc-p">From $500</span></div>
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">Content Automation</h3><p class="svc-d">AI posts, carousels, video. Auto-publish across platforms. Schedule and forget.</p><span class="svc-p">From $400</span></div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">Боты и ассистенты</h3>
+                    <p class="svc-d">Telegram, WhatsApp, веб. Поддержка, продажи, голос. От FAQ-бота до сложного AI-пайплайна.</p>
+                    <span class="svc-p">От $200</span>
+                </div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">RAG и базы знаний</h3>
+                    <p class="svc-d">AI, который знает ваш бизнес. Документы, CRM, таблицы. Локальный деплой для конфиденциальных данных.</p>
+                    <span class="svc-p">От $500</span>
+                </div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">Автоматизация контента</h3>
+                    <p class="svc-d">AI-посты, карусели, видео. Автопубликация на все платформы. Настроил и забыл.</p>
+                    <span class="svc-p">От $400</span>
+                </div>
             </div>
             <div class="grid-2">
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">AI Agents</h3><p class="svc-d">Autonomous agents that sell, qualify leads, and generate proposals 24/7.</p><span class="svc-p">From $400</span></div>
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">Custom Pipelines</h3><p class="svc-d">End-to-end. Python, FastAPI, LangGraph, Docker. Your idea — production in 2 weeks.</p><span class="svc-p">$100/hour</span></div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">AI-агенты</h3>
+                    <p class="svc-d">Автономные агенты, которые продают, квалифицируют лиды и генерируют КП 24/7.</p>
+                    <span class="svc-p">От $400</span>
+                </div>
+                <div class="card" style="display:flex;flex-direction:column;">
+                    <h3 class="svc-t">Кастомные пайплайны</h3>
+                    <p class="svc-d">Полный цикл. Python, FastAPI, LangGraph, Docker. Ваша идея — продакшн за 2 недели.</p>
+                    <span class="svc-p">$100/час</span>
+                </div>
             </div>
         </section>
 
         <section id="cases" class="s">
-            <p class="s-label">Case Studies</p>
-            <h2 class="s-title">Proven results</h2>
+            <p class="s-label">Кейсы</p>
+            <h2 class="s-title">Доказанные результаты</h2>
             <div class="grid-3">
-                <div class="card case"><p class="case-ind">Investment Fund</p><h3 class="case-num">2 months &rarr; 20 min</h3><p class="case-txt">Due diligence pipeline. AI parses 500+ page reports, scores startups, generates memos. On-premise — zero data leaks.</p><span class="case-roi">Replaced 3-person team</span></div>
-                <div class="card case"><p class="case-ind">SaaS Startup</p><h3 class="case-num">MVP in 9 days</h3><p class="case-txt">Telegram bot + web dashboard + Stripe + RAG knowledge base. Idea to first paying customer in under two weeks.</p><span class="case-roi">$2K MRR month one</span></div>
-                <div class="card case"><p class="case-ind">Media &mdash; 2.6M users</p><h3 class="case-num">5 bots &mdash; 1 ecosystem</h3><p class="case-txt">Anti-spam, giveaways, analytics, payments, moderation. Full bot infrastructure running 24/7.</p><span class="case-roi">50K+ messages/day</span></div>
+                <div class="card case">
+                    <p class="case-ind">Инвестиционный фонд</p>
+                    <h3 class="case-num">2 месяца &rarr; 20 мин</h3>
+                    <p class="case-txt">Пайплайн due diligence. AI парсит 500+ страниц отчётов, скорит стартапы, генерирует мемо. Локальный деплой — данные не уходят.</p>
+                    <span class="case-roi">Заменил команду из 3 аналитиков</span>
+                </div>
+                <div class="card case">
+                    <p class="case-ind">SaaS-стартап</p>
+                    <h3 class="case-num">MVP за 9 дней</h3>
+                    <p class="case-txt">Telegram-бот + веб-дашборд + Stripe + RAG база знаний. От идеи до первого платящего клиента за две недели.</p>
+                    <span class="case-roi">$2K MRR в первый месяц</span>
+                </div>
+                <div class="card case">
+                    <p class="case-ind">Медиа &middot; 2.6M юзеров</p>
+                    <h3 class="case-num">5 ботов, 1 экосистема</h3>
+                    <p class="case-txt">Антиспам, розыгрыши, аналитика, платежи, модерация. Полная бот-инфраструктура 24/7.</p>
+                    <span class="case-roi">50K+ сообщений/день</span>
+                </div>
             </div>
         </section>
 
         <section class="s">
-            <p class="s-label">Blog</p>
-            <h2 class="s-title">Latest</h2>
+            <p class="s-label">Блог</p>
+            <h2 class="s-title">Последнее</h2>
             <div class="grid-3">
-                <div class="card post"><span class="post-tag">Engineering</span><h3 class="post-title">Stop using GPT-4 for everything</h3><p class="post-desc">How semantic routing cuts your OpenAI bill by 60% without losing quality.</p><a href="blog/stop-using-gpt4-for-everything" class="post-link">Read &rarr;</a></div>
-                <div class="card post"><span class="post-tag">Case Study</span><h3 class="post-title">How we saved a fund 2 months of work</h3><p class="post-desc">PDF parsing, vector search, LLM scoring — the full due diligence pipeline.</p><a href="blog/fund-due-diligence-case" class="post-link">Read &rarr;</a></div>
-                <div class="card post"><span class="post-tag">Opinion</span><h3 class="post-title">No-code is great until it isn't</h3><p class="post-desc">When Zapier and n8n stop working and you need real engineering.</p><a href="blog/no-code-trap" class="post-link">Read &rarr;</a></div>
+                <div class="card post">
+                    <span class="post-tag">Инженерия</span>
+                    <h3 class="post-title">Хватит использовать GPT-4 для всего</h3>
+                    <p class="post-desc">Как семантический роутинг снижает счёт за OpenAI на 60% без потери качества.</p>
+                    <a href="../blog/stop-using-gpt4-for-everything" class="post-link">Читать &rarr;</a>
+                </div>
+                <div class="card post">
+                    <span class="post-tag">Кейс</span>
+                    <h3 class="post-title">Как мы сэкономили фонду 2 месяца работы</h3>
+                    <p class="post-desc">PDF-парсинг, векторный поиск, LLM-скоринг — полный пайплайн due diligence.</p>
+                    <a href="../blog/fund-due-diligence-case" class="post-link">Читать &rarr;</a>
+                </div>
+                <div class="card post">
+                    <span class="post-tag">Мнение</span>
+                    <h3 class="post-title">No-code — это круто, пока не сломается</h3>
+                    <p class="post-desc">Когда Zapier и n8n перестают работать и нужна настоящая разработка.</p>
+                    <a href="../blog/no-code-trap" class="post-link">Читать &rarr;</a>
+                </div>
             </div>
         </section>
 
         <section class="s">
-            <p class="s-label">Try it</p>
-            <h2 class="s-title">Our Products</h2>
+            <p class="s-label">Попробуйте</p>
+            <h2 class="s-title">Наши продукты</h2>
             <div class="grid-2">
                 <a href="https://t.me/ai_slowpoke_bot" target="_blank" rel="noopener noreferrer" class="card" style="display:flex;flex-direction:column;text-decoration:none;color:var(--text);">
-                    <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="tool-img">
+                    <img src="../assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="tool-img">
                     <h3 class="tool-name">Slowpoke Bot</h3>
-                    <p class="tool-desc">AI assistant in Telegram. Works with docs, images, voice. Crypto payments, 600+ active users.</p>
-                    <span class="tool-link">Try in Telegram &rarr;</span>
+                    <p class="tool-desc">Мульти-AI ассистент в Telegram. Роутинг GPT + Gemini, крипто-платежи, 600+ активных юзеров.</p>
+                    <span class="tool-link">Попробовать в Telegram &rarr;</span>
                 </a>
                 <a href="https://resumequick.app/en" target="_blank" rel="noopener noreferrer" class="card" style="display:flex;flex-direction:column;text-decoration:none;color:var(--text);">
-                    <img src="assets/images/cv_logo.webp" alt="ResumeQuick" class="tool-img">
+                    <img src="../assets/images/cv_logo.webp" alt="ResumeQuick" class="tool-img">
                     <h3 class="tool-name">ResumeQuick</h3>
-                    <p class="tool-desc">AI resume builder. Describe yourself — get a polished CV in 2 minutes. Interview prep, job matching, ATS-optimized. 2,000+ users.</p>
-                    <span class="tool-link">Build your resume &rarr;</span>
+                    <p class="tool-desc">AI-конструктор резюме. Опишите себя — получите готовое CV за 2 минуты. Подготовка к интервью, анализ вакансий. 2,000+ юзеров.</p>
+                    <span class="tool-link">Создать резюме &rarr;</span>
                 </a>
             </div>
         </section>
 
         <section id="contact">
             <div class="cta-block">
-                <h2>Let's build something</h2>
-                <p>Free consultation. We find the highest-ROI automation for your business.</p>
+                <h2>Давайте построим</h2>
+                <p>Бесплатная консультация. Найдём самую выгодную автоматизацию для вашего бизнеса.</p>
                 <div class="cta-btns">
                     <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Telegram</a>
                     <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-wa" target="_blank" rel="noopener noreferrer">WhatsApp</a>
@@ -269,13 +274,5 @@
         </div>
         <p>&copy; 2025-2026 NeCL – Neural Engineering &amp; Cognitive Logic.</p>
     </footer>
-
-    <script>
-        document.addEventListener('click', e => {
-            if (!e.target.closest('.nav-lang')) {
-                document.querySelectorAll('.nav-lang-drop').forEach(d => d.classList.remove('open'));
-            }
-        });
-    </script>
 </body>
 </html>

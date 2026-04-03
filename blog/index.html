@@ -9,10 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --accent: #00d4ff; --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --r: 14px; }
+        :root { --accent: #e8a0b4; --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --r: 14px; }
         body { font-family: 'Inter', sans-serif; background: #2d1b4e; color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
-        .nav { position: fixed; top: 0; left: 2rem; right: 2rem; padding: 0.5rem 1.4rem; background: var(--dark); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 100; border: 1px solid var(--border); border-top: none; border-radius: 0 0 10px 10px; }
-        .nav-inner { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding-top: 0.5rem; pointer-events: none; }
+        .nav-inner { display: flex; align-items: center; gap: 1.8rem; padding: 0.35rem 1.4rem; background: rgba(10,10,30,0.45); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; pointer-events: auto; }
         .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
         .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.82rem; font-weight: 500; }
         .nav-back:hover { color: var(--text); }
@@ -27,7 +27,7 @@
         .post-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
         .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
         @media (max-width: 768px) {
-            .nav { left: 0.5rem; right: 0.5rem; }
+
             main { padding: 4rem 1.2rem 3rem; }
             h1 { font-size: 1.8rem; }
         }
@@ -36,8 +36,8 @@
 <body>
     <nav class="nav">
         <div class="nav-inner">
-            <a href="/" class="nav-logo">NeCL</a>
-            <a href="/" class="nav-back">&larr; Home</a>
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="../" class="nav-back">&larr; Home</a>
         </div>
     </nav>
 
