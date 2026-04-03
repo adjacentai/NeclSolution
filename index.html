@@ -61,9 +61,12 @@
 
         /* HERO */
         .hero { min-height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 2rem; }
-        .hero-inner { max-width: 680px; background: rgba(255,255,255,0.95); border-radius: 20px; padding: 3rem 3.5rem; }
+        .hero-inner { max-width: 680px; background: rgba(255,255,255,0.15); border-radius: 20px; padding: 3rem 3.5rem; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
         .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1rem; color: #1a1a2e; }
-        .hero p { font-size: 1rem; color: #555; font-weight: 400; line-height: 1.7; margin-bottom: 2rem; }
+        .hero p { font-size: 1rem; color: #333; font-weight: 400; line-height: 1.7; margin-bottom: 1.5rem; }
+        .hero-stats { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 1.5rem; }
+        .hero-stats .stat-n { color: #1a1a2e; }
+        .hero-stats .stat-l { color: #666; }
         .hero-cta { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
 
         /* BTNS */
@@ -78,9 +81,8 @@
         .btn-em:hover { background: #d33a2d; }
 
         /* STATS */
-        .stats { display: flex; gap: 3rem; justify-content: center; padding: 0 2rem 3rem; max-width: 1000px; margin: 0 auto; }
-        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; color: var(--text); }
-        .stat-l { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
+        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; }
+        .stat-l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
 
         /* CARD */
         .card { background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.25s; }
@@ -110,7 +112,7 @@
         .post-link:hover { text-decoration: underline; }
 
         /* TOOLS PREVIEW */
-        .tool-img { width: 100%; border-radius: 10px; margin-bottom: 1rem; object-fit: cover; max-height: 160px; }
+        .tool-img { width: 100%; border-radius: 10px; margin-bottom: 1rem; object-fit: contain; max-height: 100px; }
         .tool-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
         .tool-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
         .tool-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; }
@@ -185,28 +187,27 @@
             <div class="hero-inner">
                 <h1>We build AI that makes you money</h1>
                 <p>Bots, agents, RAG systems, content pipelines. From idea to production in 2 weeks. No bullshit, no wrappers — real engineering.</p>
+                <div class="hero-stats">
+                    <div>
+                        <span class="stat-n">12,000+</span>
+                        <span class="stat-l">Users</span>
+                    </div>
+                    <div>
+                        <span class="stat-n">70+</span>
+                        <span class="stat-l">Products</span>
+                    </div>
+                    <div>
+                        <span class="stat-n">2 wk</span>
+                        <span class="stat-l">To MVP</span>
+                    </div>
+                </div>
+
                 <div class="hero-cta">
                     <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Talk to us</a>
                     <a href="#cases" class="btn btn-s">See results</a>
                 </div>
             </div>
         </section>
-
-        <!-- 2. STATS -->
-        <div class="stats">
-            <div>
-                <span class="stat-n">12,000+</span>
-                <span class="stat-l">Users</span>
-            </div>
-            <div>
-                <span class="stat-n">70+</span>
-                <span class="stat-l">Products</span>
-            </div>
-            <div>
-                <span class="stat-n">2 wk</span>
-                <span class="stat-l">To MVP</span>
-            </div>
-        </div>
 
         <!-- 3. SERVICES -->
         <section id="services" class="s">
@@ -311,7 +312,7 @@
                     <span class="tool-link">Try in Telegram &rarr;</span>
                 </a>
                 <a href="https://resumequick.app/en" target="_blank" rel="noopener noreferrer" class="card" style="display:flex;flex-direction:column;text-decoration:none;color:var(--text);">
-                    <img src="assets/images/cv_logo.webp" alt="ResumeQuick" class="tool-img" style="object-fit:contain;background:rgba(255,255,255,0.05);">
+                    <img src="assets/images/cv_logo.webp" alt="ResumeQuick" class="tool-img">
                     <h3 class="tool-name">ResumeQuick</h3>
                     <p class="tool-desc">AI resume builder. Describe yourself — get a polished CV in 2 minutes. Interview prep, job matching, ATS-optimized. 2,000+ users.</p>
                     <span class="tool-link">Build your resume &rarr;</span>
