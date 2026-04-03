@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --accent: #e8a0b4; --accent-dim: rgba(232,160,180,0.12); --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --green: #34d399; --r: 14px; }
+        :root { --accent: #e8a0b4; --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --green: #34d399; --r: 14px; }
         body { font-family: 'Inter', -apple-system, sans-serif; background: #2d1b4e; color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
         .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding-top: 0.5rem; pointer-events: none; }
         .nav-inner { display: flex; align-items: center; gap: 1.8rem; padding: 0.35rem 1.4rem; background: var(--dark); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 10px; pointer-events: auto; }
@@ -17,9 +17,13 @@
         .nav-menu { display: flex; gap: 1.3rem; list-style: none; }
         .nav-menu a { color: var(--accent); text-decoration: none; font-size: 0.88rem; font-weight: 500; opacity: 0.7; transition: opacity 0.2s; }
         .nav-menu a:hover { opacity: 1; }
-        .nav-lang { display: flex; gap: 0.2rem; }
-        .nav-lang a { padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 6px; text-decoration: none; color: var(--text-dim); font-size: 0.8rem; }
-        .nav-lang a.active { background: var(--accent); border-color: var(--accent); color: #2d1b4e; font-weight: 600; }
+        .nav-lang { position: relative; }
+        .nav-lang-btn { padding: 0.3rem 0.6rem; background: var(--accent); border: none; border-radius: 6px; color: #2d1b4e; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; }
+        .nav-lang-drop { display: none; position: absolute; top: 110%; right: 0; background: rgba(20,10,40,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0; min-width: 140px; z-index: 300; }
+        .nav-lang-drop.open { display: block; }
+        .nav-lang-drop a { display: block; padding: 0.4rem 1rem; color: var(--text-dim); text-decoration: none; font-size: 0.8rem; transition: background 0.15s; }
+        .nav-lang-drop a:hover { background: rgba(255,255,255,0.08); color: var(--text); }
+        .nav-lang-drop a.active { color: var(--accent); font-weight: 600; }
         .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 0.3rem; }
         .nav-burger span { display: block; width: 20px; height: 2px; background: var(--accent); margin: 4px 0; border-radius: 2px; }
         .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5,5,20,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
@@ -33,25 +37,23 @@
         .s-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 600; margin-bottom: 0.6rem; }
         .s-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 1.5rem; }
         .hero { min-height: 75vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 2rem; }
-        .hero-inner { max-width: 680px; background: rgba(255,255,255,0.85); border-radius: 20px; padding: 3rem 3.5rem; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1rem; color: #1a1a2e; }
-        .hero p { font-size: 1rem; color: #333; font-weight: 400; line-height: 1.7; margin-bottom: 1.5rem; }
+        .hero-inner { max-width: 680px; background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 20px; padding: 3rem 3.5rem; }
+        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1rem; color: var(--text); }
+        .hero p { font-size: 1rem; color: var(--text-dim); font-weight: 400; line-height: 1.7; margin-bottom: 1.5rem; }
         .hero-stats { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 1.5rem; }
-        .hero-stats .stat-n { color: #1a1a2e; }
-        .hero-stats .stat-l { color: #666; }
         .hero-cta { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
-        .btn { padding: 0.85rem 2rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; }
+        .btn { padding: 0.85rem 2rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; display: inline-block; min-width: 140px; text-align: center; }
         .btn-p { background: var(--accent); color: #2d1b4e; }
         .btn-p:hover { background: #f0b0c4; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(232,160,180,0.4); }
-        .btn-s { background: #2d1b4e; color: var(--text); }
-        .btn-s:hover { background: #3d2b5e; }
-        .btn-wa { background: #25D366; color: #fff; border: none; }
+        .btn-s { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); }
+        .btn-s:hover { background: rgba(255,255,255,0.12); }
+        .btn-wa { background: #25D366; color: #fff; }
         .btn-wa:hover { background: #1fb855; }
-        .btn-em { background: #EA4335; color: #fff; border: none; }
+        .btn-em { background: #EA4335; color: #fff; }
         .btn-em:hover { background: #d33a2d; }
-        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; }
-        .stat-l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; }
-        .card { background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.25s; }
+        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; color: var(--text); }
+        .stat-l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; color: var(--text-dim); }
+        .card { background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.25s; display: flex; flex-direction: column; }
         .card:hover { border-color: rgba(232,160,180,0.35); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 1.2rem; }
@@ -63,7 +65,7 @@
         .case-ind { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); font-weight: 500; margin-bottom: 0.8rem; }
         .case-num { font-size: 1.9rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.7rem; background: linear-gradient(135deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
         .case-txt { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
-        .case-roi { font-size: 0.72rem; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 1px; }
+        .case-roi { font-size: 0.72rem; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-top: auto; }
         .post { display: flex; flex-direction: column; }
         .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
         .post-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
@@ -73,15 +75,15 @@
         .tool-img { width: 100%; border-radius: 10px; margin-bottom: 1rem; object-fit: contain; max-height: 100px; }
         .tool-name { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
         .tool-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
-        .tool-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; }
+        .tool-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; margin-top: auto; }
         .tool-link:hover { text-decoration: underline; }
         .cta-block { text-align: center; padding: 4rem 2rem; max-width: 550px; margin: 0 auto 2rem; }
-        .cta-block h2 { font-size: 2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.8rem; }
+        .cta-block h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
         .cta-block p { color: var(--text-dim); font-weight: 300; margin-bottom: 2rem; }
         .cta-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
         .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
         .footer-socials { display: flex; gap: 1.2rem; justify-content: center; margin-bottom: 1rem; }
-        .footer-socials a { color: var(--text-dim); text-decoration: none; font-size: 1.2rem; transition: color 0.2s; }
+        .footer-socials a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
         .footer-socials a:hover { color: var(--accent); }
         @media (max-width: 768px) {
             .nav { padding-top: 0.3rem; }
@@ -92,6 +94,7 @@
             .hero-inner { padding: 2rem 1.5rem; }
             .hero h1 { font-size: 2rem; }
             .hero p { font-size: 0.9rem; }
+            .hero-stats { gap: 1.5rem; }
             .stat-n { font-size: 1.8rem; }
             .s { padding: 2.5rem 1.2rem; }
             .s + .s { padding-top: 1.5rem; }
@@ -99,27 +102,37 @@
             .grid-3, .grid-2 { grid-template-columns: 1fr; }
             .hero-cta, .cta-btns { flex-direction: column; align-items: center; }
             .case-num { font-size: 1.5rem; }
+            .btn { width: 100%; max-width: 200px; }
         }
     </style>
 </head>
 <body>
     <nav class="nav">
         <div class="nav-inner">
-            <a href="/" class="nav-logo">NeCL</a>
+            <a href="../" class="nav-logo">NeCL</a>
             <ul class="nav-menu">
                 <li><a href="#services">Услуги</a></li>
                 <li><a href="#cases">Кейсы</a></li>
                 <li><a href="../blog/">Блог</a></li>
-                <li><a href="../tools/">Инструменты</a></li>
+                <li><a href="../tools/">Тулзы</a></li>
                 <li><a href="#contact">Контакты</a></li>
             </ul>
             <div class="nav-lang">
-                <a href="../">EN</a>
-                <a href="#" class="active">RU</a>
+                <button class="nav-lang-btn" onclick="this.nextElementSibling.classList.toggle('open')">RU</button>
+                <div class="nav-lang-drop">
+                    <a href="../">English</a>
+                    <a href="#" class="active">Russian</a>
+                    <a href="#">Spanish</a>
+                    <a href="#">German</a>
+                    <a href="#">French</a>
+                    <a href="#">Portuguese</a>
+                    <a href="#">Chinese</a>
+                    <a href="#">Japanese</a>
+                    <a href="#">Korean</a>
+                    <a href="#">Arabic</a>
+                </div>
             </div>
-            <button class="nav-burger" onclick="document.getElementById('mob').classList.add('open')">
-                <span></span><span></span><span></span>
-            </button>
+            <button class="nav-burger" onclick="document.getElementById('mob').classList.add('open')"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
@@ -128,7 +141,7 @@
         <a href="#services" onclick="this.parentElement.classList.remove('open')">Услуги</a>
         <a href="#cases" onclick="this.parentElement.classList.remove('open')">Кейсы</a>
         <a href="../blog/">Блог</a>
-        <a href="../tools/">Инструменты</a>
+        <a href="../tools/">Тулзы</a>
         <a href="#contact" onclick="this.parentElement.classList.remove('open')">Контакты</a>
     </div>
 
@@ -153,33 +166,13 @@
             <p class="s-label">Услуги</p>
             <h2 class="s-title">Что мы делаем</h2>
             <div class="grid-3">
-                <div class="card" style="display:flex;flex-direction:column;">
-                    <h3 class="svc-t">Боты и ассистенты</h3>
-                    <p class="svc-d">Telegram, WhatsApp, веб. Поддержка, продажи, голос. От FAQ-бота до сложного AI-пайплайна.</p>
-                    <span class="svc-p">От $200</span>
-                </div>
-                <div class="card" style="display:flex;flex-direction:column;">
-                    <h3 class="svc-t">RAG и базы знаний</h3>
-                    <p class="svc-d">AI, который знает ваш бизнес. Документы, CRM, таблицы. Локальный деплой для конфиденциальных данных.</p>
-                    <span class="svc-p">От $500</span>
-                </div>
-                <div class="card" style="display:flex;flex-direction:column;">
-                    <h3 class="svc-t">Автоматизация контента</h3>
-                    <p class="svc-d">AI-посты, карусели, видео. Автопубликация на все платформы. Настроил и забыл.</p>
-                    <span class="svc-p">От $400</span>
-                </div>
+                <div class="card"><h3 class="svc-t">Боты и ассистенты</h3><p class="svc-d">Telegram, WhatsApp, веб. Поддержка, продажи, голос. От FAQ-бота до сложного AI-пайплайна.</p><span class="svc-p">От $200</span></div>
+                <div class="card"><h3 class="svc-t">RAG и базы знаний</h3><p class="svc-d">AI, который знает ваш бизнес. Документы, CRM, таблицы. Локальный деплой для конфиденциальных данных.</p><span class="svc-p">От $500</span></div>
+                <div class="card"><h3 class="svc-t">Автоматизация контента</h3><p class="svc-d">AI-посты, карусели, видео. Автопубликация на все платформы. Настроил и забыл.</p><span class="svc-p">От $400</span></div>
             </div>
             <div class="grid-2">
-                <div class="card" style="display:flex;flex-direction:column;">
-                    <h3 class="svc-t">AI-агенты</h3>
-                    <p class="svc-d">Автономные агенты, которые продают, квалифицируют лиды и генерируют КП 24/7.</p>
-                    <span class="svc-p">От $400</span>
-                </div>
-                <div class="card" style="display:flex;flex-direction:column;">
-                    <h3 class="svc-t">Кастомные пайплайны</h3>
-                    <p class="svc-d">Полный цикл. Python, FastAPI, LangGraph, Docker. Ваша идея — продакшн за 2 недели.</p>
-                    <span class="svc-p">$100/час</span>
-                </div>
+                <div class="card"><h3 class="svc-t">AI-агенты</h3><p class="svc-d">Автономные агенты, которые продают, квалифицируют лиды и генерируют КП 24/7.</p><span class="svc-p">От $400</span></div>
+                <div class="card"><h3 class="svc-t">Кастомные пайплайны</h3><p class="svc-d">Полный цикл. Python, FastAPI, LangGraph, Docker. Ваша идея — продакшн за 2 недели.</p><span class="svc-p">$100/час</span></div>
             </div>
         </section>
 
@@ -187,24 +180,9 @@
             <p class="s-label">Кейсы</p>
             <h2 class="s-title">Доказанные результаты</h2>
             <div class="grid-3">
-                <div class="card case">
-                    <p class="case-ind">Инвестиционный фонд</p>
-                    <h3 class="case-num">2 месяца &rarr; 20 мин</h3>
-                    <p class="case-txt">Пайплайн due diligence. AI парсит 500+ страниц отчётов, скорит стартапы, генерирует мемо. Локальный деплой — данные не уходят.</p>
-                    <span class="case-roi">Заменил команду из 3 аналитиков</span>
-                </div>
-                <div class="card case">
-                    <p class="case-ind">SaaS-стартап</p>
-                    <h3 class="case-num">MVP за 9 дней</h3>
-                    <p class="case-txt">Telegram-бот + веб-дашборд + Stripe + RAG база знаний. От идеи до первого платящего клиента за две недели.</p>
-                    <span class="case-roi">$2K MRR в первый месяц</span>
-                </div>
-                <div class="card case">
-                    <p class="case-ind">Медиа &middot; 2.6M юзеров</p>
-                    <h3 class="case-num">5 ботов, 1 экосистема</h3>
-                    <p class="case-txt">Антиспам, розыгрыши, аналитика, платежи, модерация. Полная бот-инфраструктура 24/7.</p>
-                    <span class="case-roi">50K+ сообщений/день</span>
-                </div>
+                <div class="card case"><p class="case-ind">Инвестиционный фонд</p><h3 class="case-num">2 месяца &rarr; 20 мин</h3><p class="case-txt">Пайплайн due diligence. AI парсит 500+ страниц, скорит стартапы, генерирует мемо. Локальный деплой — данные не уходят.</p><span class="case-roi">Заменил команду из 3 аналитиков</span></div>
+                <div class="card case"><p class="case-ind">SaaS-стартап</p><h3 class="case-num">MVP за 9 дней</h3><p class="case-txt">Telegram-бот + веб-дашборд + Stripe + RAG база знаний. От идеи до первого платящего клиента за две недели.</p><span class="case-roi">$2K MRR в первый месяц</span></div>
+                <div class="card case"><p class="case-ind">Медиа &mdash; 2.6M юзеров</p><h3 class="case-num">5 ботов &mdash; 1 экосистема</h3><p class="case-txt">Антиспам, розыгрыши, аналитика, платежи, модерация. Полная бот-инфраструктура 24/7.</p><span class="case-roi">50K+ сообщений/день</span></div>
             </div>
         </section>
 
@@ -212,24 +190,9 @@
             <p class="s-label">Блог</p>
             <h2 class="s-title">Последнее</h2>
             <div class="grid-3">
-                <div class="card post">
-                    <span class="post-tag">Инженерия</span>
-                    <h3 class="post-title">Хватит использовать GPT-4 для всего</h3>
-                    <p class="post-desc">Как семантический роутинг снижает счёт за OpenAI на 60% без потери качества.</p>
-                    <a href="../blog/stop-using-gpt4-for-everything" class="post-link">Читать &rarr;</a>
-                </div>
-                <div class="card post">
-                    <span class="post-tag">Кейс</span>
-                    <h3 class="post-title">Как мы сэкономили фонду 2 месяца работы</h3>
-                    <p class="post-desc">PDF-парсинг, векторный поиск, LLM-скоринг — полный пайплайн due diligence.</p>
-                    <a href="../blog/fund-due-diligence-case" class="post-link">Читать &rarr;</a>
-                </div>
-                <div class="card post">
-                    <span class="post-tag">Мнение</span>
-                    <h3 class="post-title">No-code — это круто, пока не сломается</h3>
-                    <p class="post-desc">Когда Zapier и n8n перестают работать и нужна настоящая разработка.</p>
-                    <a href="../blog/no-code-trap" class="post-link">Читать &rarr;</a>
-                </div>
+                <div class="card post"><span class="post-tag">Инженерия</span><h3 class="post-title">Хватит использовать GPT-4 для всего</h3><p class="post-desc">Как семантический роутинг снижает счёт за OpenAI на 60% без потери качества.</p><a href="../blog/stop-using-gpt4-for-everything" class="post-link">Читать &rarr;</a></div>
+                <div class="card post"><span class="post-tag">Кейс</span><h3 class="post-title">Как мы сэкономили фонду 2 месяца работы</h3><p class="post-desc">PDF-парсинг, векторный поиск, LLM-скоринг — полный пайплайн due diligence.</p><a href="../blog/fund-due-diligence-case" class="post-link">Читать &rarr;</a></div>
+                <div class="card post"><span class="post-tag">Мнение</span><h3 class="post-title">No-code — это круто, пока не сломается</h3><p class="post-desc">Когда Zapier и n8n перестают работать и нужна настоящая разработка.</p><a href="../blog/no-code-trap" class="post-link">Читать &rarr;</a></div>
             </div>
         </section>
 
@@ -237,16 +200,16 @@
             <p class="s-label">Попробуйте</p>
             <h2 class="s-title">Наши продукты</h2>
             <div class="grid-2">
-                <a href="https://t.me/ai_slowpoke_bot" target="_blank" rel="noopener noreferrer" class="card" style="display:flex;flex-direction:column;text-decoration:none;color:var(--text);">
+                <a href="https://t.me/ai_slowpoke_bot" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);">
                     <img src="../assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="tool-img">
                     <h3 class="tool-name">Slowpoke Bot</h3>
-                    <p class="tool-desc">Мульти-AI ассистент в Telegram. Роутинг GPT + Gemini, крипто-платежи, 600+ активных юзеров.</p>
+                    <p class="tool-desc">AI-ассистент в Telegram. Работает с документами, фото, голосом. Крипто-платежи, 600+ юзеров.</p>
                     <span class="tool-link">Попробовать в Telegram &rarr;</span>
                 </a>
-                <a href="https://resumequick.app/en" target="_blank" rel="noopener noreferrer" class="card" style="display:flex;flex-direction:column;text-decoration:none;color:var(--text);">
+                <a href="https://resumequick.app/en" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);">
                     <img src="../assets/images/cv_logo.webp" alt="ResumeQuick" class="tool-img">
                     <h3 class="tool-name">ResumeQuick</h3>
-                    <p class="tool-desc">AI-конструктор резюме. Опишите себя — получите готовое CV за 2 минуты. Подготовка к интервью, анализ вакансий. 2,000+ юзеров.</p>
+                    <p class="tool-desc">AI-конструктор резюме. Опишите себя — получите CV за 2 минуты. Подготовка к интервью, анализ вакансий. 2,000+ юзеров.</p>
                     <span class="tool-link">Создать резюме &rarr;</span>
                 </a>
             </div>
@@ -274,5 +237,13 @@
         </div>
         <p>&copy; 2025-2026 NeCL – Neural Engineering &amp; Cognitive Logic.</p>
     </footer>
+
+    <script>
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.nav-lang')) {
+                document.querySelectorAll('.nav-lang-drop').forEach(d => d.classList.remove('open'));
+            }
+        });
+    </script>
 </body>
 </html>
