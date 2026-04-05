@@ -58,8 +58,8 @@
         .nav-menu { display: flex; gap: 2rem; list-style: none; }
         .nav-menu a { color: var(--text-dim); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
         .nav-menu a:hover { color: var(--text); }
-        .nav-cta { padding: 0.5rem 1.2rem; background: var(--accent); color: #1a1a2e; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
-        .nav-cta:hover { background: #d48a9e; }
+        .nav-cta { padding: 0.5rem 1.2rem; background: var(--accent); color: #fff; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .nav-cta:hover { background: #8555c4; }
 
         /* HAMBURGER */
         .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 0.3rem; }
@@ -90,14 +90,14 @@
 
         /* BTNS */
         .btn { padding: 0.85rem 1.8rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; display: inline-block; text-align: center; }
-        .btn-p { background: var(--accent); color: #1a1a2e; }
-        .btn-p:hover { background: #d48a9e; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(232,160,180,0.4); }
+        .btn-p { background: var(--accent); color: #fff; }
+        .btn-p:hover { background: #8555c4; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(155,109,215,0.4); }
         .btn-s { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
         .btn-s:hover { background: #f9fafb; border-color: #d1d5db; }
 
         /* CARDS */
         .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.2s; display: flex; flex-direction: column; }
-        .card:hover { border-color: #e8a0b4; box-shadow: 0 4px 20px rgba(232,160,180,0.15); }
+        .card:hover { border-color: var(--accent); box-shadow: 0 4px 20px rgba(155,109,215,0.15); }
 
         /* GRIDS */
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
@@ -141,11 +141,11 @@
         .faq-a p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
 
         /* CTA SECTION */
-        .cta-section { background: var(--accent); border-radius: 16px; padding: 4rem 3rem; text-align: center; color: #1a1a2e; max-width: 900px; margin: 0 auto 4rem; }
+        .cta-section { background: var(--accent); border-radius: 16px; padding: 4rem 3rem; text-align: center; color: #fff; max-width: 900px; margin: 0 auto 4rem; }
         .cta-section h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
-        .cta-section p { opacity: 0.75; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
-        .cta-section .btn { background: #1a1a2e; color: #fff; font-weight: 700; }
-        .cta-section .btn:hover { background: #2d2d4e; }
+        .cta-section p { opacity: 0.85; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-section .btn { background: #fff; color: var(--accent); font-weight: 700; }
+        .cta-section .btn:hover { background: #f3edfc; }
 
         /* FOOTER */
         .footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.75rem; color: var(--text-dim); }
@@ -154,8 +154,8 @@
         .footer-socials a:hover { color: var(--accent); }
 
         /* FLOATING */
-        .float-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 90; padding: 0.8rem 1.5rem; background: var(--accent); color: #1a1a2e; text-decoration: none; border-radius: 50px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 20px rgba(232,160,180,0.4); transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
-        .float-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(232,160,180,0.5); }
+        .float-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 90; padding: 0.8rem 1.5rem; background: var(--accent); color: #fff; text-decoration: none; border-radius: 50px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 20px rgba(155,109,215,0.4); transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .float-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(155,109,215,0.5); }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
@@ -405,7 +405,7 @@
                 <p>Book a free 15-minute discovery call. We'll identify the highest-ROI automation for your business.</p>
                 <a href="https://calendly.com" class="btn" target="_blank" rel="noopener noreferrer">Book a Call &rarr;</a>
                 <br><br>
-                <a href="mailto:neclcompany@gmail.com" style="color:#1a1a2e;opacity:0.6;font-size:0.85rem;text-decoration:underline;">or email us: neclcompany@gmail.com</a>
+                <a href="mailto:neclcompany@gmail.com" style="color:#fff;opacity:0.7;font-size:0.85rem;text-decoration:underline;">or email us: neclcompany@gmail.com</a>
             </div>
         </section>
     </main>
