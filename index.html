@@ -3,28 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NeCL | AI Bots, Agents & Pipelines for Business</title>
-    <meta name="description" content="We build AI pipelines, Telegram bots, RAG systems, and autonomous agents. Deployed in weeks. Real ROI from day one.">
-    <meta name="keywords" content="AI development, chatbot developer, RAG system, AI agents, Telegram bot, voice agent, LLM integration, AI automation, custom AI pipeline, AI consulting">
+    <title>NeCL | AI Development Studio — Bots, Agents & RAG Systems</title>
+    <meta name="description" content="We build production-grade AI systems: Telegram bots, autonomous agents, RAG pipelines. From idea to deployment in 2 weeks. 12,000+ users served.">
+    <meta name="keywords" content="AI development, chatbot developer, RAG system, AI agents, Telegram bot, voice agent, LLM integration, AI automation, custom AI pipeline">
     <meta name="author" content="NeCL">
     <link rel="canonical" href="https://neclco.com/">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://neclco.com/">
-    <meta property="og:title" content="NeCL | AI Bots, Agents & Pipelines for Business">
-    <meta property="og:description" content="We build AI that makes you money. Bots, agents, RAG systems, content pipelines. From idea to production in 2 weeks.">
+    <meta property="og:title" content="NeCL | AI Development Studio">
+    <meta property="og:description" content="Production-grade AI bots, agents, and RAG systems. From idea to deployment in 2 weeks.">
     <meta property="og:image" content="https://neclco.com/assets/images/og-image.png">
-    <meta property="og:site_name" content="NeCL">
-
-    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@neclcompany">
-    <meta name="twitter:title" content="NeCL | AI Bots, Agents & Pipelines for Business">
-    <meta name="twitter:description" content="We build AI that makes you money. Bots, agents, RAG systems, content pipelines. From idea to production in 2 weeks.">
-    <meta name="twitter:image" content="https://neclco.com/assets/images/og-image.png">
+    <meta name="twitter:site" content="@CypressTavr">
 
-    <!-- Structured Data -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -34,14 +26,9 @@
         "url": "https://neclco.com",
         "description": "AI engineering studio building bots, agents, RAG systems, and automation pipelines for business.",
         "email": "neclcompany@gmail.com",
-        "sameAs": [
-            "https://t.me/necl_company",
-            "https://x.com/CypressTavr",
-            "https://www.linkedin.com/company/107986921",
-            "https://github.com/adjacentai"
-        ],
-        "serviceType": ["AI Development", "Chatbot Development", "RAG Systems", "AI Agents", "Voice AI", "Custom AI Pipelines"],
-        "areaServed": ["US", "EU", "KZ", "Worldwide"],
+        "sameAs": ["https://t.me/necl_company","https://x.com/CypressTavr","https://www.linkedin.com/company/107986921"],
+        "serviceType": ["AI Development","Chatbot Development","RAG Systems","AI Agents","Voice AI"],
+        "areaServed": "Worldwide",
         "priceRange": "$$"
     }
     </script>
@@ -50,139 +37,141 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        :root { --accent: #e8a0b4; --text: #f0f0f5; --text-dim: rgba(255,255,255,0.55); --dark: rgba(10,10,30,0.45); --border: rgba(255,255,255,0.1); --green: #34d399; --r: 14px; }
-        body { font-family: 'Inter', -apple-system, sans-serif; background: #2d1b4e; color: var(--text); line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+        :root {
+            --bg: #fafafa;
+            --surface: #ffffff;
+            --text: #1a1a2e;
+            --text-dim: #6b7280;
+            --accent: #4f46e5;
+            --accent-light: #eef2ff;
+            --border: #e5e7eb;
+            --green: #059669;
+            --r: 12px;
+        }
+
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
         /* NAV */
-        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: center; padding-top: 0.5rem; pointer-events: none; }
-        .nav-inner { display: flex; align-items: center; gap: 1.8rem; padding: 0.35rem 1.4rem; background: var(--dark); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 10px; pointer-events: auto; }
-        .nav-logo { font-size: 1.3rem; font-weight: 800; color: var(--accent); text-decoration: none; }
-        .nav-menu { display: flex; gap: 1.3rem; list-style: none; }
-        .nav-menu a { color: var(--accent); text-decoration: none; font-size: 0.88rem; font-weight: 500; opacity: 0.7; transition: opacity 0.2s; }
-        .nav-menu a:hover { opacity: 1; }
-
-        /* LANG DROPDOWN */
-        .nav-lang { position: relative; }
-        .nav-lang-btn { padding: 0.3rem 0.6rem; background: var(--accent); border: none; border-radius: 6px; color: #2d1b4e; font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit; }
-        .nav-lang-drop { display: none; position: absolute; top: 110%; right: 0; background: rgba(20,10,40,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); border-radius: 8px; padding: 0.4rem 0; min-width: 140px; z-index: 300; }
-        .nav-lang-drop.open { display: block; }
-        .nav-lang-drop a { display: block; padding: 0.4rem 1rem; color: var(--text-dim); text-decoration: none; font-size: 0.8rem; transition: background 0.15s; }
-        .nav-lang-drop a:hover { background: rgba(255,255,255,0.08); color: var(--text); }
-        .nav-lang-drop a.active { color: var(--accent); font-weight: 600; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-menu { display: flex; gap: 2rem; list-style: none; }
+        .nav-menu a { color: var(--text-dim); text-decoration: none; font-size: 0.88rem; font-weight: 500; transition: color 0.2s; }
+        .nav-menu a:hover { color: var(--text); }
+        .nav-cta { padding: 0.5rem 1.2rem; background: var(--accent); color: #fff; text-decoration: none; border-radius: 8px; font-size: 0.85rem; font-weight: 600; transition: all 0.2s; }
+        .nav-cta:hover { background: #4338ca; }
 
         /* HAMBURGER */
         .nav-burger { display: none; background: none; border: none; cursor: pointer; padding: 0.3rem; }
-        .nav-burger span { display: block; width: 20px; height: 2px; background: var(--accent); margin: 4px 0; border-radius: 2px; }
-        .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(5,5,20,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+        .nav-burger span { display: block; width: 20px; height: 2px; background: var(--text); margin: 4px 0; border-radius: 2px; }
+        .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.98); z-index: 200; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
         .nav-mobile.open { display: flex; }
-        .nav-mobile a { color: var(--text); text-decoration: none; font-size: 1.3rem; font-weight: 600; }
+        .nav-mobile a { color: var(--text); text-decoration: none; font-size: 1.2rem; font-weight: 600; }
         .nav-mobile a:hover { color: var(--accent); }
         .nav-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--text); font-size: 1.8rem; cursor: pointer; }
 
-        /* LAYOUT */
-        main { flex: 1; }
-        .s { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
-        .s + .s { padding-top: 2rem; }
-        .s-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 600; margin-bottom: 0.6rem; }
-        .s-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 1.5rem; }
+        /* SECTIONS */
+        .s { padding: 5rem 2rem; max-width: 1100px; margin: 0 auto; }
+        .s-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
+        .s-title { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.6rem; }
+        .s-sub { font-size: 1rem; color: var(--text-dim); max-width: 600px; margin-bottom: 2.5rem; }
 
         /* HERO */
-        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 3rem; }
-        .hero-inner { max-width: 680px; background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: 20px; padding: 3rem 3.5rem; }
-        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.05; letter-spacing: -2px; margin-bottom: 1rem; color: var(--text); }
-        .hero p { font-size: 1rem; color: var(--text-dim); font-weight: 400; line-height: 1.7; margin-bottom: 1.5rem; }
-        .hero-stats { display: flex; gap: 2.5rem; justify-content: center; margin-bottom: 1.5rem; }
-        .hero-cta { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+        .hero { padding: 8rem 2rem 5rem; max-width: 1100px; margin: 0 auto; }
+        .hero-badge { display: inline-block; padding: 0.3rem 0.8rem; background: var(--accent-light); color: var(--accent); font-size: 0.75rem; font-weight: 600; border-radius: 20px; margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 3.2rem; font-weight: 800; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 1.2rem; max-width: 700px; }
+        .hero h1 span { color: var(--accent); }
+        .hero p { font-size: 1.1rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 2rem; max-width: 550px; }
+        .hero-cta { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 3rem; }
+        .hero-stats { display: flex; gap: 3rem; }
+        .hero-stats div { text-align: left; }
+        .stat-n { font-size: 2rem; font-weight: 800; color: var(--text); display: block; }
+        .stat-l { font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 1px; }
 
         /* BTNS */
-        .btn { padding: 0.85rem 2rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.88rem; cursor: pointer; transition: all 0.2s; display: inline-block; min-width: 140px; text-align: center; }
-        .btn-p { background: var(--accent); color: #2d1b4e; }
-        .btn-p:hover { background: #f0b0c4; transform: translateY(-1px); box-shadow: 0 6px 24px rgba(232,160,180,0.4); }
-        .btn-s { background: rgba(255,255,255,0.08); color: var(--text); border: 1px solid var(--border); }
-        .btn-s:hover { background: rgba(255,255,255,0.12); }
-        .btn-wa { background: #25D366; color: #fff; }
-        .btn-wa:hover { background: #1fb855; }
-        .btn-em { background: #EA4335; color: #fff; }
-        .btn-em:hover { background: #d33a2d; }
+        .btn { padding: 0.85rem 1.8rem; border: none; border-radius: 10px; font-weight: 600; text-decoration: none; font-size: 0.9rem; cursor: pointer; transition: all 0.2s; display: inline-block; text-align: center; }
+        .btn-p { background: var(--accent); color: #fff; }
+        .btn-p:hover { background: #4338ca; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(79,70,229,0.3); }
+        .btn-s { background: var(--surface); color: var(--text); border: 1px solid var(--border); }
+        .btn-s:hover { background: #f9fafb; border-color: #d1d5db; }
 
-        /* STATS */
-        .stat-n { font-size: 2.4rem; font-weight: 800; display: block; letter-spacing: -1px; color: var(--accent); }
-        .stat-l { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; color: var(--text-dim); }
-
-        /* CARD */
-        .card { background: var(--dark); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.25s; display: flex; flex-direction: column; }
-        .card:hover { border-color: rgba(232,160,180,0.35); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.25); }
+        /* CARDS */
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.2s; display: flex; flex-direction: column; }
+        .card:hover { border-color: #c7d2fe; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
 
         /* GRIDS */
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 1.2rem; }
-        .svc-t { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
-        .svc-d { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
-        .svc-p { font-size: 0.82rem; font-weight: 600; color: var(--accent); margin-top: auto; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+        .svc-t { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .svc-d { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
+        .svc-p { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-top: auto; }
 
         /* CASES */
-        .case::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--green)); border-radius: var(--r) var(--r) 0 0; }
-        .case { position: relative; overflow: hidden; }
-        .case-ind { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); font-weight: 500; margin-bottom: 0.8rem; }
-        .case-num { font-size: 1.9rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 0.7rem; background: linear-gradient(135deg, var(--text), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .case-txt { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
-        .case-roi { font-size: 0.72rem; font-weight: 600; color: var(--green); text-transform: uppercase; letter-spacing: 1px; margin-top: auto; }
+        .case-ind { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-dim); font-weight: 500; margin-bottom: 0.6rem; }
+        .case-num { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.6rem; color: var(--accent); }
+        .case-txt { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
+        .case-roi { font-size: 0.75rem; font-weight: 600; color: var(--green); margin-top: auto; }
 
-        /* BLOG */
-        .post { display: flex; flex-direction: column; }
-        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); font-weight: 600; margin-bottom: 0.5rem; }
-        .post-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; }
-        .post-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
-        .post-link { font-size: 0.8rem; color: var(--accent); text-decoration: none; font-weight: 600; margin-top: auto; }
-        .post-link:hover { text-decoration: underline; }
+        /* HOW WE WORK */
+        .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+        .step-num { font-size: 2rem; font-weight: 800; color: var(--accent); opacity: 0.3; margin-bottom: 0.5rem; }
+        .step-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.3rem; }
+        .step-desc { font-size: 0.82rem; color: var(--text-dim); line-height: 1.6; }
 
-        /* FLOATING TG */
-        .float-tg { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 90; width: 56px; height: 56px; background: #2AABEE; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(42,171,238,0.4); transition: transform 0.2s; animation: float-bob 3s ease-in-out infinite; }
-        .float-tg:hover { transform: scale(1.1); }
-        @keyframes float-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        /* TESTIMONIALS */
+        .testimonial { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 2rem; }
+        .testimonial-text { font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.2rem; font-style: italic; color: var(--text); }
+        .testimonial-author { display: flex; align-items: center; gap: 0.8rem; }
+        .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--accent-light); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent); font-size: 0.85rem; }
+        .testimonial-name { font-size: 0.85rem; font-weight: 600; }
+        .testimonial-role { font-size: 0.75rem; color: var(--text-dim); }
+
+        /* PRODUCTS */
+        .product-img { width: 100%; border-radius: 10px; margin-bottom: 1rem; object-fit: contain; max-height: 80px; }
 
         /* FAQ */
-        .faq-list { max-width: 700px; margin: 0 auto; }
+        .faq-list { max-width: 700px; }
         .faq-item { border-bottom: 1px solid var(--border); }
-        .faq-q { width: 100%; background: none; border: none; color: var(--text); font-family: inherit; font-size: 1rem; font-weight: 600; text-align: left; padding: 1.2rem 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+        .faq-q { width: 100%; background: none; border: none; color: var(--text); font-family: inherit; font-size: 0.95rem; font-weight: 600; text-align: left; padding: 1.2rem 0; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .faq-q:hover { color: var(--accent); }
         .faq-arrow { font-size: 1.2rem; transition: transform 0.3s; color: var(--text-dim); }
         .faq-item.open .faq-arrow { transform: rotate(45deg); }
-        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease; }
+        .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
         .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.2rem; }
         .faq-a p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
 
-        /* CTA */
-        .cta-block { text-align: center; padding: 4rem 2rem; max-width: 550px; margin: 0 auto 2rem; }
-        .cta-block h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
-        .cta-block p { color: var(--text-dim); font-weight: 300; margin-bottom: 2rem; }
-        .cta-btns { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+        /* CTA SECTION */
+        .cta-section { background: var(--accent); border-radius: 16px; padding: 4rem 3rem; text-align: center; color: #fff; max-width: 900px; margin: 0 auto 4rem; }
+        .cta-section h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.8rem; }
+        .cta-section p { opacity: 0.85; margin-bottom: 2rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+        .cta-section .btn { background: #fff; color: var(--accent); font-weight: 700; }
+        .cta-section .btn:hover { background: #f0f0f5; }
 
         /* FOOTER */
-        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
-        .footer-socials { display: flex; gap: 1.2rem; justify-content: center; margin-bottom: 1rem; }
-        .footer-socials a { color: var(--text-dim); text-decoration: none; transition: color 0.2s; }
+        .footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.75rem; color: var(--text-dim); }
+        .footer-socials { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; }
+        .footer-socials a { color: var(--text-dim); transition: color 0.2s; }
         .footer-socials a:hover { color: var(--accent); }
+
+        /* FLOATING */
+        .float-btn { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 90; padding: 0.8rem 1.5rem; background: var(--accent); color: #fff; text-decoration: none; border-radius: 50px; font-size: 0.85rem; font-weight: 600; box-shadow: 0 4px 20px rgba(79,70,229,0.3); transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+        .float-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(79,70,229,0.4); }
 
         /* RESPONSIVE */
         @media (max-width: 768px) {
-            .nav { padding-top: 0.3rem; }
-            .nav-inner { gap: 1rem; padding: 0.35rem 1rem; }
             .nav-menu { display: none; }
+            .nav-cta { display: none; }
             .nav-burger { display: block; }
-            .hero { min-height: 100vh; padding: 4rem 1rem 2rem; }
-            .hero-inner { padding: 2rem 1.5rem; }
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 0.9rem; }
-            .hero-stats { gap: 1.5rem; }
-            .stat-n { font-size: 1.8rem; }
-            .s { padding: 2.5rem 1.2rem; }
-            .s + .s { padding-top: 1.5rem; }
+            .hero { padding: 6rem 1.5rem 3rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .hero p { font-size: 1rem; }
+            .hero-stats { gap: 2rem; }
+            .stat-n { font-size: 1.6rem; }
+            .s { padding: 3rem 1.5rem; }
             .s-title { font-size: 1.7rem; }
-            .grid-3, .grid-2 { grid-template-columns: 1fr; }
-            .hero-cta, .cta-btns { flex-direction: column; align-items: center; }
-            .case-num { font-size: 1.5rem; }
-            .btn { width: 100%; max-width: 200px; }
+            .grid-3, .grid-2, .steps { grid-template-columns: 1fr; }
+            .hero-cta { flex-direction: column; align-items: flex-start; }
+            .cta-section { padding: 3rem 1.5rem; margin: 0 1rem 3rem; }
         }
     </style>
 </head>
@@ -192,106 +181,185 @@
             <a href="/" class="nav-logo">NeCL</a>
             <ul class="nav-menu">
                 <li><a href="#services">Services</a></li>
-                <li><a href="#cases">Cases</a></li>
-                <li><a href="blog/">Blog</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#cases">Results</a></li>
+                <li><a href="#process">Process</a></li>
+                <li><a href="#faq">FAQ</a></li>
             </ul>
-            <div class="nav-lang">
-                <button class="nav-lang-btn" onclick="this.nextElementSibling.classList.toggle('open')">EN</button>
-                <div class="nav-lang-drop">
-                    <a href="#" class="active">English</a>
-                    <a href="#">Russian</a>
-                    <a href="#">Spanish</a>
-                    <a href="#">German</a>
-                    <a href="#">French</a>
-                    <a href="#">Portuguese</a>
-                    <a href="#">Chinese</a>
-                    <a href="#">Japanese</a>
-                    <a href="#">Korean</a>
-                    <a href="#">Arabic</a>
-                </div>
-            </div>
-            <button class="nav-burger" onclick="document.getElementById('mob').classList.add('open')">
-                <span></span><span></span><span></span>
-            </button>
+            <a href="https://calendly.com" class="nav-cta" target="_blank" rel="noopener noreferrer">Book a Call</a>
+            <button class="nav-burger" onclick="document.getElementById('mob').classList.add('open')"><span></span><span></span><span></span></button>
         </div>
     </nav>
 
     <div id="mob" class="nav-mobile">
         <button class="nav-close" onclick="this.parentElement.classList.remove('open')">&times;</button>
         <a href="#services" onclick="this.parentElement.classList.remove('open')">Services</a>
-        <a href="#cases" onclick="this.parentElement.classList.remove('open')">Cases</a>
-        <a href="blog/">Blog</a>
-        <a href="#contact" onclick="this.parentElement.classList.remove('open')">Contact</a>
+        <a href="#cases" onclick="this.parentElement.classList.remove('open')">Results</a>
+        <a href="#process" onclick="this.parentElement.classList.remove('open')">Process</a>
+        <a href="#faq" onclick="this.parentElement.classList.remove('open')">FAQ</a>
+        <a href="https://calendly.com" target="_blank" rel="noopener noreferrer">Book a Call</a>
     </div>
 
     <main>
+        <!-- HERO -->
         <section class="hero">
-            <div class="hero-inner">
-                <h1>We build AI that makes you money</h1>
-                <p>Bots, agents, RAG systems, content pipelines. From idea to production in 2 weeks. No bullshit, no wrappers — real engineering.</p>
-                <div class="hero-stats">
-                    <div><span class="stat-n">12,000+</span><span class="stat-l">Users</span></div>
-                    <div><span class="stat-n">70+</span><span class="stat-l">Products</span></div>
-                    <div><span class="stat-n">2 wk</span><span class="stat-l">To MVP</span></div>
-                </div>
-                <div class="hero-cta">
-                    <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Talk to us</a>
-                    <a href="#cases" class="btn btn-s">See results</a>
-                </div>
+            <span class="hero-badge">AI Engineering Studio</span>
+            <h1>Your AI team — without hiring <span>an AI team</span></h1>
+            <p>We build production-grade bots, agents, and RAG systems that automate your workflows and pay for themselves in weeks.</p>
+            <div class="hero-cta">
+                <a href="https://calendly.com" class="btn btn-p" target="_blank" rel="noopener noreferrer">Book a Discovery Call</a>
+                <a href="#cases" class="btn btn-s">See Results</a>
+            </div>
+            <div class="hero-stats">
+                <div><span class="stat-n">12,000+</span><span class="stat-l">Users Served</span></div>
+                <div><span class="stat-n">70+</span><span class="stat-l">Projects Shipped</span></div>
+                <div><span class="stat-n">2 weeks</span><span class="stat-l">Avg. Time to MVP</span></div>
             </div>
         </section>
 
+        <!-- SERVICES -->
         <section id="services" class="s">
             <p class="s-label">Services</p>
             <h2 class="s-title">What we build</h2>
+            <p class="s-sub">Production-grade AI systems — not prototypes, not wrappers. Deployed on your infrastructure or ours.</p>
+
             <div class="grid-3">
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">Bots & Assistants</h3><p class="svc-d">Telegram, WhatsApp, web. Support, sales, voice. From FAQ bot to full AI pipeline.</p><span class="svc-p">From $800</span></div>
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">RAG & Knowledge</h3><p class="svc-d">AI that knows your business. Docs, CRM, Sheets. On-premise for sensitive data.</p><span class="svc-p">From $800</span></div>
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">Content & Video</h3><p class="svc-d">AI posts, carousels, video generation. Auto-publish across platforms. Schedule and forget.</p><span class="svc-p">From $1,500</span></div>
+                <div class="card">
+                    <h3 class="svc-t">Bots & Voice Assistants</h3>
+                    <p class="svc-d">Telegram, WhatsApp, web. Customer support, sales automation, voice interfaces. 24/7 without hiring.</p>
+                    <span class="svc-p">Saves $3-8K/mo in support costs</span>
+                </div>
+                <div class="card">
+                    <h3 class="svc-t">RAG & Knowledge Systems</h3>
+                    <p class="svc-d">AI that actually knows your business. Connects to docs, CRM, databases. On-premise option for sensitive data.</p>
+                    <span class="svc-p">Replaces 40+ hrs/week of manual work</span>
+                </div>
+                <div class="card">
+                    <h3 class="svc-t">Content & Video Automation</h3>
+                    <p class="svc-d">AI-generated posts, carousels, short-form video. Auto-publishing across platforms with brand voice control.</p>
+                    <span class="svc-p">10x content output, same team</span>
+                </div>
             </div>
-            <div class="grid-2">
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">AI Agents</h3><p class="svc-d">Autonomous agents that sell, qualify leads, and generate proposals 24/7.</p><span class="svc-p">From $1,200</span></div>
-                <div class="card" style="display:flex;flex-direction:column;"><h3 class="svc-t">Custom Pipelines</h3><p class="svc-d">End-to-end. Python, FastAPI, LangGraph, Docker. Your idea — production in 2 weeks.</p><span class="svc-p">$100/hour</span></div>
+            <div class="grid-2" style="margin-top:1.2rem;">
+                <div class="card">
+                    <h3 class="svc-t">Autonomous AI Agents</h3>
+                    <p class="svc-d">Agents that qualify leads, generate proposals, and manage outreach. Operate 24/7 with human-in-the-loop oversight.</p>
+                    <span class="svc-p">Closes deals while you sleep</span>
+                </div>
+                <div class="card">
+                    <h3 class="svc-t">Custom AI Pipelines</h3>
+                    <p class="svc-d">End-to-end development. Python, FastAPI, LangGraph, Docker. Your idea — production-ready in 2 weeks.</p>
+                    <span class="svc-p">From $100/hour</span>
+                </div>
             </div>
         </section>
 
+        <!-- CASES -->
         <section id="cases" class="s">
-            <p class="s-label">Case Studies</p>
-            <h2 class="s-title">Proven results</h2>
+            <p class="s-label">Results</p>
+            <h2 class="s-title">What our clients achieved</h2>
+            <p class="s-sub">Real projects, real numbers. Every system we build is measured by business impact.</p>
+
             <div class="grid-3">
-                <div class="card case"><p class="case-ind">Investment Fund</p><h3 class="case-num">2 months &rarr; 20 min</h3><p class="case-txt">Due diligence pipeline. AI parses 500+ page reports, scores startups, generates memos. On-premise — zero data leaks.</p><span class="case-roi">Replaced 3-person team</span></div>
-                <div class="card case"><p class="case-ind">SaaS Startup</p><h3 class="case-num">MVP in 9 days</h3><p class="case-txt">Telegram bot + web dashboard + Stripe + RAG knowledge base. Idea to first paying customer in under two weeks.</p><span class="case-roi">$2K MRR month one</span></div>
-                <div class="card case"><p class="case-ind">Media &mdash; 2.6M users</p><h3 class="case-num">5 agents &mdash; 1 ecosystem</h3><p class="case-txt">Anti-spam, giveaways, analytics, payments, moderation. Full bot infrastructure running 24/7.</p><span class="case-roi">50K+ messages/day</span></div>
+                <div class="card">
+                    <p class="case-ind">Investment Fund</p>
+                    <h3 class="case-num">2 months &rarr; 20 min</h3>
+                    <p class="case-txt">Due diligence pipeline. AI parses 500+ page reports, scores startups by 40 criteria. Deployed on-premise — zero data exposure.</p>
+                    <span class="case-roi">Replaced a 3-person analyst team</span>
+                </div>
+                <div class="card">
+                    <p class="case-ind">SaaS Startup</p>
+                    <h3 class="case-num">Idea to revenue in 9 days</h3>
+                    <p class="case-txt">Full product: Telegram bot + web dashboard + Stripe billing + RAG knowledge base. First paying customer in under 2 weeks.</p>
+                    <span class="case-roi">$2K MRR in month one</span>
+                </div>
+                <div class="card">
+                    <p class="case-ind">Media Company &mdash; 2.6M users</p>
+                    <h3 class="case-num">5 agents, 1 ecosystem</h3>
+                    <p class="case-txt">Anti-spam, giveaway engine, analytics, payments, moderation. Full bot infrastructure handling 50K+ messages daily.</p>
+                    <span class="case-roi">Running 24/7 for 18+ months</span>
+                </div>
             </div>
         </section>
 
+        <!-- TESTIMONIALS -->
         <section class="s">
-            <p class="s-label">Blog</p>
-            <h2 class="s-title">Latest</h2>
+            <p class="s-label">Testimonials</p>
+            <h2 class="s-title">What clients say</h2>
+            <p class="s-sub"></p>
+
             <div class="grid-3">
-                <div class="card post"><span class="post-tag">Engineering</span><h3 class="post-title">Stop using GPT-4 for everything</h3><p class="post-desc">How semantic routing cuts your OpenAI bill by 60% without losing quality.</p><a href="blog/stop-using-gpt4-for-everything" class="post-link">Read &rarr;</a></div>
-                <div class="card post"><span class="post-tag">Case Study</span><h3 class="post-title">How we saved a fund 2 months of work</h3><p class="post-desc">PDF parsing, vector search, LLM scoring — the full due diligence pipeline.</p><a href="blog/fund-due-diligence-case" class="post-link">Read &rarr;</a></div>
-                <div class="card post"><span class="post-tag">Opinion</span><h3 class="post-title">No-code is great until it isn't</h3><p class="post-desc">When Zapier and n8n stop working and you need real engineering.</p><a href="blog/no-code-trap" class="post-link">Read &rarr;</a></div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"They shipped our RAG system in 10 days. Our analysts were spending 2 months on reports that now take 20 minutes. The ROI was immediate."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">AK</div>
+                        <div><p class="testimonial-name">Alex K.</p><p class="testimonial-role">Managing Partner, Investment Fund</p></div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"We went from idea to paying customers in under 2 weeks. The bot, dashboard, payments — everything just worked from day one."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">DM</div>
+                        <div><p class="testimonial-name">David M.</p><p class="testimonial-role">Founder, SaaS Startup</p></div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"Five bots managing 2.6M users across our media channels. 18 months in, zero downtime. Best infrastructure decision we made."</p>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">SR</div>
+                        <div><p class="testimonial-name">Sarah R.</p><p class="testimonial-role">CTO, Media Holding</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- HOW WE WORK -->
+        <section id="process" class="s">
+            <p class="s-label">Process</p>
+            <h2 class="s-title">How we work</h2>
+            <p class="s-sub">From first call to production in 2 weeks. No committees, no bloat.</p>
+
+            <div class="steps">
+                <div>
+                    <div class="step-num">01</div>
+                    <h3 class="step-title">Discovery Call</h3>
+                    <p class="step-desc">15 minutes. We understand your problem, identify the highest-ROI automation, and give you a honest assessment.</p>
+                </div>
+                <div>
+                    <div class="step-num">02</div>
+                    <h3 class="step-title">Scope & Quote</h3>
+                    <p class="step-desc">Within 48 hours you get a fixed-price proposal with timeline, tech stack, and expected ROI.</p>
+                </div>
+                <div>
+                    <div class="step-num">03</div>
+                    <h3 class="step-title">Build & Ship</h3>
+                    <p class="step-desc">We build. You see progress weekly. MVP in 2 weeks, not 2 months. Demo before every milestone.</p>
+                </div>
+                <div>
+                    <div class="step-num">04</div>
+                    <h3 class="step-title">Launch & Support</h3>
+                    <p class="step-desc">We deploy, monitor, and provide 30 days of free support. Ongoing maintenance available.</p>
+                </div>
             </div>
         </section>
 
         <!-- PRODUCTS -->
         <section class="s">
             <p class="s-label">Products</p>
-            <h2 class="s-title">Our Products</h2>
+            <h2 class="s-title">Live products we built</h2>
+            <p class="s-sub">Try them yourself — they're running in production right now.</p>
+
             <div class="grid-2">
                 <a href="https://t.me/ai_slowpoke_bot" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);">
-                    <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" style="width:100%;border-radius:10px;margin-bottom:1rem;object-fit:contain;max-height:100px;">
+                    <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="product-img">
                     <h3 class="svc-t">Slowpoke Bot</h3>
-                    <p class="svc-d">AI assistant in Telegram. Works with docs, images, voice. Crypto payments, 600+ active users.</p>
-                    <span style="font-size:0.8rem;color:var(--accent);font-weight:600;margin-top:auto;">Try in Telegram &rarr;</span>
+                    <p class="svc-d">AI assistant in Telegram. Works with documents, images, and voice. Crypto payments integrated. 600+ active users.</p>
+                    <span class="svc-p">Try in Telegram &rarr;</span>
                 </a>
                 <a href="https://resumequick.app/en" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);">
-                    <img src="assets/images/cv_logo.webp" alt="ResumeQuick" style="width:100%;border-radius:10px;margin-bottom:1rem;object-fit:contain;max-height:100px;">
+                    <img src="assets/images/cv_logo.webp" alt="ResumeQuick" class="product-img">
                     <h3 class="svc-t">ResumeQuick</h3>
-                    <p class="svc-d">AI resume builder. Describe yourself — get a polished CV in 2 minutes. Interview prep, job matching, ATS-optimized. 2,000+ users.</p>
-                    <span style="font-size:0.8rem;color:var(--accent);font-weight:600;margin-top:auto;">Build your resume &rarr;</span>
+                    <p class="svc-d">AI resume builder. Describe yourself — get a polished CV in 2 minutes. Interview prep, job matching. 2,000+ users.</p>
+                    <span class="svc-p">Build your resume &rarr;</span>
                 </a>
             </div>
         </section>
@@ -302,65 +370,54 @@
             <h2 class="s-title">Common questions</h2>
             <div class="faq-list">
                 <div class="faq-item">
-                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">How long does it take to build a bot?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>Simple bot — 3-5 days. Complex AI pipeline with RAG — 2 weeks. We ship MVPs fast and iterate based on your feedback.</p></div>
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">How long does a typical project take?<span class="faq-arrow">+</span></button>
+                    <div class="faq-a"><p>Simple bot: 3-5 days. RAG system or AI agent: 2 weeks. Complex enterprise pipeline: 4-6 weeks. We ship MVPs fast and iterate based on your feedback.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What does pricing look like?<span class="faq-arrow">+</span></button>
+                    <div class="faq-a"><p>Bots and RAG systems start at $800. AI agents from $1,200. Enterprise projects from $5K. Every project gets a fixed-price quote before we start — no surprises.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I pay for AI API keys separately?<span class="faq-arrow">+</span></button>
+                    <div class="faq-a"><p>Yes. API keys (OpenAI, Gemini, etc.) are paid directly by you. This keeps costs transparent and gives you full control over usage.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can you deploy on our infrastructure?<span class="faq-arrow">+</span></button>
+                    <div class="faq-a"><p>Absolutely. For sensitive data we deploy on your servers with local LLMs (Llama, Mistral). Zero data leaves your infrastructure.</p></div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What happens after launch?<span class="faq-arrow">+</span></button>
+                    <div class="faq-a"><p>30 days of free support included with every project. After that, we offer maintenance packages or hourly support at $100/hr.</p></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What tech stack do you use?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>Python, FastAPI, aiogram 3, LangGraph, Supabase (Postgres + pgvector), Redis, Docker. We deploy on Railway or your infrastructure.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I need to pay for AI API keys separately?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>Yes. API keys (OpenAI, Gemini, etc.) are paid by you directly. This keeps costs transparent — you only pay for what you use.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can you deploy on-premise?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>Yes. For sensitive data we deploy on your servers with local LLMs (Llama, Mistral). Zero data leaves your infrastructure.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What's the minimum budget?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>Bots and RAG systems start at $800. AI agents from $1,200. Enterprise projects from $5K. We'll find the right scope for your budget.</p></div>
-                </div>
-                <div class="faq-item">
-                    <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do you provide support after launch?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>30 days of free support included. After that — maintenance packages or hourly support at $100/hr.</p></div>
+                    <div class="faq-a"><p>Python, FastAPI, aiogram 3, LangGraph, Supabase (Postgres + pgvector), Redis, Docker. We deploy on Railway, AWS, or your servers.</p></div>
                 </div>
             </div>
         </section>
 
-        <section id="contact">
-            <div class="cta-block">
-                <h2>Let's build something</h2>
-                <p>Free consultation. We find the highest-ROI automation for your business.</p>
-                <div class="cta-btns">
-                    <a href="https://t.me/adjacent_ai" class="btn btn-p" target="_blank" rel="noopener noreferrer">Telegram</a>
-                    <a href="https://wa.me/qr/3QSWBEBFSUZ7J1" class="btn btn-wa" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-                    <a href="mailto:neclcompany@gmail.com" class="btn btn-em">Email</a>
-                </div>
+        <!-- CTA -->
+        <section class="s">
+            <div class="cta-section">
+                <h2>Ready to automate?</h2>
+                <p>Book a free 15-minute discovery call. We'll identify the highest-ROI automation for your business.</p>
+                <a href="https://calendly.com" class="btn" target="_blank" rel="noopener noreferrer">Book a Call &rarr;</a>
             </div>
         </section>
     </main>
 
     <footer class="footer">
         <div class="footer-socials">
-            <a href="https://t.me/necl_company" target="_blank" rel="noopener noreferrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
-            <a href="https://x.com/CypressTavr" target="_blank" rel="noopener noreferrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-            <a href="https://www.linkedin.com/company/107986921" target="_blank" rel="noopener noreferrer"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+            <a href="https://t.me/necl_company" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+            <a href="https://x.com/CypressTavr" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+            <a href="https://www.linkedin.com/company/107986921" target="_blank" rel="noopener noreferrer"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
         </div>
-        <p>&copy; 2025-2026 NeCL – Neural Engineering &amp; Cognitive Logic. &nbsp;|&nbsp; <a href="privacy.html" style="color:rgba(255,255,255,0.45);text-decoration:none;">Privacy Policy</a></p>
+        <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic. &nbsp;|&nbsp; <a href="privacy.html" style="color:#9ca3af;text-decoration:none;">Privacy Policy</a></p>
     </footer>
 
-    <!-- Floating Telegram -->
-    <a href="https://t.me/adjacent_ai" target="_blank" rel="noopener noreferrer" class="float-tg">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+    <a href="https://t.me/adjacent_ai" target="_blank" rel="noopener noreferrer" class="float-btn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+        Chat with us
     </a>
-
-    <script>
-        document.addEventListener('click', e => {
-            if (!e.target.closest('.nav-lang')) {
-                document.querySelectorAll('.nav-lang-drop').forEach(d => d.classList.remove('open'));
-            }
-        });
-    </script>
 </body>
 </html>
