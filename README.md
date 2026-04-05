@@ -1,31 +1,54 @@
-# NeCL Solutions - AI & Automation Landing Page
+# neclco.com
 
-https://adjacentai.github.io/NeclSolution/
+Website for NeCL — AI Engineering Studio.
 
-This repository contains the source code for the official landing page of **NeCL Solutions**, an outsourcing company dedicated to integrating artificial intelligence into all aspects of life and business.
+**Live:** https://neclco.com
 
-## About the Company
+## Structure
 
-NeCL Solutions specializes in creating custom AI solutions, including:
-- Telegram, WhatsApp, and Discord bots
-- Advanced Python integrations and automation scripts
-- Custom API development and integration with leading AI models (OpenAI, Replicate, etc.)
-- Voice assistants and speech-enabled automation
-- Complex AI-powered automation pipelines
+```
+index.html          Main landing page
+blog/
+  index.html        Blog listing
+  *.html            Individual posts
+privacy.html        Privacy policy
+sitemap.xml         For Google indexing
+robots.txt          Crawler rules
+assets/images/      Images
+CNAME               Custom domain config
+```
 
-Our mission is to provide powerful, scalable, and fully managed AI solutions, from idea to launch and beyond.
+## Adding a blog post
 
-## Tech Stack
+1. Create `blog/your-post-slug.html` — copy an existing post as template
+2. Update `<title>`, `<meta description>`, `<link rel="canonical">`
+3. Write content inside `<article>`
+4. Add link to `blog/index.html`
+5. Add URL to `sitemap.xml`
+6. Push:
 
-This is a clean, lightweight static website built with:
-- HTML5
-- CSS3 (with Flexbox and Grid for responsive design)
-- Vanilla JavaScript
+```bash
+git add -A && git commit -m "New post: your title" && git push origin main
+```
 
-## Deployment
+Post goes live in ~2 minutes after push.
 
-The website is designed for easy deployment on static hosting platforms like **GitHub Pages**. It includes multilingual support (English and Russian) with automatic language detection based on browser settings.
+## SEO checklist for each post
 
----
+- [ ] Unique `<title>` with keyword (under 60 chars)
+- [ ] `<meta name="description">` (under 155 chars)
+- [ ] `<link rel="canonical">` with full URL
+- [ ] One `<h1>` per page
+- [ ] Heading hierarchy: h1 > h2 > h3
+- [ ] Internal links to other posts / main page
+- [ ] CTA box at the end
+- [ ] Added to `sitemap.xml`
+- [ ] Added to `blog/index.html`
 
-For inquiries, please contact us at **neclcompany@gmail.com** or via Telegram **@adjacent_ai**.
+## Tech
+
+Static HTML + CSS + JS. Hosted on GitHub Pages. No build step, no framework.
+
+## Contact
+
+neclcompany@gmail.com
