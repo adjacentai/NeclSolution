@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time | NeCL Blog</title>
+    <meta name="description" content="A lightweight desktop AI overlay for developers and professionals. Voice questions, screenshot analysis, real-time answers. Interview prep, coding help, research. macOS + Windows.">
+    <link rel="canonical" href="https://neclco.com/blog/cream-mic-ai-desktop-assistant.html">
+    <meta property="og:title" content="Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time">
+    <meta property="og:description" content="A lightweight desktop AI overlay for developers and professionals. Voice questions, screenshot analysis, real-time answers. Interview prep, coding help, research. macOS + Windows.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/cream-mic-ai-desktop-assistant.html">
+    <meta property="og:image" content="../assets/images/blog/cream-mic-og.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        article { flex: 1; max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        .post-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.5rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.75rem; color: var(--text-dim); }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; line-height: 1.2; }
+        .lead { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.7; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+        p { margin-bottom: 1.2rem; font-size: 1rem; }
+        ul, ol { margin: 0 0 1.2rem 1.5rem; }
+        li { margin-bottom: 0.4rem; font-size: 1rem; }
+        code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88rem; }
+        pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; color: inherit; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+        th { font-weight: 600; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            article { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="./" class="nav-back">&larr; All posts</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="post-meta">
+            <span class="post-tag">Product</span>
+            <span class="post-date">Apr 12, 2026</span>
+        </div>
+
+        <h1>Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time</h1>
+        <img src="../assets/images/blog/cream-mic-hero.webp" alt="Cream Mic AI Desktop Assistant" class="hero-img" loading="lazy">
+        <p class="lead">The best advisor is the one who is always present but never in the way. Who listens when spoken to, sees what you see, and delivers the answer before you finish formulating the question.</p>
+
+        <p>Every developer, engineer, and knowledge worker faces the same daily friction: context switching. You are deep in code — and need to look up an API signature. You are reviewing an architecture diagram — and need a second opinion. You are preparing for a technical interview — and need a sparring partner who knows system design as well as you do.</p>
+        <p>Each interruption breaks your flow. Each tab switch costs 23 minutes of focus recovery. Each Google search pulls you out of the work and into the noise.</p>
+        <p>Cream Mic eliminates this friction entirely. It runs as a lightweight overlay on your desktop — always available, never intrusive. Press a key to ask a question by voice. Press another to analyze whatever is on your screen. The AI responds in real time, streaming the answer directly into a clean floating panel. No browser. No tab switching. No broken flow.</p>
+        <p>Think of it as an AI copilot that lives on your screen — ready when you need it, invisible when you don't.</p>
+
+        <h2>How Cream Mic Works</h2>
+
+        <h3>The Interface</h3>
+        <p>Cream Mic is a PyQt6 desktop application with a frameless, semi-transparent window. It floats on top of all other windows but stays visually minimal — rounded corners, adjustable transparency, compact UI. It occupies as little attention as a sticky note, but delivers the power of a full AI assistant.</p>
+        <p>On macOS, it uses native Quartz rendering. On Windows, WinAPI transparency. Both look polished and professional.</p>
+
+        <h3>The Hotkeys</h3>
+        <p>The entire interaction model is built around two keys — because the fastest assistant is the one that requires zero setup:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Key</th>
+                    <th>First press</th>
+                    <th>Second press</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Caps Lock</strong></td>
+                    <td>Start recording your question</td>
+                    <td>Stop recording &rarr; transcription &rarr; AI answer streams in</td>
+                </tr>
+                <tr>
+                    <td><strong>Alt / Option</strong></td>
+                    <td>Capture screenshot &rarr; Vision AI analyzes it &rarr; answer</td>
+                    <td>&mdash;</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Two keys. No menus. No typing required. You speak naturally, and the assistant responds.</p>
+
+        <h3>The Voice Pipeline</h3>
+        <p>When you press Caps Lock:</p>
+
+<pre><code>Recording starts (ask your question out loud)
+    |
+Stop recording (second press)
+    |
+Speech-to-text transcription (~500ms)
+    |
+LLM processes your question (streaming)
+    |
+Answer appears in the overlay, sentence by sentence
+    |
+Optional: TTS reads the answer back to you</code></pre>
+
+        <p>From question to first words of the answer: 1-3 seconds. Faster than typing the query into any chat interface. Faster than opening a new tab.</p>
+
+        <h3>Screenshot Analysis</h3>
+        <p>Press Alt/Option at any time. Cream Mic captures your screen, sends it to a Vision AI, and returns an analysis. This is where it becomes more than a chatbot — it sees what you see.</p>
+
+        <p><strong>Use cases:</strong></p>
+        <ul>
+            <li><strong>Code on screen</strong> — "What's wrong with this function?" &rarr; AI identifies bugs, suggests fixes, explains the logic</li>
+            <li><strong>Architecture diagram</strong> — "How would you improve this?" &rarr; AI reviews the design and suggests optimizations</li>
+            <li><strong>Error message</strong> — "What does this mean?" &rarr; AI explains the error and recommends a fix</li>
+            <li><strong>Documentation page</strong> — "Summarize the key points" &rarr; AI extracts what matters</li>
+            <li><strong>Database schema</strong> — "Any issues with this design?" &rarr; AI reviews normalization, indexing, relationships</li>
+        </ul>
+
+        <p>You don't need to copy-paste code into a chat window. You don't need to describe what you're looking at. The AI sees your screen and responds with context.</p>
+
+        <h2>Who Uses Cream Mic</h2>
+
+        <h3>Developers — Coding Without Leaving the Editor</h3>
+        <p>You're deep in VS Code. A function is behaving unexpectedly. Instead of Alt-Tab to a browser, type a query, scroll through StackOverflow — press Caps Lock: "Why would this async function return undefined instead of the promise result?" The answer streams into the overlay while your editor stays in focus.</p>
+        <p>Screenshot an error traceback. Get an explanation and a fix in 2 seconds. No context switch. No flow disruption.</p>
+
+        <h3>Engineers Preparing for Technical Interviews</h3>
+        <p>Interview preparation is one of Cream Mic's strongest use cases. Use it as a <strong>practice partner</strong>:</p>
+        <ul>
+            <li>Simulate real interview conditions — ask system design questions out loud, get detailed answers to compare with your own</li>
+            <li>Screenshot LeetCode problems and get step-by-step solution breakdowns</li>
+            <li>Practice explaining concepts aloud and compare your explanation with the AI's version</li>
+            <li>Build a personal study log — every Q&amp;A session is automatically saved</li>
+        </ul>
+        <p>The engineers who prepare with AI-assisted practice consistently outperform those who study alone. Not because the AI gives them answers — but because it gives them instant, structured feedback on their thinking.</p>
+
+        <h3>Product Managers and Analysts</h3>
+        <p>During meetings, research sessions, or strategy reviews — ask the AI to analyze what's on screen. A competitive analysis spreadsheet. A market research PDF. A product roadmap diagram. Get instant summaries, second opinions, and sanity checks without leaving the current context.</p>
+
+        <h3>Researchers and Writers</h3>
+        <p>Reading a dense paper? Screenshot a page and ask "What's the main finding here?" Working on a report? Ask for feedback on your draft by voice. The overlay keeps your working document in view while the AI provides input alongside it.</p>
+
+        <h2>Provider Flexibility</h2>
+        <p>Cream Mic is not locked to a single AI provider. You choose what works best for your needs:</p>
+
+        <h3>Speech-to-Text Options</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Provider</th>
+                    <th>Best for</th>
+                    <th>Privacy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ElevenLabs</td>
+                    <td>Highest accuracy, multilingual</td>
+                    <td>Cloud</td>
+                </tr>
+                <tr>
+                    <td>Whisper (local)</td>
+                    <td>Free, fully private — nothing leaves your machine</td>
+                    <td>Local</td>
+                </tr>
+                <tr>
+                    <td>Yandex SpeechKit</td>
+                    <td>Russian language</td>
+                    <td>Cloud</td>
+                </tr>
+                <tr>
+                    <td>Sber SaluteSpeech</td>
+                    <td>Russian language (alternative)</td>
+                    <td>Cloud</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>For maximum privacy, use local Whisper. Your questions are transcribed entirely on your hardware.</p>
+
+        <h3>Language Model Options</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Best for</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Gemini 2.5 Flash</td>
+                    <td>Fast answers, quick lookups, syntax questions</td>
+                </tr>
+                <tr>
+                    <td>GPT-4.1-nano</td>
+                    <td>Deep technical reasoning, system design, complex code review</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Switch between models depending on the task. Quick syntax question? Use Gemini Flash for speed. Complex architecture question? Use GPT for depth.</p>
+
+        <h3>Text-to-Speech Voices</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Voice</th>
+                    <th>Character</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Nova</td>
+                    <td>Warm, professional</td>
+                </tr>
+                <tr>
+                    <td>Alloy</td>
+                    <td>Neutral, versatile</td>
+                </tr>
+                <tr>
+                    <td>Echo</td>
+                    <td>Deeper male voice</td>
+                </tr>
+                <tr>
+                    <td>Fable</td>
+                    <td>British accent, authoritative</td>
+                </tr>
+                <tr>
+                    <td>Onyx</td>
+                    <td>Low, calm</td>
+                </tr>
+                <tr>
+                    <td>Shimmer</td>
+                    <td>Friendly, energetic</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>All voices support English and Russian. TTS plays sentence-by-sentence during streaming — you hear the first sentence within 400ms, not after the entire response generates.</p>
+
+        <h2>Session Logging — Your AI-Powered Study Journal</h2>
+
+        <p>Every question and answer is automatically saved to the <code>data/</code> directory with timestamps:</p>
+
+<pre><code>[14:32:05] Q: How would you design a rate limiter for an API?
+[14:32:08] A: I'd approach this with a token bucket algorithm. Here's how it works...
+
+[14:35:12] Q: What happens when the bucket is empty?
+[14:35:14] A: When tokens are depleted, requests are either queued or rejected with a 429 status...</code></pre>
+
+        <p>Over time, this becomes a <strong>personal knowledge base</strong> — a searchable archive of every technical question you've asked and every AI-generated explanation you've received. Use it to:</p>
+        <ul>
+            <li>Review concepts you explored weeks ago</li>
+            <li>Track which topics you've studied during interview prep</li>
+            <li>Build study guides from real Q&amp;A sessions</li>
+            <li>Share useful explanations with teammates</li>
+        </ul>
+
+        <p>The general who documents his campaigns learns faster than the one who relies on memory alone.</p>
+
+        <h2>Customization</h2>
+
+        <h3>System Prompt — Define Your Assistant's Expertise</h3>
+        <p>Configure the AI to match your domain:</p>
+        <ul>
+            <li>"You are a senior backend engineer specializing in distributed systems. Answer concisely."</li>
+            <li>"You are a data science expert. Include relevant Python code examples."</li>
+            <li>"You are a product manager. Focus on trade-offs and business impact."</li>
+            <li>"You are a DevOps specialist. Focus on infrastructure and deployment."</li>
+        </ul>
+        <p>The system prompt shapes every response. Different roles, different contexts — one tool.</p>
+
+        <h3>Screenshot Prompt — Control How the AI Reads Your Screen</h3>
+        <ul>
+            <li>"Analyze this code for bugs, performance issues, and improvements."</li>
+            <li>"Review this system design diagram and suggest improvements."</li>
+            <li>"Summarize what's on screen in simple terms."</li>
+            <li>"Extract all key metrics and data points from this dashboard."</li>
+        </ul>
+
+        <h2>Cross-Platform Support</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>macOS</th>
+                    <th>Windows 11</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Overlay</td>
+                    <td>Native Quartz</td>
+                    <td>WinAPI</td>
+                </tr>
+                <tr>
+                    <td>Hotkeys</td>
+                    <td>Quartz CGEventTap</td>
+                    <td>keyboard library</td>
+                </tr>
+                <tr>
+                    <td>TTS playback</td>
+                    <td>afplay (system)</td>
+                    <td>pygame.mixer</td>
+                </tr>
+                <tr>
+                    <td>Whisper (local)</td>
+                    <td>Supported</td>
+                    <td>Supported</td>
+                </tr>
+                <tr>
+                    <td>Installation</td>
+                    <td><code>make install</code></td>
+                    <td><code>scripts\install.bat</code></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p>Both platforms provide identical functionality with native rendering.</p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <p><strong>What can I use Cream Mic for?</strong><br>Coding assistance, technical research, interview preparation, document analysis, debugging, architecture reviews — anything where you need quick AI help without leaving your current workflow.</p>
+
+        <p><strong>Does it work alongside any app?</strong><br>Yes. It's a system-level overlay that works on top of any application — code editors, browsers, design tools, video calls, terminals.</p>
+
+        <p><strong>What about latency?</strong><br>First words of the answer appear 1-3 seconds after you stop recording. TTS plays each sentence with ~400ms delay. For a 5-sentence answer, you hear the first sentence in 1.5 seconds and the last in ~4 seconds.</p>
+
+        <p><strong>Is my data private?</strong><br>With local Whisper, your voice never leaves your machine. The LLM query is sent to the provider you select (OpenAI, Google, etc.) under their standard API privacy terms. Session logs are stored locally on your device.</p>
+
+        <p><strong>Does it require internet?</strong><br>For LLM responses and cloud STT: yes. For local Whisper transcription: the STT part works offline, but the AI response requires internet.</p>
+
+        <p><strong>Can I use it for interview preparation?</strong><br>Absolutely — this is one of the most popular use cases. Practice system design questions, get instant feedback, build a study log, and track your progress over time.</p>
+
+        <p><strong>See also:</strong></p>
+        <ul>
+            <li><a href="resumequick-ai-resume-builder.html">ResumeQuick: AI Resume Builder with Mock Interviews and Job Matching</a></li>
+            <li><a href="slowpoke-bot-multi-ai-telegram.html">Slowpoke Bot: Multi-Model AI Assistant in Telegram</a></li>
+            <li><a href="what-is-necl.html">What Is NeCL? AI Engineering Studio That Builds Systems, Not Demos</a></li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>Try Cream Mic — your AI desktop assistant</h3>
+            <p>Contact us on Telegram to get started.</p>
+            <a href="https://t.me/adjacent_ai" class="btn" target="_blank" rel="noopener noreferrer">Contact @adjacent_ai</a>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>

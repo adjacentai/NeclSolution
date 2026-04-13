@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>Pickachu Bot: Profitable Telegram Image Editor with Gemini 3 Pro | NeCL Blog</title>
+    <meta name="description" content="A Telegram bot for AI image editing with credit-based monetization. Gemini 3 Pro, up to 14 references, voice commands. Real unit economics inside.">
+    <link rel="canonical" href="https://neclco.com/blog/pickachu-bot-ai-image-editor.html">
+    <meta property="og:title" content="Pickachu Bot: Profitable Telegram Image Editor with Gemini 3 Pro | NeCL Blog">
+    <meta property="og:description" content="A Telegram bot for AI image editing with credit-based monetization. Gemini 3 Pro, up to 14 references, voice commands. Real unit economics inside.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/pickachu-bot-ai-image-editor.html">
+    <meta property="og:image" content="../assets/images/blog/pickachu-bot-og.webp">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        article { flex: 1; max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        .post-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.5rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.75rem; color: var(--text-dim); }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; line-height: 1.2; }
+        .lead { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.7; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+        p { margin-bottom: 1.2rem; font-size: 1rem; }
+        ul, ol { margin: 0 0 1.2rem 1.5rem; }
+        li { margin-bottom: 0.4rem; font-size: 1rem; }
+        code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88rem; }
+        pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; color: inherit; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+        th { font-weight: 600; }
+        .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            article { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="./" class="nav-back">&larr; All posts</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="post-meta">
+            <span class="post-tag">Product</span>
+            <span class="post-date">Apr 12, 2026</span>
+        </div>
+
+        <h1>Pickachu Bot: How We Built a Profitable Telegram Image Editor with Gemini 3 Pro</h1>
+        <img src="../assets/images/blog/pickachu-bot-hero.webp" alt="Pickachu Bot AI Image Editor" class="hero-img" loading="lazy">
+        <p class="lead">There is a difference between occupying territory and holding it. Any developer can build a Telegram bot and plant a flag. But building one that generates revenue &mdash; that sustains itself, grows, and defends its position &mdash; requires the discipline of a commander who understands supply lines, not just swords.</p>
+
+        <p>Pickachu Bot is our campaign study in Telegram product monetization. A consumer-facing AI image editor that handles everything from background removal to creative compositions, powered by Google's most capable image model. It does not merely exist. It profits.</p>
+        <p>This article is not a product showcase. It is a transparent field report &mdash; the unit economics, the technical decisions, and the strategic lessons learned.</p>
+
+        <h2>The Product: What Pickachu Bot Does</h2>
+        <p>Pickachu Bot is an AI image editor that lives entirely inside Telegram. Users send photos, describe what they want via text or voice, and receive professionally edited images.</p>
+
+        <h3>The Interaction Flow</h3>
+        <ol>
+            <li><strong>Send a photo</strong> &mdash; or up to 14 photos as references</li>
+            <li><strong>Describe the edit</strong> &mdash; "Remove background, add gradient" or record a voice message</li>
+            <li><strong>The bot processes</strong> &mdash; Gemini 3 Pro generates the result</li>
+            <li><strong>Receive the output</strong> &mdash; preview (compressed) + original (lossless PNG/JPG)</li>
+            <li><strong>Take action</strong> &mdash; retry with different prompt, download, or start new</li>
+        </ol>
+        <p>The entire interface is a single Telegram message that updates in place. No chat spam. Clean, decisive UX.</p>
+
+        <h3>Why Gemini 3 Pro?</h3>
+        <p>We chose Gemini 3 Pro after evaluating the alternatives:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Quality</th>
+                    <th>Speed</th>
+                    <th>Cost</th>
+                    <th>Our verdict</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>DALL-E 3</td>
+                    <td>Good</td>
+                    <td>Slow</td>
+                    <td>$$$</td>
+                    <td>Too expensive for consumer pricing</td>
+                </tr>
+                <tr>
+                    <td>Stable Diffusion</td>
+                    <td>Variable</td>
+                    <td>Fast</td>
+                    <td>$</td>
+                    <td>Quality inconsistent</td>
+                </tr>
+                <tr>
+                    <td>Midjourney</td>
+                    <td>Excellent</td>
+                    <td>Medium</td>
+                    <td>$$</td>
+                    <td>No API for Telegram integration</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 3 Pro</strong></td>
+                    <td><strong>Excellent</strong></td>
+                    <td><strong>Medium</strong></td>
+                    <td><strong>$$</strong></td>
+                    <td><strong>Best quality/cost/API balance</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The strongest blade is useless if it cannot be drawn quickly.</p>
+
+        <h3>Voice Commands: The Killer Feature</h3>
+        <p>Text prompts work for simple edits. But for complex descriptions, voice is superior:</p>
+        <blockquote>"Take the product from the first photo, put it on the marble surface from the second photo, match the lighting from the third photo, and add a subtle shadow underneath."</blockquote>
+        <p>Typing that takes 30 seconds. Speaking it takes 5. Voice commands doubled our engagement per user. The lesson: remove friction from the chain of command, and your troops move twice as fast.</p>
+
+        <h3>Multi-Reference Support</h3>
+        <p>Most image editing bots accept one image and one prompt. Pickachu accepts up to 14 reference images &mdash; the technical moat that competitors cannot easily storm:</p>
+        <ul>
+            <li>"Combine elements from these 3 product photos into one hero image"</li>
+            <li>"Apply the style from this reference to my product photo"</li>
+            <li>"Make my photo match the aesthetic of these Instagram examples"</li>
+        </ul>
+
+        <h2>The Business Model: Credit-Based Monetization</h2>
+
+        <h3>Why Not Subscriptions?</h3>
+        <p>Subscriptions create pressure to use the product even when you don't need it. For an image editing tool &mdash; where usage is naturally sporadic &mdash; subscriptions create a mismatch. Misalignment between a general and his army breeds desertion.</p>
+
+        <h3>Why Credits?</h3>
+        <p>Credits align cost with value. Heavy usage this month? Buy more. Quiet next month? Spend nothing. No waste, no guilt, no churn from unused commitments.</p>
+
+        <h3>The Pricing Tiers</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Plan</th>
+                    <th>Credits</th>
+                    <th>Price</th>
+                    <th>Per image</th>
+                    <th>Markup over API cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Starter</td>
+                    <td>10</td>
+                    <td>$2.49</td>
+                    <td>$0.50</td>
+                    <td>3.6x</td>
+                </tr>
+                <tr>
+                    <td>Creator</td>
+                    <td>25</td>
+                    <td>$9.99</td>
+                    <td>$0.40</td>
+                    <td>2.9x</td>
+                </tr>
+                <tr>
+                    <td>Pro</td>
+                    <td>55</td>
+                    <td>$19.99</td>
+                    <td>$0.36</td>
+                    <td>2.6x</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>API cost per generation: ~$0.13-0.14.</p>
+
+        <h3>Unit Economics</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>API cost per generation</td>
+                    <td>$0.13-0.14</td>
+                </tr>
+                <tr>
+                    <td>Average revenue per generation</td>
+                    <td>$0.40 (weighted across tiers)</td>
+                </tr>
+                <tr>
+                    <td>Gross margin per generation</td>
+                    <td>~65%</td>
+                </tr>
+                <tr>
+                    <td>Infrastructure cost</td>
+                    <td>~$25/month</td>
+                </tr>
+                <tr>
+                    <td>Break-even point</td>
+                    <td>~100 generations/month</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>At 500 generations/month, monthly gross profit is ~$130. At 2,000: ~$520. The economics scale linearly &mdash; every additional generation is 65% margin.</p>
+
+        <h2>Technical Decisions</h2>
+
+        <h3>Single-Message UI</h3>
+        <p>Standard Telegram bots send a new message for every interaction. We imposed order through a single-message architecture:</p>
+        <ul>
+            <li>One message shows the current state (uploaded images, prompt, status)</li>
+            <li>Every action updates that same message instead of sending a new one</li>
+            <li>Users always see a clean, current command post</li>
+        </ul>
+
+        <h3>Cost Tracking per Request</h3>
+        <p>Every generation logs its cost to the database:</p>
+        <pre><code>request_id | user_id | model | prompt | status | cost_usd | created_at</code></pre>
+        <p>This gives us:</p>
+        <ul>
+            <li>Real-time unit economics monitoring</li>
+            <li>Per-user profitability analysis</li>
+            <li>Cost anomaly detection (if API pricing changes)</li>
+            <li>Data for pricing optimization</li>
+        </ul>
+
+        <h3>Localization</h3>
+        <p>Full Russian and English support. Not just translated strings &mdash; the entire UX adapts: button labels, error messages, help text, onboarding flow. Adding languages is modular &mdash; new languages require only a new locale file, no code changes.</p>
+
+        <h2>Lessons Learned</h2>
+
+        <h3>1. Voice Input &gt; Text Input for Complex Edits</h3>
+        <p>We expected 80% text, 20% voice. Reality: 45% text, 55% voice. The strategist who listens to how his army actually moves &mdash; rather than how he expected them to move &mdash; adapts and prevails.</p>
+
+        <h3>2. Credit System &gt; Subscription for Sporadic Use</h3>
+        <p>Initial prototype used subscriptions. Churn after first month: 70%. Switching to credits: 85% repurchase within 60 days.</p>
+
+        <h3>3. Quality Is Table Stakes &mdash; UX Is the Differentiator</h3>
+        <p>Multiple bots deploy the same AI models. The difference is the experience of wielding them. Our single-message interface, voice commands, and multi-reference support create a noticeably superior operation.</p>
+
+        <h2>Deploy Your Own Version</h2>
+        <p>Pickachu Bot is available as a white-label solution:</p>
+        <ul>
+            <li>Your brand, your bot name</li>
+            <li>Custom pricing tiers</li>
+            <li>Admin dashboard with analytics</li>
+            <li>Full source code and documentation</li>
+            <li>Deployment on your infrastructure</li>
+        </ul>
+        <p>Part of our AI Image Editor white-label offering, from $1,500.</p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <p><strong>How long does a generation take?</strong><br>5-15 seconds depending on complexity and server load.</p>
+
+        <p><strong>What's the maximum image resolution?</strong><br>Input: any resolution (auto-compressed for API). Output: up to the model's maximum (typically 1024&times;1024 or higher for Gemini 3 Pro).</p>
+
+        <p><strong>Can users request specific aspect ratios?</strong><br>Yes. "Make it square," "make it 16:9," "make it vertical for Instagram Stories" &mdash; all supported via natural language.</p>
+
+        <p><strong>How do you handle abuse?</strong><br>Content moderation via Gemini's built-in safety filters + custom rules. Usage rate limiting to prevent API abuse. User blocking for violations.</p>
+
+        <p><strong>See also:</strong></p>
+        <ul>
+            <li><a href="ai-image-editor-telegram-bot.html">AI Image Editor Bot for Telegram: Edit Photos with Text and Voice</a></li>
+            <li><a href="ai-video-generator-from-text.html">AI Video Generator and Editor: Create and Edit Videos with AI</a></li>
+            <li><a href="what-is-necl.html">What Is NeCL? AI Engineering Studio That Builds Systems, Not Demos</a></li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>Want to build a profitable Telegram bot?</h3>
+            <p>We'll deploy a Pickachu-style bot for your brand.</p>
+            <a href="https://t.me/adjacent_ai" class="btn" target="_blank" rel="noopener noreferrer">Contact us on Telegram</a>
+        </div>
+    </article>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>
