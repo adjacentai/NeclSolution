@@ -369,9 +369,34 @@ Optional: TTS reads the answer back to you</code></pre>
         <div class="cta-box">
             <h3>Try Cream Mic — your AI desktop assistant</h3>
             <p>Follow our Telegram channel for launch updates and early access.</p>
-            <a href="https://t.me/necl_company" class="btn" target="_blank" rel="noopener noreferrer">Join NeCL on Telegram</a>
+            <a href="https://t.me/necl_company" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_social',{platform:'telegram_channel',location:'blog_cta',article:'cream-mic'})">Join NeCL on Telegram</a>
         </div>
     </article>
+
+    <script>
+    (function(){
+        if (typeof gtag === 'undefined') return;
+        var article = 'cream-mic';
+        var milestones = [25, 50, 75, 100];
+        var hit = {};
+        window.addEventListener('scroll', function() {
+            var h = document.documentElement, b = document.body;
+            var pct = ((h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight)) * 100;
+            for (var i = 0; i < milestones.length; i++) {
+                var m = milestones[i];
+                if (pct >= m && !hit[m]) {
+                    hit[m] = 1;
+                    gtag('event', 'scroll_depth', { percent: m, article: article });
+                }
+            }
+        }, { passive: true });
+        [30, 60, 120, 300].forEach(function(sec) {
+            setTimeout(function() {
+                gtag('event', 'time_on_article', { seconds: sec, article: article });
+            }, sec * 1000);
+        });
+    })();
+    </script>
 
     <footer class="footer">
         <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>

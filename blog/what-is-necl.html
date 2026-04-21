@@ -138,7 +138,7 @@
         <h2>Working With Agencies and Service Providers</h2>
         <p>If you run a web agency, consult as a fractional CTO, or manage a marketing firm &mdash; your clients are asking for AI features. You need a technical AI team to deliver, without hiring engineers.</p>
         <p>NeCL works as your <strong>white-label AI engineering partner</strong>. You own the client relationship. We build the AI. Your client gets a great product. You expand your offering without expanding your team.</p>
-        <p>This is not a referral program. It's a real partnership with revenue sharing and joint delivery. If this fits your practice, <a href="https://calendly.com/neclcompany/30min">let's talk</a>.</p>
+        <p>This is not a referral program. It's a real partnership with revenue sharing and joint delivery. If this fits your practice, <a href="https://calendly.com/neclcompany/30min" onclick="gtag('event','click_calendly',{location:'blog_inline',article:'what-is-necl'})">let's talk</a>.</p>
 
         <h2>Our Markets</h2>
         <ul>
@@ -154,7 +154,7 @@
         <p><strong>Can you work with my existing systems?</strong><br>Yes. We integrate with CRMs, Google Workspace, Notion, Slack, Stripe, and custom APIs.</p>
         <p><strong>What if I need changes after delivery?</strong><br>30 days of support included. After that, we offer maintenance retainers or ad-hoc development.</p>
         <p><strong>Do you sign NDAs?</strong><br>Yes. All client work is confidential by default.</p>
-        <p><strong>Do you work with agencies and service providers?</strong><br>Yes. We operate as a white-label AI engineering team for agencies, fractional CTOs, and consultancies who need AI delivery capability. <a href="https://calendly.com/neclcompany/30min">Book a call</a> to discuss.</p>
+        <p><strong>Do you work with agencies and service providers?</strong><br>Yes. We operate as a white-label AI engineering team for agencies, fractional CTOs, and consultancies who need AI delivery capability. <a href="https://calendly.com/neclcompany/30min" onclick="gtag('event','click_calendly',{location:'blog_faq',article:'what-is-necl'})">Book a call</a> to discuss.</p>
 
         <p><strong>See also:</strong></p>
         <ul>
@@ -166,11 +166,37 @@
         <div class="cta-box">
             <h3>Let's talk about your AI challenge</h3>
             <p>Describe your project on Telegram — we'll reply within hours. Or book a call if you prefer to talk first.</p>
-            <a href="https://t.me/adjacent_ai" class="btn" target="_blank" rel="noopener noreferrer">Write on Telegram</a>
+            <a href="https://t.me/adjacent_ai" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'blog_cta',article:'what-is-necl'})">Write on Telegram</a>
             <br><br>
-            <a href="https://calendly.com/neclcompany/30min" style="font-size:0.85rem;color:#6b7280;text-decoration:underline;" target="_blank" rel="noopener noreferrer">or book a 30-min call</a>
+            <a href="https://calendly.com/neclcompany/30min" style="font-size:0.85rem;color:#6b7280;text-decoration:underline;" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'blog_cta',article:'what-is-necl'})">or book a 30-min call</a>
         </div>
     </article>
+
+    <script>
+    (function(){
+        if (typeof gtag === 'undefined') return;
+        var article = 'what-is-necl';
+        var start = Date.now();
+        var milestones = [25, 50, 75, 100];
+        var hit = {};
+        window.addEventListener('scroll', function() {
+            var h = document.documentElement, b = document.body;
+            var pct = ((h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight)) * 100;
+            for (var i = 0; i < milestones.length; i++) {
+                var m = milestones[i];
+                if (pct >= m && !hit[m]) {
+                    hit[m] = 1;
+                    gtag('event', 'scroll_depth', { percent: m, article: article });
+                }
+            }
+        }, { passive: true });
+        [30, 60, 120, 300].forEach(function(sec) {
+            setTimeout(function() {
+                gtag('event', 'time_on_article', { seconds: sec, article: article });
+            }, sec * 1000);
+        });
+    })();
+    </script>
 
     <footer class="footer">
         <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>

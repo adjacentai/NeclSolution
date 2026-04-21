@@ -113,10 +113,37 @@ def route_query(text: str) -> str:
 
         <div class="cta-box">
             <h3>Want us to audit your AI costs?</h3>
-            <p>We'll analyze your LLM usage and show you exactly where you're overspending.</p>
-            <a href="https://calendly.com/neclcompany/30min" class="btn" target="_blank" rel="noopener noreferrer">Book a free call</a>
+            <p>Describe your setup on Telegram &mdash; we'll tell you where you're overspending. Or book a call if you prefer to talk.</p>
+            <a href="https://t.me/adjacent_ai" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'blog_cta',article:'stop-using-gpt4'})">Write on Telegram</a>
+            <br><br>
+            <a href="https://calendly.com/neclcompany/30min" style="font-size:0.85rem;color:#6b7280;text-decoration:underline;" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'blog_cta',article:'stop-using-gpt4'})">or book a 30-min call</a>
         </div>
     </article>
+
+    <script>
+    (function(){
+        if (typeof gtag === 'undefined') return;
+        var article = 'stop-using-gpt4';
+        var milestones = [25, 50, 75, 100];
+        var hit = {};
+        window.addEventListener('scroll', function() {
+            var h = document.documentElement, b = document.body;
+            var pct = ((h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight)) * 100;
+            for (var i = 0; i < milestones.length; i++) {
+                var m = milestones[i];
+                if (pct >= m && !hit[m]) {
+                    hit[m] = 1;
+                    gtag('event', 'scroll_depth', { percent: m, article: article });
+                }
+            }
+        }, { passive: true });
+        [30, 60, 120, 300].forEach(function(sec) {
+            setTimeout(function() {
+                gtag('event', 'time_on_article', { seconds: sec, article: article });
+            }, sec * 1000);
+        });
+    })();
+    </script>
 
     <footer class="footer">
         <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>
