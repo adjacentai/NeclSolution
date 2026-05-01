@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>Pickachu AI Image Editor: White-Label for Realtors, Interior Designers, and Brands | NeCL Blog</title>
+    <meta name="description" content="Pickachu is an AI image editor built on Gemini 3 Pro. Realtors, interior designers, and brands now run it under their own names. White-label deployment, real unit economics, proven margins.">
+    <link rel="canonical" href="https://neclco.com/blog/pickachu-bot-ai-image-editor.html">
+    <meta property="og:title" content="Pickachu AI Image Editor: White-Label for Realtors, Interior Designers, and Brands">
+    <meta property="og:description" content="We built Pickachu. They rebranded it. Now realtors, interior designers, and brands run AI image editing under their own names — on our infrastructure.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/pickachu-bot-ai-image-editor.html">
+    <meta property="og:image" content="../assets/images/blog/pickachu-bot-hero.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        article { flex: 1; max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        .post-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.5rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.75rem; color: var(--text-dim); }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; line-height: 1.2; }
+        .lead { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.7; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+        p { margin-bottom: 1.2rem; font-size: 1rem; }
+        ul, ol { margin: 0 0 1.2rem 1.5rem; }
+        li { margin-bottom: 0.4rem; font-size: 1rem; }
+        code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88rem; }
+        pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; color: inherit; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+        th { font-weight: 600; }
+        .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            article { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="./" class="nav-back">&larr; All posts</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="post-meta">
+            <span class="post-tag">White-Label</span>
+            <span class="post-date">Apr 19, 2026</span>
+        </div>
+
+        <h1>Pickachu AI Image Editor: White-Label for Realtors, Interior Designers, and Brands</h1>
+        <img src="../assets/images/blog/pickachu-bot-hero.png" alt="Pickachu AI Image Editor White-Label" class="hero-img" loading="lazy">
+        <p class="lead">We built Pickachu as an AI image editor. Then realtors started using it. Then interior designers. Then brands we never expected. What began as a single product became an engine other businesses rebrand and deploy under their own names.</p>
+
+        <p>This article is a transparent field report on what that engine does, who uses it, and how the white-label economics actually work &mdash; with real numbers, not marketing claims.</p>
+
+        <h2>The Pivot: From Product to Platform</h2>
+        <p>We launched Pickachu as our own consumer AI image editor on Telegram. Gemini 3 Pro under the hood, voice commands, up to 14 reference images, credit-based monetization. It worked. Users came. Revenue followed.</p>
+        <p>Then something we did not plan for happened: business owners started asking for their own version.</p>
+        <p>A realtor wanted a bot his clients could use to visualize renovated apartments before a walk-through. An interior designer wanted her own branded tool for generating mood boards from client photos. An e-commerce brand wanted product shots composited on new backgrounds without hiring a photographer.</p>
+        <p>The framing was wrong. "Telegram image editor" was too narrow. What we actually built was an AI visual assistant that adapts to any industry that touches images &mdash; and every industry now touches images.</p>
+
+        <h2>Who Is Using It</h2>
+
+        <h3>Realtors &mdash; Property Visualization</h3>
+        <p>Send a photo of a bare apartment. Describe the desired style: "modern minimalist, warm wood floors, large sofa." Receive a staged version in seconds. Buyers see potential. Sellers close faster.</p>
+        <p>Before our client integrated this, each listing required either physical staging (expensive) or professional rendering (slow). Now it is a 15-second operation inside Telegram, branded as part of his agency's service.</p>
+
+        <h3>Interior Designers &mdash; Mood Boards and Concept Shots</h3>
+        <p>Designers send reference photos, describe the client's taste, and receive concept variations. Multi-reference support is critical here &mdash; they can combine elements from 5 different Pinterest inspirations into a single coherent composition.</p>
+        <p>What used to take hours in Photoshop is a voice message and a 10-second wait.</p>
+
+        <h3>E-Commerce Brands &mdash; Product Shots Without a Studio</h3>
+        <p>Product on a white background is a starting point. Product on a marble counter with soft morning light is a sale. Brands use the bot to generate lifestyle shots, seasonal variants, and campaign compositions &mdash; without shipping products to a photographer.</p>
+
+        <h3>The Common Thread</h3>
+        <p>Every industry that depends on visual communication can use this. The model is the same. The use cases are not. What changes is the system prompt, the branding, the pricing, and the client base. The AI engine stays constant underneath.</p>
+
+        <h2>The Product: What Your Clients Actually Get</h2>
+        <p>When a white-label partner deploys this, their end users interact with a clean Telegram bot that carries the partner's brand. Here is what that experience looks like.</p>
+
+        <h3>The Interaction Flow</h3>
+        <ol>
+            <li><strong>Send a photo</strong> &mdash; or up to 14 photos as references</li>
+            <li><strong>Describe the edit</strong> &mdash; by text or voice message</li>
+            <li><strong>The bot processes</strong> &mdash; Gemini 3 Pro generates the result</li>
+            <li><strong>Receive the output</strong> &mdash; preview + original (lossless PNG/JPG)</li>
+            <li><strong>Take action</strong> &mdash; retry with different prompt, download, or start new</li>
+        </ol>
+        <p>The entire interface is a single Telegram message that updates in place. No chat spam. Clean, decisive UX &mdash; carrying whatever brand our partner chose to put on it.</p>
+
+        <h3>Why Gemini 3 Pro?</h3>
+        <p>We chose Gemini 3 Pro after evaluating the alternatives:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Model</th>
+                    <th>Quality</th>
+                    <th>Speed</th>
+                    <th>Cost</th>
+                    <th>Our verdict</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>DALL-E 3</td>
+                    <td>Good</td>
+                    <td>Slow</td>
+                    <td>$$$</td>
+                    <td>Too expensive for consumer pricing</td>
+                </tr>
+                <tr>
+                    <td>Stable Diffusion</td>
+                    <td>Variable</td>
+                    <td>Fast</td>
+                    <td>$</td>
+                    <td>Quality inconsistent</td>
+                </tr>
+                <tr>
+                    <td>Midjourney</td>
+                    <td>Excellent</td>
+                    <td>Medium</td>
+                    <td>$$</td>
+                    <td>No API for Telegram integration</td>
+                </tr>
+                <tr>
+                    <td><strong>Gemini 3 Pro</strong></td>
+                    <td><strong>Excellent</strong></td>
+                    <td><strong>Medium</strong></td>
+                    <td><strong>$$</strong></td>
+                    <td><strong>Best quality/cost/API balance</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Partners inherit this choice. They do not evaluate models, negotiate API contracts, or monitor pricing changes. They get the result.</p>
+
+        <h3>Voice Commands: Why Every Industry Loves Them</h3>
+        <p>Text prompts work for simple edits. For the kind of descriptions a realtor or designer actually needs, voice is superior:</p>
+        <blockquote>"Take the living room from photo one, replace the sofa with the one from photo two, add warm afternoon light coming through the windows, and remove the clutter on the coffee table."</blockquote>
+        <p>Typing that takes 30 seconds. Speaking it takes 5. Voice commands doubled engagement per user in our deployments &mdash; and were particularly popular with non-technical end users who would never type a detailed prompt but will happily speak one.</p>
+
+        <h3>Multi-Reference Support &mdash; Where It Becomes a Moat</h3>
+        <p>Most image editing bots accept one image and one prompt. Our engine accepts up to 14 reference images &mdash; the technical capability that unlocks the real-world use cases partners care about:</p>
+        <ul>
+            <li><strong>Interior designers:</strong> "Combine the color palette from these 3 mood boards with the furniture style from these 2 references"</li>
+            <li><strong>Realtors:</strong> "Stage this empty apartment using the style from these 5 reference interiors"</li>
+            <li><strong>E-commerce:</strong> "Place my product on the backgrounds from these 4 lifestyle photos"</li>
+        </ul>
+        <p>One image plus one prompt is a toy. Fourteen references is a workflow tool.</p>
+
+        <h2>The Economics: What Partners Actually Earn</h2>
+
+        <p>This is where white-label gets real. Every partner sets their own pricing, aimed at their own market. The engine beneath is the same. Here is the unit economics we learned running it ourselves and deploying for partners.</p>
+
+        <h3>Credits Over Subscriptions &mdash; The Lesson We Paid For</h3>
+        <p>Our first iteration used monthly subscriptions. Churn after month one: 70%. Image editing is sporadic &mdash; realtors spend heavy weeks closing listings, then quiet weeks. Subscriptions create guilt during quiet weeks. Guilt becomes cancellation.</p>
+        <p>We switched to credit packs. Repurchase rate within 60 days: 85%. Partners inherit this model by default and save themselves the same mistake.</p>
+
+        <h3>Reference Pricing (What We Run)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Plan</th>
+                    <th>Credits</th>
+                    <th>Price</th>
+                    <th>Per image</th>
+                    <th>Markup over API cost</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Starter</td>
+                    <td>10</td>
+                    <td>$2.49</td>
+                    <td>$0.50</td>
+                    <td>3.6x</td>
+                </tr>
+                <tr>
+                    <td>Creator</td>
+                    <td>25</td>
+                    <td>$9.99</td>
+                    <td>$0.40</td>
+                    <td>2.9x</td>
+                </tr>
+                <tr>
+                    <td>Pro</td>
+                    <td>55</td>
+                    <td>$19.99</td>
+                    <td>$0.36</td>
+                    <td>2.6x</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Partners in higher-value verticals charge more. A realtor who closes a deal partly because AI staging won the buyer over does not flinch at $50 for 50 images. A designer billing a client $5,000 for concepts sees the bot as infrastructure. Pricing power scales with the vertical you serve.</p>
+
+        <h3>Unit Economics</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>API cost per generation</td>
+                    <td>$0.13-0.14</td>
+                </tr>
+                <tr>
+                    <td>Average revenue per generation (our tiers)</td>
+                    <td>$0.40</td>
+                </tr>
+                <tr>
+                    <td>Gross margin per generation</td>
+                    <td>~65%</td>
+                </tr>
+                <tr>
+                    <td>Infrastructure cost</td>
+                    <td>~$25/month</td>
+                </tr>
+                <tr>
+                    <td>Break-even point</td>
+                    <td>~100 generations/month</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>At 500 generations/month, monthly gross profit is ~$130. At 2,000: ~$520. Every additional generation is 65% margin. Partners charging premium pricing for vertical-specific use cases see margins of 75-85%.</p>
+
+        <h2>Technical Decisions</h2>
+
+        <h3>Single-Message UI</h3>
+        <p>Standard Telegram bots send a new message for every interaction. We imposed order through a single-message architecture:</p>
+        <ul>
+            <li>One message shows the current state (uploaded images, prompt, status)</li>
+            <li>Every action updates that same message instead of sending a new one</li>
+            <li>Users always see a clean, current command post</li>
+        </ul>
+
+        <h3>Cost Tracking per Request</h3>
+        <p>Every generation logs its cost to the database:</p>
+        <pre><code>request_id | user_id | model | prompt | status | cost_usd | created_at</code></pre>
+        <p>This gives us:</p>
+        <ul>
+            <li>Real-time unit economics monitoring</li>
+            <li>Per-user profitability analysis</li>
+            <li>Cost anomaly detection (if API pricing changes)</li>
+            <li>Data for pricing optimization</li>
+        </ul>
+
+        <h3>Localization</h3>
+        <p>Full Russian and English support. Not just translated strings &mdash; the entire UX adapts: button labels, error messages, help text, onboarding flow. Adding languages is modular &mdash; new languages require only a new locale file, no code changes.</p>
+
+        <h2>What We Learned From Real Deployments</h2>
+
+        <h3>1. The Use Cases We Never Predicted</h3>
+        <p>We built for content creators. The buyers who came were realtors, designers, and brand owners. The lesson: once the engine works, stop trying to predict the market. Let buyers tell you what they need it for, and make the system flexible enough to reframe.</p>
+
+        <h3>2. Voice Input &gt; Text Input &mdash; Especially for Non-Technical Users</h3>
+        <p>We expected 80% text, 20% voice. Reality across deployments: roughly 55% voice, 45% text. Realtors walking between properties speak. Designers dictating between calls speak. The bot meets users where they actually are &mdash; not at a keyboard.</p>
+
+        <h3>3. Credit System &gt; Subscription for Sporadic Use</h3>
+        <p>Initial prototype used subscriptions. Churn after first month: 70%. Switching to credits: 85% repurchase within 60 days. Every partner inherits this model and skips the mistake.</p>
+
+        <h3>4. The Moat Is Not the Model &mdash; It Is the Wrapper Around It</h3>
+        <p>Any competitor can call the same Gemini API. The moat is multi-reference handling, voice-to-prompt pipeline, single-message UX, cost tracking, and content moderation. Each one is a small piece. Together, they are the reason a realtor picks the branded bot over opening a browser and typing into ChatGPT.</p>
+
+        <h2>The White-Label Offering</h2>
+        <p>If you serve an industry that touches visual content &mdash; real estate, interior design, e-commerce, marketing, events, fashion, or anything adjacent &mdash; you can run this engine under your brand.</p>
+
+        <h3>What You Get</h3>
+        <ul>
+            <li><strong>Your brand, your bot name</strong> &mdash; your clients never see ours</li>
+            <li><strong>Industry-tuned system prompt</strong> &mdash; the AI behaves like it was built for your vertical</li>
+            <li><strong>Custom pricing tiers</strong> &mdash; price for your market, not ours</li>
+            <li><strong>Admin dashboard</strong> &mdash; user analytics, revenue, cost tracking per request</li>
+            <li><strong>Full source code and documentation</strong> &mdash; no vendor lock-in</li>
+            <li><strong>Deployment on your infrastructure or ours</strong> &mdash; your choice</li>
+            <li><strong>30 days of support included</strong> &mdash; maintenance retainer available after</li>
+        </ul>
+
+        <h3>What You Bring</h3>
+        <ul>
+            <li><strong>A vertical</strong> &mdash; an industry and an audience that needs visual AI</li>
+            <li><strong>A brand</strong> &mdash; the name your clients already trust</li>
+            <li><strong>Distribution</strong> &mdash; the channel to reach your users (your agency, your community, your client list)</li>
+        </ul>
+
+        <h3>Who This Is For</h3>
+        <ul>
+            <li>Real estate agencies adding AI staging to their service</li>
+            <li>Interior designers offering instant concept generation to clients</li>
+            <li>E-commerce brands replacing studio shoots with AI compositions</li>
+            <li>Marketing agencies adding a new productized service</li>
+            <li>Fractional CTOs and consultancies adding AI to their offerings</li>
+        </ul>
+
+        <p>White-label deployment starts from <strong>$1,500</strong> plus monthly hosting (can run on your infrastructure for zero ongoing fees to us).</p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <p><strong>How quickly can you deploy a white-label version?</strong><br>Branded deployment with custom system prompt and pricing tiers typically takes 5-10 working days from kickoff. Industry-specific fine-tuning adds 3-5 days.</p>
+
+        <p><strong>Who owns the users and revenue?</strong><br>You do. The bot runs under your brand, users sign up to you, payments go to your account. We are infrastructure, not a middleman.</p>
+
+        <p><strong>How long does a generation take?</strong><br>5-15 seconds depending on complexity and server load.</p>
+
+        <p><strong>What's the maximum image resolution?</strong><br>Input: any resolution (auto-compressed for API). Output: up to the model's maximum (typically 1024&times;1024 or higher for Gemini 3 Pro).</p>
+
+        <p><strong>Can I customize the AI's behavior for my industry?</strong><br>Yes. The system prompt is fully configurable. Realtor deployments receive property-specific instructions. Designer deployments receive mood-board-specific instructions. Each vertical gets tuning for its use case.</p>
+
+        <p><strong>How do you handle abuse?</strong><br>Content moderation via Gemini's built-in safety filters plus custom rules. Usage rate limiting prevents API abuse. User blocking is available in the admin dashboard.</p>
+
+        <p><strong>What happens if I outgrow the setup?</strong><br>Source code is yours. You can scale on your own infrastructure, hire engineers to extend it, or retain us for continued development. No lock-in.</p>
+
+        <p><strong>See also:</strong></p>
+        <ul>
+            <li><a href="cream-mic-ai-desktop-assistant.html">Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers</a></li>
+            <li><a href="resumequick-ai-resume-builder.html">ResumeQuick: AI Resume Builder in 12 Languages</a></li>
+            <li><a href="what-is-necl.html">What Is NeCL? AI Engineering for SaaS</a></li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>Run this under your brand</h3>
+            <p>Describe your industry and audience on Telegram &mdash; we'll scope a white-label deployment for you.</p>
+            <a href="https://t.me/adjacent_ai" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'blog_cta',article:'pickachu'})">Write on Telegram</a>
+            <br><br>
+            <a href="https://calendly.com/neclcompany/30min" style="font-size:0.85rem;color:#6b7280;text-decoration:underline;" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'blog_cta',article:'pickachu'})">or book a 30-min call</a>
+        </div>
+    </article>
+
+    <script>
+    (function(){
+        if (typeof gtag === 'undefined') return;
+        var article = 'pickachu';
+        var milestones = [25, 50, 75, 100];
+        var hit = {};
+        window.addEventListener('scroll', function() {
+            var h = document.documentElement, b = document.body;
+            var pct = ((h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight)) * 100;
+            for (var i = 0; i < milestones.length; i++) {
+                var m = milestones[i];
+                if (pct >= m && !hit[m]) {
+                    hit[m] = 1;
+                    gtag('event', 'scroll_depth', { percent: m, article: article });
+                }
+            }
+        }, { passive: true });
+        [30, 60, 120, 300].forEach(function(sec) {
+            setTimeout(function() {
+                gtag('event', 'time_on_article', { seconds: sec, article: article });
+            }, sec * 1000);
+        });
+    })();
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>

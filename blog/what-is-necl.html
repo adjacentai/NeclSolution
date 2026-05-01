@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>What Is NeCL? AI Engineering for SaaS — Systems, Not Wrappers | NeCL Blog</title>
+    <meta name="description" content="NeCL is an AI engineering studio that builds production-grade RAG, agents, and AI-native backends for SaaS companies. Engineered for scale, shipped in 2 weeks. From $5,000.">
+    <link rel="canonical" href="https://neclco.com/blog/what-is-necl.html">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png?v=2">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="What Is NeCL? AI Engineering for SaaS — Systems, Not Wrappers">
+    <meta property="og:description" content="Production-grade AI systems for SaaS — RAG, agents, AI-native backends. Engineered for scale, not glued from wrappers.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/what-is-necl.html">
+    <meta property="og:image" content="../assets/images/blog/what-is-necl-og.png">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="What Is NeCL? AI Engineering for SaaS — Systems, Not Wrappers">
+    <meta name="twitter:description" content="Production-grade AI systems for SaaS — RAG, agents, AI-native backends. Engineered for scale, not glued from wrappers.">
+    <meta name="twitter:image" content="../assets/images/blog/what-is-necl-og.png">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        article { flex: 1; max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        .post-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.5rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.75rem; color: var(--text-dim); }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; line-height: 1.2; }
+        .lead { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.7; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+        p { margin-bottom: 1.2rem; font-size: 1rem; }
+        ul, ol { margin: 0 0 1.2rem 1.5rem; }
+        li { margin-bottom: 0.4rem; font-size: 1rem; }
+        code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88rem; }
+        pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; color: inherit; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            article { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="./" class="nav-back">&larr; All posts</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="post-meta">
+            <span class="post-tag">Company</span>
+            <span class="post-date">Apr 12, 2026</span>
+        </div>
+
+        <h1>What Is NeCL? AI Engineering for SaaS &mdash; Systems, Not Wrappers</h1>
+        <img src="../assets/images/blog/what-is-necl-hero.png" alt="NeCL AI Engineering Studio" class="hero-img" loading="lazy">
+        <p class="lead">Every SaaS company knows it needs AI features. Most don't have an AI engineering team &mdash; and hiring one takes months. NeCL fills that gap. We are the AI engineering team you plug into your product without the overhead of building one yourself.</p>
+
+        <blockquote>Production-grade AI systems for SaaS &mdash; RAG, agents, AI-native backends. Engineered for scale, not glued from wrappers. Shipped in 2 weeks. From $5,000.</blockquote>
+
+        <p>NeCL (Neural Engineering &amp; Cognitive Logic) is an AI engineering studio. We build the AI layer inside your product: retrieval-augmented generation that actually retrieves, agents that actually act, backends that survive real traffic. We deploy to production in 2 weeks &mdash; not 2 months.</p>
+        <p>We serve 4,000+ active users across our own products and work with SaaS companies across the US, Europe, and Central Asia. This article explains who we are, how we work, and why companies choose us over alternatives.</p>
+
+        <h2>What NeCL Is NOT</h2>
+        <p>The AI services market is full of noise. Let us be precise about what we are not.</p>
+        <p><strong>We are not ChatGPT integrators.</strong> We don't paste an OpenAI API key into a no-code tool and call it a feature. If your product needs a &ldquo;chat with AI&rdquo; button and nothing deeper &mdash; there are cheaper options. We build systems where AI is load-bearing infrastructure, not a cosmetic addition.</p>
+        <p><strong>We are not a no-code agency.</strong> Zapier and Make are fine for simple automations. But when you need a RAG pipeline with real retrieval quality over 100K documents, or a voice agent that handles thousands of concurrent calls with sub-second latency &mdash; no-code breaks. We write real code: Python, FastAPI, LangGraph, PostgreSQL with pgvector, Docker. Engineered to survive scale.</p>
+        <p><strong>We are not consultants who hand you a PDF.</strong> We don't produce strategy decks. We produce working software. Deployed, documented, and handed off with source code you own.</p>
+
+        <h2>What We Build</h2>
+        <p>Every engagement starts from the same question: where does AI create real value inside your product? From there, we engineer and ship one of these systems:</p>
+
+        <h3>RAG Systems and Knowledge Bases</h3>
+        <p>Retrieval-Augmented Generation is the backbone of AI that answers questions using <em>your</em> data instead of hallucinating. We build RAG systems that connect to your documents, databases, CRM, and internal knowledge &mdash; with real retrieval quality, not keyword matching disguised as semantic search.</p>
+        <p>The result: an AI that knows your product as well as your best engineer, available 24/7 to your users and your team.</p>
+
+        <h3>AI Agents</h3>
+        <p>Autonomous agents that qualify leads, process inbound requests, handle customer onboarding, and execute multi-step workflows. Not chatbots that follow a script &mdash; agents that reason, use tools, and make decisions. Built on LangGraph with real tool-use architecture.</p>
+
+        <h3>AI-Native Backends</h3>
+        <p>Full-stack backends where AI is a core component, not an afterthought. Embedding pipelines, evaluation harnesses, model routing, cost optimization, observability &mdash; everything a production AI system needs to run reliably and affordably at scale.</p>
+
+        <h3>Bots and Assistants</h3>
+        <p>Telegram, WhatsApp, and web-based assistants powered by modern LLMs. Customer support automation, sales qualification, appointment booking, internal knowledge access. These understand context, handle voice, process documents, and integrate with your existing stack.</p>
+
+        <h2>How We Know Our Engineering Works</h2>
+        <p>We don't just build AI for clients &mdash; we build and operate our own AI products. This is the difference between an engineer who reads about production and one who lives in it.</p>
+        <ul>
+            <li><strong>Slowpoke Bot</strong> &mdash; multi-model AI assistant in Telegram with 600+ active users. Semantic routing between GPT, Gemini, and Imagen. Pay-as-you-go monetization.</li>
+            <li><strong>ResumeQuick</strong> &mdash; AI career platform with resume generation, mock interviews, and job matching. 2,000+ users across 12 languages.</li>
+        </ul>
+        <p>These products are live, monetized, and serving real users every day. When we tell you a RAG pipeline will handle your query volume, or that a credit-based payment system will monetize &mdash; we're speaking from direct operating experience, not theory.</p>
+
+        <h2>Our Flagship Case</h2>
+        <p><strong>Investment fund &mdash; due diligence pipeline.</strong> Replaced approximately 2 months of manual analyst work with a 20-minute automated pipeline. On-premise deployment, zero third-party data exposure. The fund's sensitive financial documents never leave their infrastructure.</p>
+        <p>This is the kind of work we do best: a real business process, a measurable time reduction, and engineering constraints (on-premise, data privacy) that require genuine technical depth.</p>
+
+        <h2>How We Work</h2>
+        <p>Our process is designed for speed without cutting corners:</p>
+        <p><strong>Day 1&ndash;2: Scoping.</strong> You describe the problem. We define the MVP scope, select the tech stack, and give you a fixed price and timeline. No ambiguity &mdash; you know what you're getting and when.</p>
+        <p><strong>Day 3&ndash;12: Building.</strong> Iterative development with working demos as features complete. You see progress throughout, not silence followed by a big reveal.</p>
+        <p><strong>Day 12&ndash;14: Ship.</strong> Production deployment, testing, documentation, handoff. You get working software, full source code, and deployment on your infrastructure.</p>
+        <p><strong>After launch:</strong> 30 days of support included. Ongoing maintenance and feature development available as a retainer.</p>
+
+        <h3>Pricing</h3>
+        <p>AI engineering engagements start from <strong>$5,000</strong>. Custom development is also available at $100/hour. Every project includes full source code, documentation, and deployment.</p>
+
+        <h3>Payment</h3>
+        <p>50% upfront, 50% on delivery. Wire transfer or Payoneer for US/EU clients.</p>
+
+        <h2>Why Companies Choose NeCL</h2>
+        <p><strong>Engineering depth, not wrapper assembly.</strong> We build production AI systems &mdash; RAG with real retrieval quality, agents with real tool use, backends with real observability. This is our core differentiator. When your CTO asks technical questions about embedding models, eval pipelines, or retrieval architecture &mdash; we have real answers, not marketing talking points.</p>
+        <p><strong>Speed as proof.</strong> 2-week delivery is our actual average. We have shipped a full-stack SaaS MVP (Telegram bot + web dashboard + Stripe + RAG) in 9 days from kickoff. Speed is not the promise &mdash; it's the evidence that the engineering claim is real.</p>
+        <p><strong>No vendor lock-in.</strong> You get full source code, documentation, and deployment on your infrastructure. If you want to part ways, you take everything with you.</p>
+        <p><strong>We operate what we build.</strong> Our own products serve 4,000+ users. We see what breaks in production and we engineer around it. This gives us intuition that pure-services teams lack &mdash; the difference between reading about scale and living it.</p>
+
+        <h2>Working With Agencies and Service Providers</h2>
+        <p>If you run a web agency, consult as a fractional CTO, or manage a marketing firm &mdash; your clients are asking for AI features. You need a technical AI team to deliver, without hiring engineers.</p>
+        <p>NeCL works as your <strong>white-label AI engineering partner</strong>. You own the client relationship. We build the AI. Your client gets a great product. You expand your offering without expanding your team.</p>
+        <p>This is not a referral program. It's a real partnership with revenue sharing and joint delivery. If this fits your practice, <a href="https://calendly.com/neclcompany/30min" onclick="gtag('event','click_calendly',{location:'blog_inline',article:'what-is-necl'})">let's talk</a>.</p>
+
+        <h2>Our Markets</h2>
+        <ul>
+            <li><strong>United States (60%)</strong> &mdash; primary market. SaaS startups and AI-product companies. Highest-value engagements.</li>
+            <li><strong>Europe (20%)</strong> &mdash; GDPR-compliant AI solutions, particularly on-premise RAG for data-sensitive industries.</li>
+            <li><strong>Kazakhstan (15%)</strong> &mdash; growing tech ecosystem, local connections, Astana Hub community.</li>
+        </ul>
+        <p>We work remotely and async. Clear documentation and Telegram-based communication handle timezone differences.</p>
+
+        <h2>Frequently Asked Questions</h2>
+        <p><strong>How much does a project cost?</strong><br>AI engineering engagements start from $5,000. Custom development is $100/hour. We scope every project with a fixed price before work begins.</p>
+        <p><strong>What's your tech stack?</strong><br>Python, FastAPI, LangGraph, aiogram 3, PostgreSQL with pgvector, Redis, Docker. Deployment on Railway or your infrastructure. On-premise LLMs (Llama, Mistral) when data privacy requires it.</p>
+        <p><strong>Can you work with my existing systems?</strong><br>Yes. We integrate with CRMs, Google Workspace, Notion, Slack, Stripe, and custom APIs.</p>
+        <p><strong>What if I need changes after delivery?</strong><br>30 days of support included. After that, we offer maintenance retainers or ad-hoc development.</p>
+        <p><strong>Do you sign NDAs?</strong><br>Yes. All client work is confidential by default.</p>
+        <p><strong>Do you work with agencies and service providers?</strong><br>Yes. We operate as a white-label AI engineering team for agencies, fractional CTOs, and consultancies who need AI delivery capability. <a href="https://calendly.com/neclcompany/30min" onclick="gtag('event','click_calendly',{location:'blog_faq',article:'what-is-necl'})">Book a call</a> to discuss.</p>
+
+        <p><strong>See also:</strong></p>
+        <ul>
+            <li><a href="resumequick-ai-resume-builder.html">ResumeQuick: AI Resume Builder Used by 2,000+ People in 12 Languages</a></li>
+            <li><a href="pickachu-bot-ai-image-editor.html">Pickachu AI Image Editor: White-Label for Realtors, Designers, and Brands</a></li>
+            <li><a href="cream-mic-ai-desktop-assistant.html">Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers</a></li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>Let's talk about your AI challenge</h3>
+            <p>Describe your project on Telegram — we'll reply within hours. Or book a call if you prefer to talk first.</p>
+            <a href="https://t.me/adjacent_ai" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'blog_cta',article:'what-is-necl'})">Write on Telegram</a>
+            <br><br>
+            <a href="https://calendly.com/neclcompany/30min" style="font-size:0.85rem;color:#6b7280;text-decoration:underline;" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'blog_cta',article:'what-is-necl'})">or book a 30-min call</a>
+        </div>
+    </article>
+
+    <script>
+    (function(){
+        if (typeof gtag === 'undefined') return;
+        var article = 'what-is-necl';
+        var start = Date.now();
+        var milestones = [25, 50, 75, 100];
+        var hit = {};
+        window.addEventListener('scroll', function() {
+            var h = document.documentElement, b = document.body;
+            var pct = ((h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight)) * 100;
+            for (var i = 0; i < milestones.length; i++) {
+                var m = milestones[i];
+                if (pct >= m && !hit[m]) {
+                    hit[m] = 1;
+                    gtag('event', 'scroll_depth', { percent: m, article: article });
+                }
+            }
+        }, { passive: true });
+        [30, 60, 120, 300].forEach(function(sec) {
+            setTimeout(function() {
+                gtag('event', 'time_on_article', { seconds: sec, article: article });
+            }, sec * 1000);
+        });
+    })();
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>

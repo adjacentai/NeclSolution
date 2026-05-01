@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>Blog | NeCL — AI Engineering Insights</title>
+    <meta name="description" content="AI engineering insights, case studies, and practical guides from NeCL team.">
+    <link rel="canonical" href="https://neclco.com/blog/">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; --r: 12px; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        main { flex: 1; max-width: 800px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.4rem; }
+        .subtitle { color: var(--text-dim); margin-bottom: 2.5rem; font-weight: 300; }
+        .posts { display: flex; flex-direction: column; gap: 1.2rem; }
+        .post { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); padding: 1.8rem; transition: all 0.2s; text-decoration: none; color: var(--text); display: block; }
+        .post:hover { border-color: var(--accent); box-shadow: 0 4px 16px rgba(232,160,180,0.12); }
+        .post-meta { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.72rem; color: var(--text-dim); }
+        .post-title { font-size: 1.15rem; font-weight: 700; margin-bottom: 0.4rem; }
+        .post-desc { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            main { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="../" class="nav-back">&larr; Home</a>
+        </div>
+    </nav>
+
+    <main>
+        <h1>Blog</h1>
+        <p class="subtitle">AI engineering insights, case studies, and practical guides.</p>
+
+        <div class="posts">
+            <a href="what-is-necl.html" class="post" onclick="gtag('event','click_blog_article',{article:'what-is-necl',location:'blog_list'})">
+                <div class="post-meta">
+                    <span class="post-tag">Company</span>
+                    <span class="post-date">Apr 12, 2026</span>
+                </div>
+                <h2 class="post-title">What Is NeCL? AI Engineering for SaaS — Systems, Not Wrappers</h2>
+                <p class="post-desc">RAG, agents, AI-native backends — engineered for scale, shipped in 2 weeks. Who we are and how we work with SaaS companies.</p>
+            </a>
+
+            <a href="pickachu-bot-ai-image-editor.html" class="post" onclick="gtag('event','click_blog_article',{article:'pickachu',location:'blog_list'})">
+                <div class="post-meta">
+                    <span class="post-tag">White-Label</span>
+                    <span class="post-date">Apr 19, 2026</span>
+                </div>
+                <h2 class="post-title">Pickachu AI Image Editor: White-Label for Realtors, Interior Designers, and Brands</h2>
+                <p class="post-desc">We built Pickachu. They rebranded it. How industries we never planned for now run our AI image editor &mdash; with real unit economics and 65% margins.</p>
+            </a>
+
+            <a href="cream-mic-ai-desktop-assistant.html" class="post" onclick="gtag('event','click_blog_article',{article:'cream-mic',location:'blog_list'})">
+                <div class="post-meta">
+                    <span class="post-tag">Product</span>
+                    <span class="post-date">Apr 12, 2026</span>
+                </div>
+                <h2 class="post-title">Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time</h2>
+                <p class="post-desc">Voice questions, screenshot analysis, real-time AI answers — without leaving your workflow. For developers and professionals.</p>
+            </a>
+
+            <a href="resumequick-ai-resume-builder.html" class="post" onclick="gtag('event','click_blog_article',{article:'resumequick',location:'blog_list'})">
+                <div class="post-meta">
+                    <span class="post-tag">Product</span>
+                    <span class="post-date">Apr 12, 2026</span>
+                </div>
+                <h2 class="post-title">ResumeQuick: AI Resume Builder Used by 2,000+ People in 12 Languages</h2>
+                <p class="post-desc">ATS-optimized resumes in 2 minutes. Plus mock interviews, job matching, and career planning. Free to start.</p>
+            </a>
+
+            <a href="stop-using-gpt4-for-everything.html" class="post" onclick="gtag('event','click_blog_article',{article:'stop-using-gpt4',location:'blog_list'})">
+                <div class="post-meta">
+                    <span class="post-tag">Engineering</span>
+                    <span class="post-date">Apr 5, 2026</span>
+                </div>
+                <h2 class="post-title">Stop using GPT-4 for everything</h2>
+                <p class="post-desc">How semantic routing cuts your OpenAI bill by 60% without losing quality. The exact pipeline we use in production.</p>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>
