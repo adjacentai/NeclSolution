@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>Cream Typer: Local Whisper Voice Dictation for macOS (Open Source) | NeCL Blog</title>
+    <meta name="description" content="We open-sourced Cream Typer — local Whisper voice dictation for macOS with 18-language on-the-fly translation. ~300 lines of Python, fully offline, MIT-licensed.">
+    <link rel="canonical" href="https://neclco.com/blog/cream-typer-open-source-voice-dictation-macos.html">
+    <meta property="og:title" content="Cream Typer: Local Whisper Voice Dictation for macOS (Open Source)">
+    <meta property="og:description" content="Tap Caps Lock, speak any language, get any other — pasted at your cursor. Local whisper.cpp on Metal GPU. Zero cloud. Zero telemetry. MIT-licensed.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/cream-typer-open-source-voice-dictation-macos.html">
+    <meta property="og:image" content="../assets/images/blog/cream-typer-og.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        article { flex: 1; max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        .post-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.5rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.75rem; color: var(--text-dim); }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; line-height: 1.2; }
+        .lead { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.7; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+        p { margin-bottom: 1.2rem; font-size: 1rem; }
+        ul, ol { margin: 0 0 1.2rem 1.5rem; }
+        li { margin-bottom: 0.4rem; font-size: 1rem; }
+        code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88rem; }
+        pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; color: inherit; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
+        .highlight-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 2rem 0; }
+        .highlight-box p:last-child { margin-bottom: 0; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+        th { font-weight: 600; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            article { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="./" class="nav-back">&larr; All posts</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="post-meta">
+            <span class="post-tag">Open Source</span>
+            <span class="post-date">May 3, 2026</span>
+        </div>
+
+        <h1>Cream Typer: Local Whisper Voice Dictation for macOS (Open Source)</h1>
+        <img src="../assets/images/blog/cream-typer-og.png" alt="Cream Typer — local Whisper voice dictation for macOS" class="hero-img" loading="lazy">
+        <p class="lead">8 hours of writing prompts and code a day. Wrists screaming. Every voice dictation tool we tried either shipped audio to a US cloud, came as a 200&nbsp;MB Electron monster, or made you hold a key like a walkie-talkie. So we built our own — and open-sourced it today.</p>
+
+        <p><strong>Cream Typer</strong> is a tiny voice dictation tool for macOS. Tap Caps Lock, speak in any language, get text in any other language pasted at your cursor — in Slack, Notes, VS Code, your browser, anywhere. Runs entirely on your machine. No cloud, no API keys, no telemetry.</p>
+
+        <p>MIT-licensed. ~300 lines of Python. Sub-second latency on Apple Silicon.</p>
+
+        <div class="highlight-box">
+            <p><strong>Repo:</strong> <a href="https://github.com/adjacentai/cream-typer" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_github',{location:'article_top',article:'cream-typer'})">github.com/adjacentai/cream-typer</a></p>
+            <p>Star it, fork it, send a PR — we're calling for contributors on Windows and Linux backends.</p>
+        </div>
+
+        <h2>Why we built it</h2>
+
+        <p>We write code 8 hours a day at NeCL. Wrists were dying. We tried every popular voice dictation tool on the market. Each had at least one dealbreaker:</p>
+
+        <ul>
+            <li><strong>Cloud-only tools</strong> shipped our audio to a US server. Our keystrokes are not training data.</li>
+            <li><strong>Electron-based apps</strong> ate 200&nbsp;MB of RAM and half a percent of battery just to sit in the menu bar.</li>
+            <li><strong>Hold-to-talk hotkeys</strong> require you to physically press a key for the entire duration of speech. Try doing that for a 3-minute design discussion.</li>
+        </ul>
+
+        <p>We wanted four things:</p>
+
+        <ul>
+            <li><strong>Local</strong> — no audio leaves the Mac, ever</li>
+            <li><strong>Fast</strong> — sub-second transcription</li>
+            <li><strong>Toggle</strong> — tap to start, tap to stop, hands free</li>
+            <li><strong>Polyglot</strong> — speak any language, get any other</li>
+        </ul>
+
+        <p>Nothing on the market did all four. So we built it ourselves.</p>
+
+        <h2>How it works</h2>
+
+        <pre><code>Caps Lock (tap)  →  recording starts
+Caps Lock (tap)  →  whisper.cpp on Metal GPU  →  clipboard  →  Cmd+V</code></pre>
+
+        <p>Tap Caps Lock. Speak. Tap again. Text appears wherever the cursor is. Doesn't matter what app you're in — Slack, VS Code, Notes, browser, terminal. The previous clipboard contents are saved before paste and restored 150ms later, so nothing in your workflow breaks.</p>
+
+        <h2>The translation magic — and why it should not exist</h2>
+
+        <p>This is the part we did not expect.</p>
+
+        <p>Whisper has a built-in <code>task=translate</code> flag that's <em>supposed</em> to translate audio to English. <strong>It doesn't work properly on <code>large-v3-turbo</code></strong> — that model was fine-tuned without translation data, and the flag returns garbled output. The fastest, most useful Whisper variant has translation broken on arrival.</p>
+
+        <p>We sidestepped it. The fix turns out to be a single config swap, not an extra model.</p>
+
+        <h3>The insight</h3>
+
+        <p>Whisper's encoder produces a <strong>language-agnostic representation</strong> of audio. It encodes <em>meaning</em>, not words. The decoder then writes that meaning down in whichever language you specify via the <code>language</code> parameter.</p>
+
+        <p>So if you speak English with <code>language="ru"</code> set — the decoder outputs Russian. <strong>Same audio in. Different writing out.</strong> Technically not "translation" in the architectural sense — practically identical to what users want.</p>
+
+        <pre><code># That's the entire "translation feature"
+def transcribe(audio: bytes, target_lang: str) -> str:
+    return whisper_client.post(
+        audio=audio,
+        language=target_lang,   # ← swap this, get a different output language
+    )</code></pre>
+
+        <p>One line of config instead of bundling a translation model. A whole feature for free.</p>
+
+        <h3>What this unlocks</h3>
+
+        <p>Cream Typer ships with 18 modes in the menu bar. Click to switch. Whatever you say, you get text in the active mode's language:</p>
+
+        <table>
+            <thead>
+                <tr><th>You speak (any language)</th><th>Active mode</th><th>What gets pasted</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>🇷🇺 «Привет, как у тебя дела?»</td><td>🇬🇧 English</td><td>Hello, how are you doing?</td></tr>
+                <tr><td>🇬🇧 "Let's ship it on Friday"</td><td>🇷🇺 Русский</td><td>Давай выкатим в пятницу</td></tr>
+                <tr><td>🇩🇪 "Können wir morgen reden?"</td><td>🇯🇵 日本語</td><td>明日話せますか？</td></tr>
+                <tr><td>🇰🇷 "안녕하세요"</td><td>🇸🇦 العربية</td><td>مرحبًا</td></tr>
+                <tr><td>anything</td><td>🌐 → English</td><td>always English</td></tr>
+            </tbody>
+        </table>
+
+        <p>For multilingual teams this matters. You can think and speak in your native language and have the text land in whatever language the channel needs — without switching keyboard layouts, without touching a translator, without leaving the document you're working in.</p>
+
+        <blockquote>The strongest argument for the translation feature isn't "it saves time." It's "you compose better in your native language, and the chat doesn't have to know."</blockquote>
+
+        <h2>Why running it locally matters more than you think</h2>
+
+        <p>"Local AI" gets thrown around like a buzzword. For Cream Typer it's not a marketing line — it's the only architecture that works for what we're doing. Three reasons:</p>
+
+        <h3>1. Privacy that's actually verifiable</h3>
+
+        <p>When you dictate via cloud STT, your voice is sent to a third party. That third party processes it on their servers. Their privacy policy says they don't train on it (usually). You have no way to verify that claim.</p>
+
+        <p>With Cream Typer, the audio file lives in RAM on your Mac for ~400 milliseconds, gets passed to a local <code>whisper.cpp</code> process running on your own hardware, and is discarded. Zero network egress. Zero. You can verify it with Little Snitch, with <code>tcpdump</code>, with <code>lsof -i</code> — the audio never leaves the machine because there's no code path that would send it anywhere.</p>
+
+        <p>This matters for anyone dictating: medical notes, legal drafts, internal company chat, financial commentary, anything covered by NDA, anything you'd be uncomfortable seeing in a leaked dataset.</p>
+
+        <h3>2. Cost that scales to zero</h3>
+
+        <p>Cloud STT pricing models all converge on the same thing: you pay per minute of audio, forever. Even at $0.006 per minute (current OpenAI Whisper API), heavy daily users hit $30-60/month. That's a Spotify subscription burning every month for typing.</p>
+
+        <p>Cream Typer downloads the model once (~550&nbsp;MB), then runs forever for $0. The marginal cost of every word you dictate after install is electricity — and Apple Silicon's Neural Engine sips it. Talking for an hour into Cream Typer costs about as much as having your laptop screen on for an hour.</p>
+
+        <h3>3. Speed that beats round-trips</h3>
+
+        <p>Cloud round-trips take 200-800ms before the model even starts thinking. On a slow Wi-Fi or in a coffee shop, that becomes 1-2 seconds of staring at your screen waiting for text. Local inference on Metal GPU starts immediately and finishes in 0.3-0.5 seconds for 10 seconds of speech. By the time you'd see "Loading…" on a cloud tool, your text is already pasted.</p>
+
+        <h3>4. It works offline</h3>
+
+        <p>Plane. Train. Cabin. Hotel Wi-Fi that just died. Cloud dictation tools become bricks in those moments. Cream Typer keeps working because it doesn't need anything except your own hardware.</p>
+
+        <h2>The 18 languages, and how to add more</h2>
+
+        <p>Cream Typer ships with 18 language modes including the flagship "→ English from any" shortcut:</p>
+
+        <pre><code>🌐 → English (from any)
+🇬🇧 English        🇺🇦 Українська     🇪🇸 Español
+🇩🇪 Deutsch        🇫🇷 Français       🇮🇹 Italiano
+🇵🇹 Português      🇳🇱 Nederlands     🇵🇱 Polski
+🇯🇵 日本語          🇨🇳 中文            🇰🇷 한국어
+🇹🇷 Türkçe         🇹🇭 ไทย             🇻🇳 Tiếng Việt
+🇸🇦 العربية         🇷🇺 Русский</code></pre>
+
+        <p>Whisper itself supports 99 languages. Adding any of them is three lines in <code>src/config.py</code>:</p>
+
+        <pre><code>MODES = {
+    ...
+    "fi": {"language": "fi"},   # ← Finnish
+}
+MODE_LABELS = {
+    ...
+    "fi": "🇫🇮 Suomi",
+}
+MENU_MODES = [..., "fi"]</code></pre>
+
+        <p>That's the entire change. No UI code, no string files, no rebuild — restart the app, the new language is in the menu.</p>
+
+        <h2>Architecture & code quality</h2>
+
+        <p>The whole codebase reads in 10-15 minutes. We deliberately kept it under 300 lines because every additional line of platform-glue code is a line that breaks on macOS updates.</p>
+
+        <pre><code>src/
+├── app.py            # business logic — NO platform-specific code
+├── config.py         # constants, modes, hotkey codes
+├── recorder.py       # sounddevice → WAV in memory (io.BytesIO)
+├── transcriber.py    # HTTP client for whisper.cpp server
+└── backend/
+    ├── _base.py      # Protocol contracts for contributors
+    ├── _macos.py     # Quartz CGEventTap + Cmd+V + rumps  ✅
+    ├── _windows.py   # pynput + pystray                   🚧 stub
+    └── _linux.py     # pynput + pystray (X11)             🚧 stub</code></pre>
+
+        <p>Platform-specific code is isolated in <code>backend/</code>. The contracts are defined as Python <code>Protocol</code>s in <code>_base.py</code>. To add Windows or Linux support, you implement three functions: hotkey listener, paste action, tray icon — about 150 lines per platform. The rest of the code is unchanged.</p>
+
+        <h2>What works today, what's coming</h2>
+
+        <table>
+            <thead>
+                <tr><th>✅ Shipped</th><th>🚧 Coming</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>macOS Apple Silicon (Metal GPU)</td><td>Windows backend (pynput + pystray)</td></tr>
+                <tr><td>macOS Intel (CPU fallback)</td><td>Linux backend (X11 first, Wayland later)</td></tr>
+                <tr><td>18 language modes + auto-translate</td><td>Streaming transcription</td></tr>
+                <tr><td>Toggle hotkey on Caps Lock</td><td>Custom hotkeys</td></tr>
+                <tr><td>Clipboard preservation</td><td>Voice Activity Detection</td></tr>
+            </tbody>
+        </table>
+
+        <h2>Install in 5 minutes</h2>
+
+        <pre><code>git clone https://github.com/adjacentai/cream-typer
+cd cream-typer
+make setup    # creates venv, builds whisper.cpp, downloads the model
+make whisper  # terminal 1: keep the server running
+make run      # terminal 2: start the menu-bar app</code></pre>
+
+        <p>From <code>git clone</code> to first dictation: about 5 minutes — most of which is downloading the 550&nbsp;MB Whisper model.</p>
+
+        <p>You'll need to grant three macOS permissions on first run (Input Monitoring, Microphone, Accessibility). The app prompts for them automatically; full instructions are in the README.</p>
+
+        <h2>We're calling for contributors</h2>
+
+        <p>This is open source not as a marketing tactic. We genuinely use Cream Typer every day, and the only way it gets meaningfully better is if more people poke at it.</p>
+
+        <p>Where help would land hardest:</p>
+
+        <ul>
+            <li><strong>Windows backend</strong> — the contracts are defined, the stub is waiting. <code>pynput</code> + <code>pystray</code> should do most of the work.</li>
+            <li><strong>Linux backend</strong> — same architecture, X11 first, Wayland support later.</li>
+            <li><strong>Streaming transcription</strong> — instead of waiting for the full audio clip, transcribe chunks as you speak. Whisper.cpp supports it.</li>
+            <li><strong>Voice Activity Detection</strong> — smarter than the current 0.3s minimum-recording threshold.</li>
+            <li><strong>More languages</strong> — Whisper supports 99, we shipped 18. PR the rest.</li>
+            <li><strong>Custom hotkeys</strong> — Caps Lock works for us; some people want Right Cmd or fn.</li>
+        </ul>
+
+        <p>Open an issue, send a PR, or just star the repo to follow along.</p>
+
+        <h2>Why we open-sourced this</h2>
+
+        <p>Cream Typer is the kind of tool we use ourselves every day. The codebase reads in 10 minutes. It uses production-grade engineering — local Whisper, low-latency pipelines, CGEvent magic, clean platform abstractions — but applied to a personal pain point instead of a paying customer's problem.</p>
+
+        <p>The same engineering goes into our client work at NeCL: production RAG over enterprise documents, real-time voice agents for B2B call centers, on-prem AI for sensitive data. Open-sourcing tools like this is how we share what we know without giving away client work — and it lets us prove what we can build in code, not in case-study slides.</p>
+
+        <p>If it helps you, great. If you build something better on top of it, even better. If you need this kind of engineering for your own product — we're here.</p>
+
+        <p><strong>See also:</strong></p>
+        <ul>
+            <li><a href="cream-mic-ai-desktop-assistant.html">Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time</a></li>
+            <li><a href="stop-using-gpt4-for-everything.html">Stop using GPT-4 for everything</a></li>
+            <li><a href="what-is-necl.html">What Is NeCL? AI Engineering for SaaS — Systems, Not Wrappers</a></li>
+        </ul>
+
+        <div class="cta-box">
+            <h3>Need production AI engineering?</h3>
+            <p>We build local-first AI: RAG over enterprise documents, real-time voice agents, on-prem deployment. Same engineering you see in Cream Typer, applied to your business.</p>
+            <a href="https://github.com/adjacentai/cream-typer" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_github',{location:'blog_cta',article:'cream-typer'})">Star Cream Typer</a>
+            <br><br>
+            <a href="https://t.me/ownerai" style="font-size:0.85rem;color:#6b7280;text-decoration:underline;" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'blog_cta',article:'cream-typer'})">or talk to us on Telegram</a>
+        </div>
+    </article>
+
+    <script>
+    (function(){
+        if (typeof gtag === 'undefined') return;
+        var article = 'cream-typer';
+        var milestones = [25, 50, 75, 100];
+        var hit = {};
+        window.addEventListener('scroll', function() {
+            var h = document.documentElement, b = document.body;
+            var pct = ((h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight)) * 100;
+            for (var i = 0; i < milestones.length; i++) {
+                var m = milestones[i];
+                if (pct >= m && !hit[m]) {
+                    hit[m] = 1;
+                    gtag('event', 'scroll_depth', { percent: m, article: article });
+                }
+            }
+        }, { passive: true });
+        [30, 60, 120, 300].forEach(function(sec) {
+            setTimeout(function() {
+                gtag('event', 'time_on_article', { seconds: sec, article: article });
+            }, sec * 1000);
+        });
+    })();
+    </script>
+
+    <footer class="footer">
+        <p>&copy; 2025-2026 NeCL &mdash; Neural Engineering &amp; Cognitive Logic.</p>
+    </footer>
+</body>
+</html>
