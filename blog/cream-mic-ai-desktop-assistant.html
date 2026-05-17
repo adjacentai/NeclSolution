@@ -5,15 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
-    <title>Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time | NeCL Blog</title>
-    <meta name="description" content="A lightweight desktop AI overlay for developers and professionals. Voice questions, screenshot analysis, real-time answers. Interview prep, coding help, research. macOS + Windows.">
+    <title>AI Desktop Assistant for macOS & Windows — Voice + Screenshot | Cream Mic</title>
+    <meta name="description" content="Lightweight AI desktop assistant for macOS & Windows. Voice questions, screenshot analysis, real-time answers. Interview prep, coding help, research. By NeCL.">
     <link rel="canonical" href="https://neclco.com/blog/cream-mic-ai-desktop-assistant.html">
-    <meta property="og:title" content="Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time">
-    <meta property="og:description" content="A lightweight desktop AI overlay for developers and professionals. Voice questions, screenshot analysis, real-time answers. Interview prep, coding help, research. macOS + Windows.">
+    <meta property="og:title" content="AI Desktop Assistant for macOS & Windows — Voice + Screenshot (Cream Mic)">
+    <meta property="og:description" content="Lightweight AI desktop overlay. Voice questions, screenshot analysis, real-time answers. Interview prep, coding help, research. macOS + Windows.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://neclco.com/blog/cream-mic-ai-desktop-assistant.html">
     <meta property="og:image" content="../assets/images/blog/cream-mic-og.png">
     <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": "What can I use Cream Mic for?", "acceptedAnswer": {"@type": "Answer", "text": "Coding assistance, technical research, interview preparation, document analysis, debugging, architecture reviews — anything where you need quick AI help without leaving your current workflow."}},
+            {"@type": "Question", "name": "Does Cream Mic work alongside any app?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. It's a system-level overlay that works on top of any application — code editors, browsers, design tools, video calls, terminals."}},
+            {"@type": "Question", "name": "What is the latency of Cream Mic?", "acceptedAnswer": {"@type": "Answer", "text": "First words of the answer appear 1–3 seconds after you stop recording. TTS plays each sentence with ~400ms delay. For a 5-sentence answer, you hear the first sentence in 1.5 seconds and the last in ~4 seconds."}},
+            {"@type": "Question", "name": "Is my data private when using Cream Mic?", "acceptedAnswer": {"@type": "Answer", "text": "With local Whisper, your voice never leaves your machine. The LLM query is sent to the provider you select (OpenAI, Google, etc.) under their standard API privacy terms. Session logs are stored locally on your device."}},
+            {"@type": "Question", "name": "Does Cream Mic require internet?", "acceptedAnswer": {"@type": "Answer", "text": "For LLM responses and cloud STT: yes. For local Whisper transcription, the speech-to-text part works offline, but the AI response requires internet."}},
+            {"@type": "Question", "name": "Can I use Cream Mic for interview preparation?", "acceptedAnswer": {"@type": "Answer", "text": "Yes — this is one of the most popular use cases. Practice system design questions, get instant feedback, build a study log, and track your progress over time."}}
+        ]
+    }
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
@@ -46,6 +60,10 @@
         .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
         .cta-box h3 { margin-top: 0; }
         .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .tldr-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 0 0 2.5rem 0; }
+        .tldr-box strong.tldr-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+        .tldr-box ul { margin: 0 0 0 1.2rem; }
+        .tldr-box li { margin-bottom: 0.35rem; font-size: 0.95rem; }
         .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
         th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
@@ -74,6 +92,17 @@
         <h1>Cream Mic: AI Desktop Assistant That Listens, Sees, and Answers in Real Time</h1>
         <img src="../assets/images/blog/cream-mic-hero.png" alt="Cream Mic AI Desktop Assistant" class="hero-img" loading="lazy">
         <p class="lead">The best advisor is the one who is always present but never in the way. Who listens when spoken to, sees what you see, and delivers the answer before you finish formulating the question.</p>
+
+        <div class="tldr-box">
+            <strong class="tldr-label">TL;DR</strong>
+            <ul>
+                <li>Lightweight AI desktop overlay for macOS &amp; Windows — runs as a floating window on top of any app.</li>
+                <li>Two hotkeys: <strong>Caps Lock</strong> (voice question) and <strong>Alt/Option</strong> (screenshot analysis). No tab switching, no flow break.</li>
+                <li>First words of the answer in <strong>1–3 seconds</strong>. TTS streams sentence-by-sentence (~400ms per sentence).</li>
+                <li>Provider-agnostic: ElevenLabs / Whisper / Yandex / Sber for STT; Gemini 2.5 Flash or GPT-4.1-nano for the LLM. Local Whisper option keeps voice fully on-device.</li>
+                <li>Every Q&amp;A is auto-saved locally — a searchable study journal over time.</li>
+            </ul>
+        </div>
 
         <p>Every developer, engineer, and knowledge worker faces the same daily friction: context switching. You are deep in code — and need to look up an API signature. You are reviewing an architecture diagram — and need a second opinion. You are preparing for a technical interview — and need a sparring partner who knows system design as well as you do.</p>
         <p>Each interruption breaks your flow. Each tab switch costs 23 minutes of focus recovery. Each Google search pulls you out of the work and into the noise.</p>

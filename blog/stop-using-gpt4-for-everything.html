@@ -5,9 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
-    <title>Stop Using GPT-4 for Everything | NeCL Blog</title>
-    <meta name="description" content="How semantic routing cuts your OpenAI bill by 60% without losing quality. The exact pipeline we use in production at NeCL.">
+    <title>How to Reduce OpenAI Costs 60% with Semantic Routing | NeCL</title>
+    <meta name="description" content="Cut your OpenAI bill 60% with semantic routing — route easy queries to cheap models, hard ones to GPT-4. LLM cost optimization pipeline from NeCL production.">
     <link rel="canonical" href="https://neclco.com/blog/stop-using-gpt4-for-everything.html">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/stop-using-gpt4-for-everything.html">
+    <meta property="og:title" content="How to Reduce OpenAI Costs 60% with Semantic Routing">
+    <meta property="og:description" content="Route easy queries to cheap models, hard ones to GPT-4. The exact LLM cost optimization pipeline NeCL runs in production.">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": "What is semantic routing for LLMs?", "acceptedAnswer": {"@type": "Answer", "text": "Semantic routing classifies each incoming query by complexity and sends it to the cheapest model that can handle it. Simple queries (greetings, FAQs, yes/no) go to small models like GPT-4o-mini. Complex queries (analysis, reasoning, code) go to GPT-4o. The classifier itself adds about 5ms of latency."}},
+            {"@type": "Question", "name": "How much can semantic routing reduce OpenAI costs?", "acceptedAnswer": {"@type": "Answer", "text": "In NeCL's production bot serving 600+ active users, monthly OpenAI spend dropped from ~$1,800 to ~$720 — roughly a 60% reduction — with no detectable change in answer quality."}},
+            {"@type": "Question", "name": "Will quality drop if I route easy queries to cheaper models?", "acceptedAnswer": {"@type": "Answer", "text": "Not if the router is calibrated. About 80% of real-world queries are simple enough that smaller models handle them as well as GPT-4. A confidence-based fallback automatically escalates low-confidence answers to the larger model."}},
+            {"@type": "Question", "name": "Does the router add latency?", "acceptedAnswer": {"@type": "Answer", "text": "The classifier adds ~5ms. But routing reduces overall latency by 40% on average, because GPT-4o-mini responds 3–5x faster than GPT-4o for the queries that don't need full reasoning."}},
+            {"@type": "Question", "name": "How do I build a query complexity classifier?", "acceptedAnswer": {"@type": "Answer", "text": "Start with rules: short messages and common patterns → cheap model; everything else → full model. Log which model handled each query and whether the user was satisfied. That data lets you upgrade later to a fine-tuned embedding classifier if needed."}},
+            {"@type": "Question", "name": "Can semantic routing also improve reliability?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. A multi-model router can failover automatically when one provider has an outage — for example, routing to Gemini or Claude if OpenAI is down. Multi-vendor architecture is more robust than single-vendor dependence."}}
+        ]
+    }
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
@@ -37,6 +56,12 @@
         pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
         pre code { background: none; padding: 0; color: inherit; }
         blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .tldr-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 0 0 2.5rem 0; }
+        .tldr-box strong { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+        .tldr-box ul { margin: 0 0 0 1.2rem; }
+        .tldr-box li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .faq-item { margin-bottom: 1.2rem; }
+        .faq-item p { margin-bottom: 0.4rem; }
         .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
         .cta-box h3 { margin-top: 0; }
         .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
@@ -63,6 +88,16 @@
 
         <h1>Stop Using GPT-4 for Everything</h1>
         <p class="lead">Most AI products send every request to GPT-4. It's expensive, slow, and unnecessary. Here's how semantic routing cuts your OpenAI bill by 60% without losing quality.</p>
+
+        <div class="tldr-box">
+            <strong>TL;DR</strong>
+            <ul>
+                <li>Most production AI apps overpay because they route every query — even "hi" — to GPT-4o at $10/M tokens.</li>
+                <li>Semantic routing classifies queries by complexity and sends easy ones to GPT-4o-mini ($0.15/M), hard ones to GPT-4o.</li>
+                <li>NeCL production result (600+ active users): monthly OpenAI bill dropped from <strong>$1,800 → $720</strong>, average response 40% faster, quality undetectable to users.</li>
+                <li>Classifier adds ~5ms latency. Start with rules + length heuristics, upgrade to a fine-tuned embedding model later if needed.</li>
+            </ul>
+        </div>
 
         <h2>The problem</h2>
         <p>You built an AI product. Users love it. Then you check your OpenAI dashboard: $2,000/month and growing. Every message — whether it's "hi" or a complex analysis request — goes through GPT-4o at $10/M tokens.</p>
@@ -113,6 +148,38 @@ def route_query(text: str) -> str:
         <h2>Beyond cost savings</h2>
         <p>Routing isn't just about money. It's about speed. GPT-4o-mini responds 3-5x faster than GPT-4o. For chat interfaces, that's the difference between "snappy" and "laggy." Users notice.</p>
         <p>It's also about resilience. If OpenAI has an outage (and they do), your router can failover to Gemini or Claude automatically. Multi-model architecture is more robust than single-vendor dependence.</p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <p><strong>What is semantic routing for LLMs?</strong></p>
+            <p>Semantic routing classifies each incoming query by complexity and sends it to the cheapest model that can handle it. Simple queries (greetings, FAQs, yes/no) go to small models like GPT-4o-mini. Complex queries (analysis, reasoning, code) go to GPT-4o. The classifier itself adds about 5ms of latency.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>How much can semantic routing reduce OpenAI costs?</strong></p>
+            <p>In NeCL's production bot serving 600+ active users, monthly OpenAI spend dropped from ~$1,800 to ~$720 — roughly a 60% reduction — with no detectable change in answer quality.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>Will quality drop if I route easy queries to cheaper models?</strong></p>
+            <p>Not if the router is calibrated. About 80% of real-world queries are simple enough that smaller models handle them as well as GPT-4. A confidence-based fallback automatically escalates low-confidence answers to the larger model.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>Does the router add latency?</strong></p>
+            <p>The classifier adds ~5ms. But routing reduces overall latency by 40% on average, because GPT-4o-mini responds 3–5x faster than GPT-4o for the queries that don't need full reasoning.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>How do I build a query complexity classifier?</strong></p>
+            <p>Start with rules: short messages and common patterns → cheap model; everything else → full model. Log which model handled each query and whether the user was satisfied. That data lets you upgrade later to a fine-tuned embedding classifier if needed.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>Can semantic routing also improve reliability?</strong></p>
+            <p>Yes. A multi-model router can failover automatically when one provider has an outage — for example, routing to Gemini or Claude if OpenAI is down. Multi-vendor architecture is more robust than single-vendor dependence.</p>
+        </div>
 
         <div class="cta-box">
             <h3>Want us to audit your AI costs?</h3>

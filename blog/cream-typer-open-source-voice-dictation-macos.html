@@ -5,15 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
-    <title>Cream Typer: Local Whisper Voice Dictation for macOS (Open Source) | NeCL Blog</title>
-    <meta name="description" content="We open-sourced Cream Typer — local Whisper voice dictation for macOS with 18-language on-the-fly translation. ~300 lines of Python, fully offline, MIT-licensed.">
+    <title>Open-Source Whisper Voice Dictation for macOS — Offline, 18 Languages | Cream Typer</title>
+    <meta name="description" content="Open-source local Whisper voice dictation for macOS. Tap Caps Lock, speak any language, get any other. ~300 lines of Python, fully offline, MIT-licensed.">
     <link rel="canonical" href="https://neclco.com/blog/cream-typer-open-source-voice-dictation-macos.html">
-    <meta property="og:title" content="Cream Typer: Local Whisper Voice Dictation for macOS (Open Source)">
+    <meta property="og:title" content="Open-Source Whisper Voice Dictation for macOS — Cream Typer">
     <meta property="og:description" content="Tap Caps Lock, speak any language, get any other — pasted at your cursor. Local whisper.cpp on Metal GPU. Zero cloud. Zero telemetry. MIT-licensed.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://neclco.com/blog/cream-typer-open-source-voice-dictation-macos.html">
     <meta property="og:image" content="../assets/images/blog/cream-typer-og.png">
     <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": "How is Cream Typer different from cloud voice dictation tools?", "acceptedAnswer": {"@type": "Answer", "text": "Cream Typer runs whisper.cpp locally on your Mac's Metal GPU. Audio never leaves the machine — zero network egress, zero telemetry, no API keys. Cloud tools send your voice to a third-party server you have no way to verify."}},
+            {"@type": "Question", "name": "What languages does Cream Typer support?", "acceptedAnswer": {"@type": "Answer", "text": "18 language modes ship by default — English, Russian, Ukrainian, Spanish, German, French, Italian, Portuguese, Dutch, Polish, Japanese, Chinese, Korean, Turkish, Thai, Vietnamese, Arabic, plus a '→ English from any' shortcut. Whisper itself supports 99 languages; adding any is three lines in src/config.py."}},
+            {"@type": "Question", "name": "Does Cream Typer work offline?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. After the initial ~550MB Whisper model download, Cream Typer needs nothing from the network. Works on planes, trains, in cabins, and on dead hotel Wi-Fi."}},
+            {"@type": "Question", "name": "What is the transcription latency on Apple Silicon?", "acceptedAnswer": {"@type": "Answer", "text": "0.3–0.5 seconds for 10 seconds of speech, running on Metal GPU. By the time a cloud tool would show 'Loading…', your text is already pasted."}},
+            {"@type": "Question", "name": "Does Cream Typer work on Windows or Linux?", "acceptedAnswer": {"@type": "Answer", "text": "macOS Apple Silicon and Intel are shipped today. Windows and Linux backends are stubbed with defined contracts — about 150 lines per platform to implement hotkey listener, paste action, and tray icon. PRs welcome."}},
+            {"@type": "Question", "name": "How does the translation feature work?", "acceptedAnswer": {"@type": "Answer", "text": "Whisper's encoder produces a language-agnostic representation of audio. The decoder writes it down in whichever language you pass via the 'language' parameter. So speaking English with language='ru' set produces Russian text. One config swap, no extra translation model."}},
+            {"@type": "Question", "name": "What does it cost to run Cream Typer?", "acceptedAnswer": {"@type": "Answer", "text": "Zero marginal cost after install. The model downloads once, then runs on your hardware forever. Cloud STT typically costs $30–60/month for heavy daily users at $0.006/minute."}}
+        ]
+    }
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
@@ -49,6 +64,12 @@
         .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
         .highlight-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 2rem 0; }
         .highlight-box p:last-child { margin-bottom: 0; }
+        .tldr-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 0 0 2rem 0; }
+        .tldr-box strong.tldr-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+        .tldr-box ul { margin: 0 0 0 1.2rem; }
+        .tldr-box li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .faq-item { margin-bottom: 1.2rem; }
+        .faq-item p { margin-bottom: 0.4rem; }
         table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
         th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
         th { font-weight: 600; }
@@ -80,6 +101,17 @@
         <p><strong>Cream Typer</strong> is a tiny voice dictation tool for macOS. Tap Caps Lock, speak in any language, get text in any other language pasted at your cursor — in Slack, Notes, VS Code, your browser, anywhere. Runs entirely on your machine. No cloud, no API keys, no telemetry.</p>
 
         <p>MIT-licensed. ~300 lines of Python. Sub-second latency on Apple Silicon.</p>
+
+        <div class="tldr-box">
+            <strong class="tldr-label">TL;DR</strong>
+            <ul>
+                <li>Tap Caps Lock, speak any language, get text pasted at your cursor in any app on macOS.</li>
+                <li>100% local — whisper.cpp on Metal GPU. Zero cloud, zero telemetry, zero API keys.</li>
+                <li>18 languages with on-the-fly translation (single config swap, not an extra model).</li>
+                <li>Transcription latency: <strong>0.3–0.5 seconds</strong> for 10 seconds of speech on Apple Silicon.</li>
+                <li>~300 lines of Python, MIT-licensed. Windows &amp; Linux backends stubbed — PRs welcome.</li>
+            </ul>
+        </div>
 
         <div class="highlight-box">
             <p><strong>Repo:</strong> <a href="https://github.com/adjacentai/cream-typer" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_github',{location:'article_top',article:'cream-typer'})">github.com/adjacentai/cream-typer</a></p>
@@ -278,6 +310,43 @@ make run      # terminal 2: start the menu-bar app</code></pre>
         <p>The same engineering goes into our client work at NeCL: production RAG over enterprise documents, real-time voice agents for B2B call centers, on-prem AI for sensitive data. Open-sourcing tools like this is how we share what we know without giving away client work — and it lets us prove what we can build in code, not in case-study slides.</p>
 
         <p>If it helps you, great. If you build something better on top of it, even better. If you need this kind of engineering for your own product — we're here.</p>
+
+        <h2>Frequently Asked Questions</h2>
+
+        <div class="faq-item">
+            <p><strong>How is Cream Typer different from cloud voice dictation tools?</strong></p>
+            <p>Cream Typer runs whisper.cpp locally on your Mac's Metal GPU. Audio never leaves the machine — zero network egress, zero telemetry, no API keys. Cloud tools send your voice to a third-party server you have no way to verify.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>What languages does Cream Typer support?</strong></p>
+            <p>18 language modes ship by default — English, Russian, Ukrainian, Spanish, German, French, Italian, Portuguese, Dutch, Polish, Japanese, Chinese, Korean, Turkish, Thai, Vietnamese, Arabic, plus a "→ English from any" shortcut. Whisper itself supports 99 languages; adding any is three lines in <code>src/config.py</code>.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>Does Cream Typer work offline?</strong></p>
+            <p>Yes. After the initial ~550&nbsp;MB Whisper model download, Cream Typer needs nothing from the network. Works on planes, trains, in cabins, and on dead hotel Wi-Fi.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>What is the transcription latency on Apple Silicon?</strong></p>
+            <p>0.3–0.5 seconds for 10 seconds of speech, running on Metal GPU. By the time a cloud tool would show "Loading…", your text is already pasted.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>Does Cream Typer work on Windows or Linux?</strong></p>
+            <p>macOS Apple Silicon and Intel are shipped today. Windows and Linux backends are stubbed with defined contracts — about 150 lines per platform to implement hotkey listener, paste action, and tray icon. PRs welcome.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>How does the translation feature work?</strong></p>
+            <p>Whisper's encoder produces a language-agnostic representation of audio. The decoder writes it down in whichever language you pass via the <code>language</code> parameter. So speaking English with <code>language="ru"</code> produces Russian text. One config swap, no extra translation model.</p>
+        </div>
+
+        <div class="faq-item">
+            <p><strong>What does it cost to run Cream Typer?</strong></p>
+            <p>Zero marginal cost after install. The model downloads once, then runs on your hardware forever. Cloud STT typically costs $30–60/month for heavy daily users at $0.006/minute.</p>
+        </div>
 
         <p><strong>See also:</strong></p>
         <ul>

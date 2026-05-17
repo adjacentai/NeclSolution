@@ -5,15 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
     <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
-    <title>Pickachu AI Image Editor: White-Label for Realtors, Interior Designers, and Brands | NeCL Blog</title>
-    <meta name="description" content="Pickachu is an AI image editor built on Gemini 3 Pro. Realtors, interior designers, and brands now run it under their own names. White-label deployment, real unit economics, proven margins.">
+    <title>White-Label AI Image Editor for Real Estate, Interior Design & Brands | Pickachu</title>
+    <meta name="description" content="AI image editor for realtors, interior designers, and brands. White-label deployment under your name on Gemini 3 Pro. Real unit economics, proven margins.">
     <link rel="canonical" href="https://neclco.com/blog/pickachu-bot-ai-image-editor.html">
-    <meta property="og:title" content="Pickachu AI Image Editor: White-Label for Realtors, Interior Designers, and Brands">
-    <meta property="og:description" content="We built Pickachu. They rebranded it. Now realtors, interior designers, and brands run AI image editing under their own names — on our infrastructure.">
+    <meta property="og:title" content="White-Label AI Image Editor for Real Estate & Brands — Pickachu by NeCL">
+    <meta property="og:description" content="We built Pickachu. They rebranded it. Realtors, interior designers, and brands now run AI image editing under their own names — on our infrastructure.">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://neclco.com/blog/pickachu-bot-ai-image-editor.html">
     <meta property="og:image" content="../assets/images/blog/pickachu-bot-hero.png">
     <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {"@type": "Question", "name": "How quickly can you deploy a white-label AI image editor?", "acceptedAnswer": {"@type": "Answer", "text": "Branded deployment with custom system prompt and pricing tiers typically takes 5–10 working days from kickoff. Industry-specific fine-tuning adds 3–5 days."}},
+            {"@type": "Question", "name": "Who owns the users and revenue in a white-label deployment?", "acceptedAnswer": {"@type": "Answer", "text": "You do. The bot runs under your brand, users sign up to you, payments go to your account. NeCL is infrastructure, not a middleman."}},
+            {"@type": "Question", "name": "How long does a Pickachu image generation take?", "acceptedAnswer": {"@type": "Answer", "text": "5–15 seconds depending on complexity and server load."}},
+            {"@type": "Question", "name": "What is the maximum image resolution Pickachu supports?", "acceptedAnswer": {"@type": "Answer", "text": "Input: any resolution (auto-compressed for the API). Output: up to the model's maximum — typically 1024×1024 or higher for Gemini 3 Pro."}},
+            {"@type": "Question", "name": "Can I customize the AI's behavior for my industry?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. The system prompt is fully configurable. Realtor deployments receive property-specific instructions. Designer deployments receive mood-board-specific instructions. Each vertical gets tuning for its use case."}},
+            {"@type": "Question", "name": "How does Pickachu handle abuse and moderation?", "acceptedAnswer": {"@type": "Answer", "text": "Content moderation via Gemini's built-in safety filters plus custom rules. Usage rate limiting prevents API abuse. User blocking is available in the admin dashboard."}},
+            {"@type": "Question", "name": "What happens if I outgrow the white-label setup?", "acceptedAnswer": {"@type": "Answer", "text": "Source code is yours. You can scale on your own infrastructure, hire engineers to extend it, or retain NeCL for continued development. No lock-in."}},
+            {"@type": "Question", "name": "How much does a white-label Pickachu deployment cost?", "acceptedAnswer": {"@type": "Answer", "text": "White-label deployment starts from $1,500 plus monthly hosting. It can run on your own infrastructure for zero ongoing fees to NeCL."}}
+        ]
+    }
+    </script>
     <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
     <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
     <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
@@ -50,6 +66,10 @@
         .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
         .cta-box h3 { margin-top: 0; }
         .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #1a1a2e; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .tldr-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 0 0 2.5rem 0; }
+        .tldr-box strong.tldr-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+        .tldr-box ul { margin: 0 0 0 1.2rem; }
+        .tldr-box li { margin-bottom: 0.35rem; font-size: 0.95rem; }
         .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
         @media (max-width: 768px) {
             article { padding: 4rem 1.2rem 3rem; }
@@ -76,6 +96,17 @@
         <p class="lead">We built Pickachu as an AI image editor. Then realtors started using it. Then interior designers. Then brands we never expected. What began as a single product became an engine other businesses rebrand and deploy under their own names.</p>
 
         <p>This article is a transparent field report on what that engine does, who uses it, and how the white-label economics actually work &mdash; with real numbers, not marketing claims.</p>
+
+        <div class="tldr-box">
+            <strong class="tldr-label">TL;DR</strong>
+            <ul>
+                <li>White-label AI image editor for verticals that touch visuals — real estate staging, interior design mood boards, e-commerce product shots.</li>
+                <li>Built on Gemini 3 Pro. Up to 14 reference images per generation, voice commands, single-message Telegram UX.</li>
+                <li>Unit economics: API cost <strong>$0.13–0.14</strong>/generation, avg revenue <strong>$0.40</strong>, gross margin <strong>~65%</strong>. Premium verticals hit 75–85%.</li>
+                <li>Credits beat subscriptions for sporadic use: <strong>85% repurchase</strong> within 60 days vs 70% churn on monthly plans.</li>
+                <li>Deployment from <strong>$1,500</strong> in 5–10 working days. Source code yours. No lock-in.</li>
+            </ul>
+        </div>
 
         <h2>The Pivot: From Product to Platform</h2>
         <p>We launched Pickachu as our own consumer AI image editor on Telegram. Gemini 3 Pro under the hood, voice commands, up to 14 reference images, credit-based monetization. It worked. Users came. Revenue followed.</p>
