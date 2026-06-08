@@ -146,6 +146,21 @@
         .case-num { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.6rem; color: var(--accent); }
         .case-txt { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
         .case-roi { font-size: 0.75rem; font-weight: 600; color: var(--green); margin-top: auto; }
+        .case-cta { font-size: 0.75rem; font-weight: 600; color: var(--accent); opacity: 0.7; margin-top: 0.5rem; }
+        .card:hover .case-cta { opacity: 1; }
+
+        /* CASES — bento layout */
+        .cases-bento { display: grid; grid-template-columns: 1.6fr 1fr; grid-template-rows: 1fr 1fr; gap: 1.2rem; }
+        .cases-bento .card-feature { grid-row: span 2; padding: 1.8rem; }
+        .case-strike { color: var(--text-dim); text-decoration: line-through; text-decoration-thickness: 2px; font-weight: 500; }
+        .case-arrow { color: var(--text-dim); font-weight: 400; margin: 0 0.3rem; }
+        .case-big-stat { display: flex; align-items: baseline; gap: 0.5rem; margin-bottom: 0.6rem; }
+        .case-big-stat .n { font-size: 3.2rem; font-weight: 800; color: var(--accent); line-height: 1; letter-spacing: -2px; }
+        .case-big-stat .l { font-size: 0.85rem; color: var(--text-dim); font-weight: 500; }
+        .case-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.9rem; }
+        .case-tag { font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.55rem; background: var(--accent-light); color: var(--accent); border-radius: 5px; }
+        .case-feature-num { font-size: 1.9rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 0.7rem; color: var(--text); }
+        .case-feature-num span { color: var(--accent); }
 
         /* HOW WE WORK */
         .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
@@ -197,6 +212,10 @@
             .s { padding: 3rem 1.5rem; }
             .s-title { font-size: 1.7rem; }
             .grid-3, .grid-2, .steps { grid-template-columns: 1fr; }
+            .cases-bento { grid-template-columns: 1fr; grid-template-rows: auto; }
+            .cases-bento .card-feature { grid-row: auto; padding: 1.8rem; }
+            .case-feature-num { font-size: 1.8rem; }
+            .case-big-stat .n { font-size: 2.4rem; }
             .hero-cta { flex-direction: column; align-items: flex-start; }
             .cta-section { padding: 3rem 1.5rem; margin: 0 1rem 3rem; }
         }
@@ -231,7 +250,7 @@
     <main>
         <!-- HERO -->
         <section class="hero">
-            <span class="hero-badge">AI Engineering Studio</span>
+            <span class="hero-badge">Neural Engineering &amp; Cognitive Logic</span>
             <h1>Your AI team — without hiring <span>an AI team</span></h1>
             <p>We build production-grade RAG systems, voice agents, and AI automation that pay for themselves in weeks.</p>
             <div class="hero-cta">
@@ -239,7 +258,6 @@
                 <a href="https://calendly.com/neclcompany/30min" class="btn btn-s" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'hero'})">Book a Call</a>
             </div>
             <div class="hero-stats">
-                <div><span class="stat-n">4,000+</span><span class="stat-l">Users Served</span></div>
                 <div><span class="stat-n">30+</span><span class="stat-l">Projects Shipped</span></div>
                 <div><span class="stat-n">2 weeks</span><span class="stat-l">Avg. Time to MVP</span></div>
             </div>
@@ -288,7 +306,7 @@
             <h2 class="s-title">Live products we built</h2>
             <p class="s-sub">Try them yourself — they're running in production right now.</p>
 
-            <div class="grid-3">
+            <div class="grid-2">
                 <a href="https://resumequick.app/en" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);">
                     <img src="assets/images/cv_logo.webp" alt="ResumeQuick" class="product-img">
                     <h3 class="svc-t">ResumeQuick</h3>
@@ -301,12 +319,6 @@
                     <p class="svc-d">AI podcast generator. Give it a topic — get a full audio episode in minutes.</p>
                     <span class="svc-p">Generate a podcast &rarr;</span>
                 </a>
-                <a href="https://t.me/ai_slowpoke_bot" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);">
-                    <img src="assets/images/slowpoke_nobg.PNG" alt="Slowpoke Bot" class="product-img">
-                    <h3 class="svc-t">Slowpoke Bot</h3>
-                    <p class="svc-d">AI assistant in Telegram. Works with documents, images, and voice. Crypto payments integrated. 600+ active users.</p>
-                    <span class="svc-p">Try in Telegram &rarr;</span>
-                </a>
             </div>
         </section>
 
@@ -316,24 +328,37 @@
             <h2 class="s-title">What our clients achieved</h2>
             <p class="s-sub">Real projects, real numbers. Every system we build is measured by business impact.</p>
 
-            <div class="grid-3">
+            <div class="cases-bento">
+                <a href="https://t.me/ownerai" target="_blank" rel="noopener noreferrer" class="card card-feature" style="text-decoration:none;color:var(--text);" onclick="gtag('event','click_telegram',{location:'case_card',case:'media-company'})">
+                    <p class="case-ind">Media Company &mdash; 2.6M users</p>
+                    <h3 class="case-feature-num"><span>5 agents</span>, 1 ecosystem</h3>
+                    <div class="case-tags">
+                        <span class="case-tag">Anti-spam</span>
+                        <span class="case-tag">Giveaways</span>
+                        <span class="case-tag">Analytics</span>
+                        <span class="case-tag">Payments</span>
+                        <span class="case-tag">Moderation</span>
+                    </div>
+                    <p class="case-txt">Full bot infrastructure handling 50K+ messages daily. Built from scratch, deployed in production.</p>
+                    <span class="case-roi">Running 24/7 for 18+ months</span>
+                    <span class="case-cta">Discuss similar project &rarr;</span>
+                </a>
                 <a href="https://t.me/ownerai" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);" onclick="gtag('event','click_telegram',{location:'case_card',case:'investment-fund'})">
                     <p class="case-ind">Investment Fund</p>
-                    <h3 class="case-num">2 months &rarr; 20 min</h3>
-                    <p class="case-txt">Due diligence pipeline. AI parses 500+ page reports, scores startups by 40 criteria. Deployed on-premise — zero data exposure.</p>
+                    <h3 class="case-num"><span class="case-strike">2 months</span><span class="case-arrow">&rarr;</span>20 min</h3>
+                    <p class="case-txt">Due diligence pipeline. AI parses 500+ page reports, scores startups by 40 criteria. On-premise &mdash; zero data exposure.</p>
                     <span class="case-roi">Replaced a 3-person analyst team</span>
+                    <span class="case-cta">Discuss similar &rarr;</span>
                 </a>
                 <a href="https://t.me/ownerai" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);" onclick="gtag('event','click_telegram',{location:'case_card',case:'saas-startup'})">
                     <p class="case-ind">SaaS Startup</p>
-                    <h3 class="case-num">Idea to revenue in 9 days</h3>
-                    <p class="case-txt">Full product: Telegram bot + web dashboard + Stripe billing + RAG knowledge base. First paying customer in under 2 weeks.</p>
+                    <div class="case-big-stat">
+                        <span class="n">9</span>
+                        <span class="l">days<br>idea &rarr; revenue</span>
+                    </div>
+                    <p class="case-txt">Telegram bot + dashboard + Stripe + RAG. First paying customer in under 2 weeks.</p>
                     <span class="case-roi">$2K MRR in month one</span>
-                </a>
-                <a href="https://t.me/ownerai" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);" onclick="gtag('event','click_telegram',{location:'case_card',case:'media-company'})">
-                    <p class="case-ind">Media Company &mdash; 2.6M users</p>
-                    <h3 class="case-num">5 agents, 1 ecosystem</h3>
-                    <p class="case-txt">Anti-spam, giveaway engine, analytics, payments, moderation. Full bot infrastructure handling 50K+ messages daily.</p>
-                    <span class="case-roi">Running 24/7 for 18+ months</span>
+                    <span class="case-cta">Discuss similar &rarr;</span>
                 </a>
             </div>
         </section>
@@ -368,6 +393,20 @@
             </div>
         </section>
 
+        <!-- CTA -->
+        <section class="s">
+            <div class="cta-section">
+                <h2>Ready to automate?</h2>
+                <p>Describe your project — we'll reply within a few hours. Or book a call if you prefer to talk first.</p>
+                <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;margin-top:0.5rem;">
+                    <a href="https://t.me/ownerai" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'bottom'})">Write on Telegram &rarr;</a>
+                    <a href="https://calendly.com/neclcompany/30min" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'bottom'})">Book a 30-min call</a>
+                </div>
+                <br>
+                <a href="mailto:neclcompany@gmail.com" style="color:#fff;opacity:0.7;font-size:0.85rem;text-decoration:underline;" onclick="gtag('event','click_email',{location:'bottom'})">or email us: neclcompany@gmail.com</a>
+            </div>
+        </section>
+
         <!-- FAQ -->
         <section id="faq" class="s">
             <p class="s-label">FAQ</p>
@@ -379,7 +418,7 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What does pricing look like?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>Bots and RAG systems start at $800. AI agents from $1,200. Enterprise projects from $5K. Every project gets a fixed-price quote before we start — no surprises.</p></div>
+                    <div class="faq-a"><p>Projects start at $3K. Enterprise from $5K. Every project gets a fixed-price quote after a 15-min discovery call — no surprises, no hourly billing creep.</p></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I pay for AI API keys separately?<span class="faq-arrow">+</span></button>
@@ -397,20 +436,6 @@
                     <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What tech stack do you use?<span class="faq-arrow">+</span></button>
                     <div class="faq-a"><p>We pick the right tools for each project, not the other way around. Most of our work is Python, FastAPI, and PostgreSQL — battle-tested, easy to hire for, easy to maintain after handoff. For AI specifically: LangGraph for agents, pgvector for RAG, Redis for caching, Docker for deployment. We ship to Railway, AWS, or your own servers — whatever makes sense for your setup.</p></div>
                 </div>
-            </div>
-        </section>
-
-        <!-- CTA -->
-        <section class="s">
-            <div class="cta-section">
-                <h2>Ready to automate?</h2>
-                <p>Describe your project — we'll reply within a few hours. Or book a call if you prefer to talk first.</p>
-                <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;margin-top:0.5rem;">
-                    <a href="https://t.me/ownerai" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'bottom'})">Write on Telegram &rarr;</a>
-                    <a href="https://calendly.com/neclcompany/30min" class="btn" style="background:transparent;border:1px solid rgba(255,255,255,0.3);color:#fff;" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'bottom'})">Book a 30-min call</a>
-                </div>
-                <br>
-                <a href="mailto:neclcompany@gmail.com" style="color:#fff;opacity:0.7;font-size:0.85rem;text-decoration:underline;" onclick="gtag('event','click_email',{location:'bottom'})">or email us: neclcompany@gmail.com</a>
             </div>
         </section>
     </main>
