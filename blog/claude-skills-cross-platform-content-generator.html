@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>Claude Skills + Free Cross-Platform Content Skill | NeCL</title>
+    <meta name="description" content="Claude Skills turn Claude into a persistent specialist. Our free Skill writes Telegram + LinkedIn + Threads posts from one draft. MIT licensed.">
+    <link rel="canonical" href="https://neclco.com/blog/claude-skills-cross-platform-content-generator.html">
+    <meta property="og:title" content="Claude Skills Explained + Free Cross-Platform Content Skill">
+    <meta property="og:description" content="Claude Skills turn Claude into a persistent specialist. Our free Skill writes Telegram + LinkedIn + Threads posts from one draft. MIT licensed.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/claude-skills-cross-platform-content-generator.html">
+    <meta property="og:image" content="../assets/images/blog/hero-claude-skills-cross-platform-content-generator.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What's the difference between a Claude Skill and a Claude Project?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Projects are conversation containers with custom instructions. Skills are *behavior modules* that Claude applies automatically across any conversation in projects where they're installed."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Will this Skill work for my industry / niche?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes — the Skill is content-agnostic. You plug in your company context (audience, tone, products, CTAs) via the template. The structural rules (hooks, twist, no AI-markers) work for any domain."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does this work with non-English languages?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Telegram output is Russian by default (our team's native market). LinkedIn and Threads are English. The Skill is forkable — you can swap any language combination by editing the SKILL.md."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use this in Cursor or other Claude-compatible IDEs?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Claude Skills are part of the Claude Code spec, which Cursor, Continue, and Cody also implement."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Will Anthropic charge for Skills?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Skills are free to create and use. Some platforms (like Smithery) may distribute premium Skills with paid tiers, but the underlying mechanism is free."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I get my own Skill into the Claude marketplace?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Push a public GitHub repo with `SKILL.md` files. Skillsmp.com and claudeskills.info auto-index them within 24-48 hours. We wrote the full publishing playbook in [our other post](/blog/publish-mcp-server-claude-skill-marketplaces-2026.html)."
+            }
+        }
+    ]
+}
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        article { flex: 1; max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        .post-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.5rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.75rem; color: var(--text-dim); }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; line-height: 1.2; }
+        .lead { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.7; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+        p { margin-bottom: 1.2rem; font-size: 1rem; }
+        ul, ol { margin: 0 0 1.2rem 1.5rem; }
+        li { margin-bottom: 0.4rem; font-size: 1rem; }
+        code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88rem; }
+        pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; color: inherit; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
+        .tldr-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 0 0 2rem 0; }
+        .tldr-box strong.tldr-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+        .tldr-box ul { margin: 0 0 0 1.2rem; }
+        .tldr-box li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .faq-item { margin-bottom: 1.2rem; }
+        .faq-item p { margin-bottom: 0.4rem; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+        th { font-weight: 600; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            article { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="./" class="nav-back">&larr; All posts</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="post-meta">
+            <span class="post-tag">Open Source</span>
+            <span class="post-date">Jun 10, 2026</span>
+        </div>
+
+        <h1>Claude Skills Explained — and How We Turn One Draft Into Three Platform-Tuned Posts</h1>
+        <img src="../assets/images/blog/hero-claude-skills-cross-platform-content-generator.png" alt="Claude Skills Explained + Free Cross-Platform Content Skill" class="hero-img" loading="lazy">
+        <p class="lead">Cross-platform posting is a 45-minute tax per idea — three different audiences, three sets of rules, three rewrites. We codified our workflow into a Claude Skill that turns one draft into three platform-tuned posts in 30 seconds.</p>
+
+        <div class="tldr-box">
+            <strong class="tldr-label">TL;DR</strong>
+            <ul>
+<li><strong>Claude Skills</strong> are markdown files (<code>SKILL.md</code>) that Claude reads automatically when relevant. Think of them as <strong>packaged expertise</strong> Claude can switch on.</li>
+<li>They live in <code>.claude/skills/</code> in your project (or <code>~/.claude/skills/</code> globally).</li>
+<li>We built <strong><code>necl-content-poster</code></strong> — a free Skill that turns one draft into three platform-tuned posts: Telegram (RU), LinkedIn (EN), Threads (EN).</li>
+<li>It encodes <strong>8 proven hook formulas</strong>, <strong>anti-AI-marker phrase ban lists</strong>, and <strong>6-block LinkedIn structure</strong> with mandatory "twist" line.</li>
+<li>Install in 30 seconds: copy the folder into <code>.claude/skills/</code>. Use immediately.</li>
+</ul>
+<hr />
+        </div>
+
+        <h2>What are Claude Skills?</h2>
+<p>Anthropic released Claude Skills as a way to give Claude <strong>persistent specialist behavior</strong> without you re-prompting every time.</p>
+<p>The mechanic is dead simple:</p>
+<ol>
+<li>You create a folder like <code>.claude/skills/my-skill/</code></li>
+<li>Inside, a single file <code>SKILL.md</code> with YAML frontmatter and markdown instructions</li>
+<li>Claude reads ALL available skills' frontmatter at session start</li>
+<li>When you ask something that matches a Skill's <code>description</code> field, Claude applies it automatically</li>
+</ol>
+<p>No slash command. No <code>/skill use</code>. No setup. The Skill is just <em>there</em> when you need it.</p>
+<p>This is fundamentally different from prompts you copy-paste each time. Prompts are ephemeral; Skills are persistent specialists Claude knows about across every session in that project.</p>
+<h2>Why Skills are better than prompt libraries</h2>
+<p>Most teams accumulate folders of "good prompts" — <code>linkedin-post-prompt.md</code>, <code>pricing-email-prompt.md</code>, etc. The problem: you have to remember they exist and copy-paste each one.</p>
+<p>Skills fix this with three changes:</p>
+<ol>
+<li><strong>Discoverability</strong> — Claude reads frontmatter automatically. You write naturally, the Skill activates.</li>
+<li><strong>Versioning</strong> — they live in your project's git repo. Team changes track. No more Slack-threads of "the latest version of the prompt".</li>
+<li><strong>Composability</strong> — Claude can apply multiple Skills in one response. A pricing email might use both a <code>pricing-rules</code> Skill and a <code>cold-email-voice</code> Skill.</li>
+</ol>
+<p>For solo builders this saves minutes per day. For teams, it makes prompt-craft a shipping artifact rather than tribal knowledge.</p>
+<h2>Why we built <code>necl-content-poster</code></h2>
+<p>We run a Telegram channel (<a href="https://t.me/necl_company">@NeCL_company</a>), a LinkedIn personal profile, a Threads account, and a Twitter/X account. Each has different rules:</p>
+<ul>
+<li><strong>Telegram (RU):</strong> warm, founder-shares-cool-stuff. Brand mentions OK.</li>
+<li><strong>LinkedIn (EN):</strong> decision-makers reading on mobile. Anti-hype voice. 1200-1800 characters.</li>
+<li><strong>Threads (EN):</strong> one inference, screenshot-bait, 15-50 words.</li>
+</ul>
+<p>Writing three posts manually from one idea is <strong>45 minutes</strong> of tone-tuning. We did the math — we were posting maybe twice a week because of that friction.</p>
+<p>We codified our cross-posting workflow into a Skill. Now: one draft → all three posts in 30 seconds.</p>
+<h2>What's inside the Skill</h2>
+<p>The Skill encodes three things we figured out the hard way:</p>
+<h3>1. Hook archetypes (8 of them)</h3>
+<p>LinkedIn algorithm rewards posts that pass the "see more" cut. To pass that cut, the first 1-2 lines must stop a scroller. We codified 8 hook patterns that work:</p>
+<ul>
+<li><strong>Shock-stat:</strong> "After 4 years with ChatGPT, it still doesn't know who I am."</li>
+<li><strong>Counter-narrative:</strong> "Speed is no longer your competitive advantage."</li>
+<li><strong>Confession:</strong> "I used to do 10-hour days. The result? Full burnout."</li>
+<li><strong>Provocation:</strong> "Most 'AI productivity hacks' are just theater."</li>
+<li><strong>Dated story:</strong> "Last Tuesday, our agent stack burned $400 in 90 minutes."</li>
+<li><strong>Question:</strong> "What if cache hit rate is now a moat?"</li>
+<li><strong>List teaser:</strong> "5 things I stopped doing after we hit $50K MRR."</li>
+<li><strong>Comparison:</strong> "I tried 3 frameworks. Only one survived production."</li>
+</ul>
+<p>The Skill makes Claude pick ONE archetype and commit to it. No mushy mixed hooks.</p>
+<h3>2. Banned phrases (anti-AI-marker rules)</h3>
+<p>LinkedIn audience identifies GPT-text in two seconds. Banned in our Skill:</p>
+<ul>
+<li>"In an era where…"</li>
+<li>"Let's dive in"</li>
+<li>"It's not just X — it's Y"</li>
+<li>"navigating the landscape"</li>
+<li>"leverage", "unlock", "unleash", "game-changer", "paradigm shift"</li>
+<li>"at the intersection of"</li>
+</ul>
+<p>If a draft would have any of these, the Skill rewrites the line. We learned this list by reading hundreds of GPT-written LinkedIn posts and noting which patterns repelled engagement.</p>
+<h3>3. Per-platform structure rules</h3>
+<p><strong>LinkedIn:</strong> Hook → Context → Twist → Useful Core → Close + specific question → optional PS. The Twist (the line that flips the obvious reading) is mandatory. Skipping it produces a blog post, not a LinkedIn post.</p>
+<p><strong>Threads:</strong> ONE inference, 15-50 words, screenshot-bait or argue-bait or nod-bait. No padding. If you can split into two posts, you cut harder.</p>
+<p><strong>Telegram (RU):</strong> warm, founder-tone, emojis as semantic markers (3-7 per post), light brand mentions OK, soft CTA in question form at the end.</p>
+<h2>Install in 30 seconds</h2>
+<p>The fastest path uses the <a href="https://skills.sh">skills.sh CLI</a> — works with Claude Code, OpenCode, Codex, Cursor, and 70+ other agents:</p>
+<pre><code class="language-bash"># project-level
+npx skills add adjacentai/necl-skills
+
+# or global (available in any project)
+npx skills add adjacentai/necl-skills -g
+</code></pre>
+<p>That's it. The CLI drops the skill into the right folder for your agent automatically. Then in Claude Code:</p>
+<pre><code>What Skills are available?
+</code></pre>
+<p>You should see <code>necl-content-poster</code> in the list. Now just describe what you want:</p>
+<pre><code>Write a post about our new RAG system that cut due-diligence from 2 months to 15 minutes.
+</code></pre>
+<p>You'll get TG/LinkedIn/Threads versions in one shot.</p>
+<h2>Plug in your company context</h2>
+<p>Before first use, create a <code>company-context.md</code> in your project root with:</p>
+<ul>
+<li>Brand name + tagline</li>
+<li>Audience per platform</li>
+<li>Tone-of-voice rules</li>
+<li>CTAs to use (Calendly, DM, website)</li>
+<li>Reference accounts whose voice you admire</li>
+<li>2-5 of your own best-performing posts (the Skill will mirror their patterns)</li>
+</ul>
+<p>We ship a <a href="https://github.com/adjacentai/necl-skills/blob/main/necl-content-poster/templates/company-context.template.md">template</a> — fill in 10 fields, save, done. Without context, posts are generic. With context, they sound like <em>you</em>.</p>
+<h2>Real example output</h2>
+<p><strong>Input:</strong></p>
+<blockquote>
+<p>Just shipped a RAG system for an investment fund. Due-diligence reviews went from 2 months per deal to 15 minutes. 258 deals processed in the first quarter.</p>
+</blockquote>
+<p><strong>Telegram (RU) output:</strong></p>
+<blockquote>
+<p>📊 За первый квартал — 258 сделок прошло через нашу RAG-систему.
+Раньше каждая сделка = 2 месяца ручного due-diligence в фонде. Теперь — 15 минут.
+✅ Загружают пачку PDF → агент находит риски, инвест-тезис, цифры.
+✅ Аналитик читает summary, лезет только в спорные места.
+Если у вас тонна документов и одни и те же вопросы — пишите в комментарии, разберём.</p>
+</blockquote>
+<p><strong>LinkedIn (EN) output (excerpt):</strong></p>
+<blockquote>
+<p>Last quarter, we shipped a RAG system that turned a 2-month due-diligence process into 15 minutes per deal. 258 deals went through it in Q1.
+The lesson isn't "AI is fast." Every team knows that by now. The lesson is that the bottleneck in most knowledge work isn't thinking — it's the retrieval layer between the question and the source paragraph.
+[...]</p>
+</blockquote>
+<p><strong>Threads (EN) output:</strong></p>
+<blockquote>
+<p>Replaced 2 months of analyst work with 15 minutes of retrieval.
+The bottleneck in knowledge work was never thinking. It was finding the paragraph that has the answer.</p>
+</blockquote>
+<p>Three posts, one input, 30 seconds. Each anchored to the same fact (258 deals, 2 months → 15 min), but pitched to its platform.</p>
+<h2>Skills vs Prompts vs MCPs — when to use which</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Best for</th>
+<th>Distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prompts</strong></td>
+<td>One-off requests</td>
+<td>Copy-paste from your prompt library</td>
+</tr>
+<tr>
+<td><strong>Skills</strong></td>
+<td>Persistent specialist workflows in Claude</td>
+<td><code>.claude/skills/</code> folder, version-controlled</td>
+</tr>
+<tr>
+<td><strong>MCPs</strong></td>
+<td>Giving Claude access to external data/tools</td>
+<td><code>mcp.json</code> config, runs as subprocess</td>
+</tr>
+</tbody>
+</table>
+<p>Most teams underuse Skills. Prompts get copy-pasted, MCPs handle infrastructure — but the persistent-expertise layer in between gets neglected. That's where the daily friction lives.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="https://github.com/adjacentai/necl-skills/tree/main/necl-content-poster">necl-content-poster Skill on GitHub</a> — install + source</li>
+<li><a href="/blog/publish-mcp-server-claude-skill-marketplaces-2026.html">Our publishing playbook</a> — how to ship your own Skill to every marketplace</li>
+<li><a href="/blog/hacker-news-mcp-server-claude-desktop.html">necl-hn-mcp</a> — pair with this for full HN → posts pipeline</li>
+<li><a href="/blog/stop-using-gpt4-for-everything.html">Stop using GPT-4 for everything</a></li>
+</ul>
+
+        <h2>FAQ</h2>
+        <div class="faq-item">
+            <p><strong>What&#x27;s the difference between a Claude Skill and a Claude Project?</strong></p>
+            <p>Projects are conversation containers with custom instructions. Skills are *behavior modules* that Claude applies automatically across any conversation in projects where they&#x27;re installed.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Will this Skill work for my industry / niche?</strong></p>
+            <p>Yes — the Skill is content-agnostic. You plug in your company context (audience, tone, products, CTAs) via the template. The structural rules (hooks, twist, no AI-markers) work for any domain.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Does this work with non-English languages?</strong></p>
+            <p>The Telegram output is Russian by default (our team&#x27;s native market). LinkedIn and Threads are English. The Skill is forkable — you can swap any language combination by editing the SKILL.md.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Can I use this in Cursor or other Claude-compatible IDEs?</strong></p>
+            <p>Yes. Claude Skills are part of the Claude Code spec, which Cursor, Continue, and Cody also implement.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Will Anthropic charge for Skills?</strong></p>
+            <p>Skills are free to create and use. Some platforms (like Smithery) may distribute premium Skills with paid tiers, but the underlying mechanism is free.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>How do I get my own Skill into the Claude marketplace?</strong></p>
+            <p>Push a public GitHub repo with `SKILL.md` files. Skillsmp.com and claudeskills.info auto-index them within 24-48 hours. We wrote the full publishing playbook in [our other post](/blog/publish-mcp-server-claude-skill-marketplaces-2026.html).</p>
+        </div>
+
+        <div class="cta-box">
+            <p>Want a custom Claude Skill tuned to your team's workflow? We build them — extraction interview, draft, ship to your repo. .</p>
+            <a href="https://calendly.com/neclcompany/30min?utm_source=blog&utm_medium=content-poster" class="btn">Book a 30-min call</a>
+        </div>
+    </article>
+
+    <footer class="footer">
+        &copy; 2025-2026 NeCL &middot; <a href="../" style="color:inherit;">neclco.com</a>
+    </footer>
+</body>
+</html>

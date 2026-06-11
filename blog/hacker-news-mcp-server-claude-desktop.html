@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-4Q812K633T"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-4Q812K633T');</script>
+    <title>Hacker News MCP for Claude — Free, No API Key | NeCL</title>
+    <meta name="description" content="Free open-source MCP for Claude that adds Hacker News tools — top stories, comments, full-text search. No API key. Install in 30 seconds.">
+    <link rel="canonical" href="https://neclco.com/blog/hacker-news-mcp-server-claude-desktop.html">
+    <meta property="og:title" content="Hacker News MCP Server for Claude — Free, No API Key">
+    <meta property="og:description" content="Free open-source MCP for Claude that adds Hacker News tools — top stories, comments, full-text search. No API key. Install in 30 seconds.">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://neclco.com/blog/hacker-news-mcp-server-claude-desktop.html">
+    <meta property="og:image" content="../assets/images/blog/hero-hacker-news-mcp-server-claude-desktop.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "What is MCP and how is it different from a regular API?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "MCP (Model Context Protocol) is a standardized way for AI agents to call tools and access data. It's like an API spec specifically designed for LLM-calling. The difference from a regular API: MCPs declare their tools in a way Claude can discover and use without per-app coding."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Do I need to know Python to use this?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. You install via `uvx`, which handles Python automatically. Just add the JSON snippet to `mcp.json` and you're done."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Will Claude rate-limit me on HN?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. HN's API is public and has no enforced rate limits. Even heavy use (hundreds of queries per minute) is fine."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Does this work in Claude Code (the CLI), not just Claude Desktop?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Any MCP client supports it — Claude Code, Cursor, Continue, Cody, any custom MCP client."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Can I use this commercially?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, MIT licensed. You can build paid products on top of it. We appreciate attribution but don't require it."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is the source code small enough to audit?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes — under 200 lines total. Two files: [hn.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/hn.py) and [server.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/server.py)."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How is this different from just hitting the HN API directly?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Direct API hitting requires you to write glue code per app. MCP makes the HN tools discoverable by any AI agent without per-app code — your prompt is enough."
+            }
+        }
+    ]
+}
+    </script>
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png?v=2">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon-16.png?v=2">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png?v=2">
+    <link rel="icon" type="image/png" href="../assets/images/favicon.png?v=2">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --accent: #9370DB; --bg: #fafafa; --surface: #fff; --text: #1a1a2e; --text-dim: #6b7280; --border: #e5e7eb; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; line-height: 1.7; }
+        .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+        .nav-inner { max-width: 720px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0.7rem 2rem; }
+        .nav-logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); text-decoration: none; }
+        .nav-back { color: var(--text-dim); text-decoration: none; font-size: 0.85rem; font-weight: 500; }
+        .nav-back:hover { color: var(--text); }
+        article { flex: 1; max-width: 720px; margin: 0 auto; padding: 5rem 2rem 4rem; width: 100%; }
+        .post-meta { display: flex; gap: 0.8rem; align-items: center; margin-bottom: 1.5rem; }
+        .post-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; }
+        .post-date { font-size: 0.75rem; color: var(--text-dim); }
+        h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 1rem; line-height: 1.2; }
+        .lead { font-size: 1.1rem; color: var(--text-dim); margin-bottom: 2.5rem; line-height: 1.7; }
+        h2 { font-size: 1.4rem; font-weight: 700; margin: 2.5rem 0 1rem; }
+        h3 { font-size: 1.1rem; font-weight: 600; margin: 2rem 0 0.8rem; }
+        p { margin-bottom: 1.2rem; font-size: 1rem; }
+        ul, ol { margin: 0 0 1.2rem 1.5rem; }
+        li { margin-bottom: 0.4rem; font-size: 1rem; }
+        code { background: #f3f4f6; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.88rem; }
+        pre { background: #1a1a2e; color: #e5e7eb; padding: 1.5rem; border-radius: 10px; overflow-x: auto; margin-bottom: 1.5rem; font-size: 0.85rem; line-height: 1.5; }
+        pre code { background: none; padding: 0; color: inherit; }
+        blockquote { border-left: 3px solid var(--accent); padding-left: 1.2rem; margin: 1.5rem 0; color: var(--text-dim); font-style: italic; }
+        .cta-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 2rem; margin: 3rem 0; text-align: center; }
+        .cta-box h3 { margin-top: 0; }
+        .cta-box .btn { display: inline-block; padding: 0.75rem 1.5rem; background: var(--accent); color: #fff; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.9rem; margin-top: 0.8rem; }
+        .hero-img { width: 100%; border-radius: 12px; margin-bottom: 2rem; }
+        .tldr-box { background: linear-gradient(135deg, #f5f0ff 0%, #faf7ff 100%); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1.4rem 1.6rem; margin: 0 0 2rem 0; }
+        .tldr-box strong.tldr-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); display: block; margin-bottom: 0.6rem; }
+        .tldr-box ul { margin: 0 0 0 1.2rem; }
+        .tldr-box li { margin-bottom: 0.35rem; font-size: 0.95rem; }
+        .faq-item { margin-bottom: 1.2rem; }
+        .faq-item p { margin-bottom: 0.4rem; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+        th, td { padding: 0.6rem 1rem; text-align: left; border-bottom: 1px solid var(--border); font-size: 0.92rem; }
+        th { font-weight: 600; }
+        .footer { text-align: center; padding: 2rem; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--border); margin-top: auto; }
+        @media (max-width: 768px) {
+            article { padding: 4rem 1.2rem 3rem; }
+            h1 { font-size: 1.7rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <div class="nav-inner">
+            <a href="../" class="nav-logo">NeCL</a>
+            <a href="./" class="nav-back">&larr; All posts</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="post-meta">
+            <span class="post-tag">Open Source</span>
+            <span class="post-date">Jun 10, 2026</span>
+        </div>
+
+        <h1>Hacker News MCP Server for Claude — Top Stories, Comments &amp; Search Without an API Key</h1>
+        <img src="../assets/images/blog/hero-hacker-news-mcp-server-claude-desktop.png" alt="Hacker News MCP Server for Claude — Free, No API Key" class="hero-img" loading="lazy">
+        <p class="lead">We pulled the Hacker News logic out of our internal Telegram bot and shipped it as a standalone MCP server. Now any Claude session can read HN — no API key, no signup, install in 30 seconds.</p>
+
+        <div class="tldr-box">
+            <strong class="tldr-label">TL;DR</strong>
+            <ul>
+<li><strong><code>necl-hn-mcp</code></strong> is a free open-source MCP server giving Claude access to Hacker News across <strong>5 tools</strong>: <code>hn_top_stories</code>, <code>hn_category</code>, <code>hn_get_story</code>, <code>hn_get_comments</code>, <code>hn_search</code>.</li>
+<li><strong>No API key required</strong> — HN's Firebase API and Algolia search are public and unlimited (we tested 200+ requests/minute without throttling).</li>
+<li>Install via <code>uvx</code> in <strong>30 seconds</strong> — no Python venv setup, no PyPI dependency, no config file edits beyond <code>mcp.json</code>.</li>
+<li>Under <strong>200 lines of Python total</strong> — auditable in 5 minutes, MIT-licensed.</li>
+<li>Returns clean structured dicts that LLMs chain in <strong>2-3 tool calls</strong> (<code>search → top story → comments → summary</code>).</li>
+<li>Production-tested: powers our internal HN→content pipeline that's been running <strong>3× daily for 6 months</strong>.</li>
+</ul>
+<hr />
+        </div>
+
+        <h2>What is MCP and why should you care</h2>
+<p>Model Context Protocol (MCP), released by Anthropic in late 2024, is a standard for connecting AI agents to external data and tools. Before MCP, every LLM integration with Slack, GitHub, your database, or a third-party API required custom plumbing per app per model. MCP turned all of that into a single shared interface.</p>
+<p>Think of it like USB for AI: one cable, any device.</p>
+<p>For Claude specifically, MCP servers make Claude Desktop and Claude Code dramatically more useful. With MCPs installed, Claude can:</p>
+<ul>
+<li>Read your filesystem and codebase</li>
+<li>Query your Postgres</li>
+<li>Post to Slack</li>
+<li>Search Hacker News (with our server)</li>
+<li>Anything else someone has built a server for</li>
+</ul>
+<p>There are 20,000+ MCP servers in catalogs as of mid-2026. Most are stdio (run locally on your machine), some are HTTP/SSE (run remotely). Both flow data into Claude the same way.</p>
+<h2>Why we built <code>necl-hn-mcp</code></h2>
+<p>We've been running an internal content agent for 6 months — a Telegram bot that aggregates Hacker News three times a day and generates draft posts for the team. It's the engine behind our <a href="https://t.me/necl_company">NeCL Telegram channel</a>. Every post we write riffs off something we noticed on HN that day.</p>
+<p>The HN-fetching logic in that agent was clean enough that pulling it out as a standalone MCP took us <strong>exactly 2 hours</strong>. We tested the full tool chain in Claude Desktop the same evening. Now any AI agent — not just our internal bot — can read HN through the same plumbing.</p>
+<h2>What the 5 tools do</h2>
+<h3><code>hn_top_stories(limit, hours)</code></h3>
+<p>Top N stories from the last N hours, ranked by score. Default: top 10 from last 24h.</p>
+<pre><code>&quot;Show me the top 5 HN stories from the last 6 hours&quot;
+</code></pre>
+<h3><code>hn_category(category, limit)</code></h3>
+<p>Pull stories from one specific category: <code>top</code>, <code>new</code>, <code>best</code>, <code>ask</code>, <code>show</code>, <code>job</code>.</p>
+<pre><code>&quot;What's in Ask HN right now?&quot;
+&quot;Show me the top 3 Show HN posts about AI agents&quot;
+</code></pre>
+<h3><code>hn_get_story(story_id)</code></h3>
+<p>Full metadata for a single story — title, URL, score, author, comments count, posted time.</p>
+<pre><code>&quot;Get details for HN story 38420000&quot;
+</code></pre>
+<h3><code>hn_get_comments(story_id, limit)</code></h3>
+<p>Top-level comments thread for a story, in HN ranking order. Each comment has <code>replies_count</code> so the LLM knows whether there's a deeper discussion.</p>
+<pre><code>&quot;What are people saying about HN story 38420000?&quot;
+</code></pre>
+<h3><code>hn_search(query, sort, limit)</code></h3>
+<p>Full-text search across HN posts and comments via the Algolia HN API. Sort by <code>relevance</code> or <code>date</code>.</p>
+<pre><code>&quot;Search HN for posts about RAG performance, sorted by date&quot;
+&quot;Find recent HN discussions on Claude vs GPT-4&quot;
+</code></pre>
+<p>Returns a clean shape — <code>{hits, total_hits, query, sort}</code> — instead of raw Algolia.</p>
+<h2>Install in 30 seconds</h2>
+<p>The recommended path uses <code>uvx</code> (modern Python install runner — no venv, no <code>pip install</code>):</p>
+<p>Add to your <code>mcp.json</code> (Claude Desktop, Claude Code, or any MCP client):</p>
+<pre><code class="language-json">{
+  &quot;mcpServers&quot;: {
+    &quot;necl-hn&quot;: {
+      &quot;command&quot;: &quot;uvx&quot;,
+      &quot;args&quot;: [
+        &quot;--from&quot;,
+        &quot;git+https://github.com/adjacentai/necl-hn-mcp.git&quot;,
+        &quot;necl-hn-mcp&quot;
+      ]
+    }
+  }
+}
+</code></pre>
+<p>Restart Claude. Type a HN question. It just works.</p>
+<p>If you don't have <code>uvx</code>: <code>pip install uv</code> or <code>brew install uv</code>.</p>
+<h2>What you can build with this</h2>
+<p>Five practical patterns we've seen people use HN data for:</p>
+<ol>
+<li><strong>Daily content brief</strong> — pull top HN stories, summarize the meta-trends, generate cross-platform posts. This is exactly what our internal content agent does every day before we sit down to write.</li>
+<li><strong>Competitive research bot</strong> — search HN for mentions of competitors. Surface negative comments. Track sentiment over time.</li>
+<li><strong>Trend detector</strong> — monitor <code>new</code> and <code>best</code> categories on a cron. Alert when a topic spikes (e.g. a new framework hits front page).</li>
+<li><strong>Newsletter pipeline</strong> — keyword search over a time window. Cluster results. Generate an editorial digest.</li>
+<li><strong>Customer-discovery agent</strong> — search Ask HN for problems your product solves. Generate cold-outreach drafts.</li>
+</ol>
+<p>Each of these used to require glue code to hit the HN API directly. Now it's one Claude conversation.</p>
+<h2>Why no API key</h2>
+<p>HN's Firebase API and Algolia HN search are both fully public. No registration, no rate limits worth worrying about. We deliberately picked HN as the pilot MCP for exactly this reason — most MCP authors immediately complicate distribution with OAuth flows and API key setup. Skipping that gives us install rate.</p>
+<p>This matters if you're building MCPs yourself: <strong>start with public-data tools first</strong>. Save the OAuth dance for v2.</p>
+<h2>How an MCP server actually works (technical detail)</h2>
+<p>Our server is ~150 lines of Python:</p>
+<ul>
+<li><code>hn.py</code> — async HTTP client wrapping Firebase HN + Algolia HN APIs.</li>
+<li><code>server.py</code> — FastMCP wrapper that exposes each function as an MCP tool with typed signatures.</li>
+<li><code>__main__.py</code> — entrypoint that runs <code>mcp.run()</code> over stdio.</li>
+</ul>
+<p>When Claude calls a tool:</p>
+<ol>
+<li>Claude Desktop spawns <code>uvx --from git+... necl-hn-mcp</code> as a subprocess.</li>
+<li>The subprocess listens on stdin for JSON-RPC requests, replies on stdout.</li>
+<li>Our tool fetches HN data, formats it into a clean dict, returns.</li>
+<li>Claude reads the response, continues reasoning.</li>
+</ol>
+<p>That's the whole protocol. No magic.</p>
+<h2>Pair this with our Skill</h2>
+<p>If you're using <code>necl-hn-mcp</code> for content research, pair it with <a href="https://github.com/adjacentai/necl-skills/tree/main/necl-content-poster"><code>necl-content-poster</code></a> — our Claude Skill that turns one draft into three platform-tuned posts (Telegram RU, LinkedIn EN, Threads EN).</p>
+<p>End-to-end pipeline: HN MCP finds the story → content-poster writes the three posts → you publish.</p>
+<h2>See also</h2>
+<ul>
+<li><a href="/blog/claude-skills-cross-platform-content-generator.html">Claude Skills + Cross-Platform Content Generator</a> — pair this MCP with our content Skill</li>
+<li><a href="/blog/publish-mcp-server-claude-skill-marketplaces-2026.html">Marketplace Publishing Playbook for MCPs and Skills</a> — how we shipped this MCP to 13 catalogs</li>
+<li><a href="https://github.com/adjacentai/necl-hn-mcp">necl-hn-mcp on GitHub</a> — source code, install, examples</li>
+<li><a href="https://github.com/adjacentai/necl-skills/tree/main/necl-content-poster">necl-content-poster Skill</a> — Skill that turns MCP-found stories into posts</li>
+<li><a href="/blog/stop-using-gpt4-for-everything.html">Stop Using GPT-4 for Everything</a> — related: AI cost optimization</li>
+<li><a href="/blog/cream-mic-ai-desktop-assistant.html">Cream Mic — AI desktop assistant by NeCL</a> — another open-source NeCL project</li>
+</ul>
+
+        <h2>FAQ</h2>
+        <div class="faq-item">
+            <p><strong>What is MCP and how is it different from a regular API?</strong></p>
+            <p>MCP (Model Context Protocol) is a standardized way for AI agents to call tools and access data. It&#x27;s like an API spec specifically designed for LLM-calling. The difference from a regular API: MCPs declare their tools in a way Claude can discover and use without per-app coding.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Do I need to know Python to use this?</strong></p>
+            <p>No. You install via `uvx`, which handles Python automatically. Just add the JSON snippet to `mcp.json` and you&#x27;re done.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Will Claude rate-limit me on HN?</strong></p>
+            <p>No. HN&#x27;s API is public and has no enforced rate limits. Even heavy use (hundreds of queries per minute) is fine.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Does this work in Claude Code (the CLI), not just Claude Desktop?</strong></p>
+            <p>Yes. Any MCP client supports it — Claude Code, Cursor, Continue, Cody, any custom MCP client.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Can I use this commercially?</strong></p>
+            <p>Yes, MIT licensed. You can build paid products on top of it. We appreciate attribution but don&#x27;t require it.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Is the source code small enough to audit?</strong></p>
+            <p>Yes — under 200 lines total. Two files: [hn.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/hn.py) and [server.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/server.py).</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>How is this different from just hitting the HN API directly?</strong></p>
+            <p>Direct API hitting requires you to write glue code per app. MCP makes the HN tools discoverable by any AI agent without per-app code — your prompt is enough.</p>
+        </div>
+
+        <div class="cta-box">
+            <p>Need a custom MCP server wired to your internal APIs, databases, or SaaS tools? We build them. .</p>
+            <a href="https://calendly.com/neclcompany/30min?utm_source=blog&utm_medium=hn-mcp" class="btn">Book a 30-min call</a>
+        </div>
+    </article>
+
+    <footer class="footer">
+        &copy; 2025-2026 NeCL &middot; <a href="../" style="color:inherit;">neclco.com</a>
+    </footer>
+</body>
+</html>
