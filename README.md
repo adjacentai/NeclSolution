@@ -7,18 +7,35 @@ Website for NeCL — AI Engineering Studio.
 ## Structure
 
 ```
-index.html          Main landing page
+index.html          Main landing page (hero, services, products,
+                    open-source cards, cases, process, FAQ, lead form)
 blog/
   index.html        Blog listing
   *.html            Individual posts
 privacy.html        Privacy policy
+terms.html          Terms of use
 sitemap.xml         For Google indexing
 robots.txt          Crawler rules
-assets/images/      Images
+assets/images/      Images (incl. blog/ hero images)
 CNAME               Custom domain config
 ```
 
+## Lead form (contact)
+
+The bottom CTA on `index.html` (`#contact`) is a **Web3Forms**-backed lead form
+— name + email + required consent checkbox. Static-site friendly: no backend.
+
+- Submissions land in the inbox configured on [web3forms.com](https://web3forms.com) (neclcompany@gmail.com).
+- The `access_key` lives in `index.html` — it's a **public** routing key (safe to expose, can only send mail to our inbox, can't read anything). To rotate it, create a new key in the Web3Forms dashboard and swap the `value` on the `access_key` hidden input.
+- Domain is locked to `neclco.com` in the Web3Forms dashboard — the key won't work from other sites or `localhost`. **Test on production, not locally.**
+- Anti-spam: hidden `botcheck` honeypot + required consent checkbox. Add hCaptcha in the dashboard if spam ever appears.
+- Submission is sent via `fetch` (no page redirect); success/error shows inline. GA4 fires a `lead_submit` event on success.
+- Nav and hero CTAs scroll to `#contact`. There is **no Calendly** on the homepage.
+
 ## Adding a blog post
+
+Drafts are written in Markdown first (in the marketing workspace), reviewed,
+then converted to HTML and committed here. Manual steps for a single post:
 
 1. Create `blog/your-post-slug.html` — copy an existing post as template (recommended: `cream-typer-...html`, it has every block we use)
 2. Update `<title>`, `<meta description>`, `<link rel="canonical">`, OG/Twitter tags
@@ -91,6 +108,8 @@ Do NOT bother with: `llms.txt`, "AI-friendly" chunking, artificial brand mention
 ## Tech
 
 Static HTML + CSS + JS. Hosted on GitHub Pages. No build step, no framework.
+Lead form via Web3Forms (no backend). Live GitHub star counts on the
+open-source cards via the public GitHub API (fails silently if rate-limited).
 
 ## Contact
 
