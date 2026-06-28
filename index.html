@@ -203,6 +203,20 @@
         .cta-section .btn { background: #fff; color: var(--accent); font-weight: 700; }
         .cta-section .btn:hover { background: #f3edfc; }
 
+        /* LEAD FORM */
+        .lead-form { max-width: 420px; margin: 1.8rem auto 0; display: flex; flex-direction: column; gap: 0.8rem; text-align: left; }
+        .lead-form input[type="text"], .lead-form input[type="email"] { width: 100%; padding: 0.8rem 1rem; border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; background: rgba(255,255,255,0.95); color: var(--text); font-family: inherit; font-size: 0.92rem; }
+        .lead-form input::placeholder { color: #9ca3af; }
+        .lead-form input:focus { outline: none; border-color: #fff; box-shadow: 0 0 0 3px rgba(255,255,255,0.25); }
+        .lead-consent { display: flex; align-items: flex-start; gap: 0.5rem; font-size: 0.78rem; color: rgba(255,255,255,0.85); line-height: 1.5; }
+        .lead-consent input { margin-top: 0.15rem; flex-shrink: 0; accent-color: var(--accent); }
+        .lead-form button { padding: 0.85rem 1rem; border: none; border-radius: 10px; background: #fff; color: var(--accent); font-weight: 700; font-size: 0.92rem; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+        .lead-form button:hover { background: #f3edfc; }
+        .lead-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+        .lead-status { font-size: 0.85rem; margin-top: 0.3rem; min-height: 1.2em; }
+        .lead-status.ok { color: #6ee7b7; }
+        .lead-status.err { color: #fca5a5; }
+
         /* FOOTER */
         .footer { border-top: 1px solid var(--border); padding: 2rem; text-align: center; font-size: 0.75rem; color: var(--text-dim); }
         .footer-socials { display: flex; gap: 1rem; justify-content: center; margin-bottom: 1rem; }
@@ -248,7 +262,7 @@
                 <li><a href="blog/">Blog</a></li>
                 <li><a href="#faq">FAQ</a></li>
             </ul>
-            <a href="https://calendly.com/neclcompany/30min" class="nav-cta" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'nav_desktop'})">Book a Call</a>
+            <a href="#contact" class="nav-cta" onclick="gtag('event','click_contact',{location:'nav_desktop'})">Get in touch</a>
             <button class="nav-burger" onclick="document.getElementById('mob').classList.add('open')"><span></span><span></span><span></span></button>
         </div>
     </nav>
@@ -260,7 +274,7 @@
         <a href="#process" onclick="this.parentElement.classList.remove('open')">Process</a>
         <a href="#faq" onclick="this.parentElement.classList.remove('open')">FAQ</a>
         <a href="blog/">Blog</a>
-        <a href="https://calendly.com/neclcompany/30min" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'nav_mobile'})">Book a Call</a>
+        <a href="#contact" onclick="this.parentElement.classList.remove('open');gtag('event','click_contact',{location:'nav_mobile'})">Get in touch</a>
     </div>
 
     <main>
@@ -271,7 +285,7 @@
             <p>We build production-grade RAG systems, voice agents, and AI automation that pay for themselves in weeks.</p>
             <div class="hero-cta">
                 <a href="https://t.me/ownerai" class="btn btn-p" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'hero'})">Write on Telegram</a>
-                <a href="https://calendly.com/neclcompany/30min" class="btn btn-s" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_calendly',{location:'hero'})">Book a Call</a>
+                <a href="#contact" class="btn btn-s" onclick="gtag('event','click_contact',{location:'hero'})">Get in touch</a>
             </div>
             <div class="hero-stats">
                 <div><span class="stat-n">30+</span><span class="stat-l">Projects Shipped</span></div>
@@ -451,16 +465,28 @@
             </div>
         </section>
 
-        <!-- CTA -->
-        <section class="s">
+        <!-- CTA / CONTACT FORM -->
+        <section id="contact" class="s">
             <div class="cta-section">
                 <h2>Ready to automate?</h2>
-                <p>Describe your project — we'll reply within a few hours.</p>
-                <div style="display:flex;gap:0.8rem;justify-content:center;flex-wrap:wrap;margin-top:0.5rem;">
-                    <a href="https://t.me/ownerai" class="btn" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'bottom'})">Write on Telegram &rarr;</a>
-                </div>
-                <br>
-                <a href="mailto:neclcompany@gmail.com" style="color:#fff;opacity:0.7;font-size:0.85rem;text-decoration:underline;" onclick="gtag('event','click_email',{location:'bottom'})">or email us: neclcompany@gmail.com</a>
+                <p>Leave your name and email — we'll reach out within a few hours.</p>
+
+                <form class="lead-form" id="leadForm">
+                    <input type="hidden" name="access_key" value="fe33ec6c-f013-4c37-8ce5-59113b20694e">
+                    <input type="hidden" name="subject" value="New lead from neclco.com">
+                    <input type="hidden" name="from_name" value="NeCL Website">
+                    <input type="text" name="botcheck" style="display:none;" tabindex="-1" autocomplete="off">
+                    <input type="text" name="name" placeholder="Your name" required minlength="2" maxlength="80" autocomplete="name">
+                    <input type="email" name="email" placeholder="you@company.com" required maxlength="120" autocomplete="email">
+                    <label class="lead-consent">
+                        <input type="checkbox" name="consent" required>
+                        <span>I agree to be contacted about my request. No spam, no sharing.</span>
+                    </label>
+                    <button type="submit" id="leadBtn">Get in touch</button>
+                    <p class="lead-status" id="leadStatus" aria-live="polite"></p>
+                </form>
+
+                <a href="mailto:neclcompany@gmail.com" style="color:#fff;opacity:0.7;font-size:0.85rem;text-decoration:underline;display:inline-block;margin-top:0.8rem;" onclick="gtag('event','click_email',{location:'bottom'})">or email us directly: neclcompany@gmail.com</a>
             </div>
         </section>
 
@@ -528,6 +554,46 @@
                 })
                 .catch(function () {});
         });
+
+        // Lead form — submits to Web3Forms via fetch, no page redirect.
+        (function () {
+            var form = document.getElementById('leadForm');
+            if (!form) return;
+            var btn = document.getElementById('leadBtn');
+            var status = document.getElementById('leadStatus');
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                status.textContent = '';
+                status.className = 'lead-status';
+                btn.disabled = true;
+                btn.textContent = 'Sending…';
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Accept': 'application/json' },
+                    body: new FormData(form)
+                })
+                .then(function (r) { return r.json(); })
+                .then(function (data) {
+                    if (data.success) {
+                        form.reset();
+                        status.textContent = 'Thanks! We\'ll be in touch shortly.';
+                        status.className = 'lead-status ok';
+                        if (window.gtag) gtag('event', 'lead_submit', { location: 'contact_form' });
+                    } else {
+                        status.textContent = 'Something went wrong. Please email us instead.';
+                        status.className = 'lead-status err';
+                    }
+                })
+                .catch(function () {
+                    status.textContent = 'Network error. Please email us instead.';
+                    status.className = 'lead-status err';
+                })
+                .finally(function () {
+                    btn.disabled = false;
+                    btn.textContent = 'Get in touch';
+                });
+            });
+        })();
     </script>
 </body>
 </html>
