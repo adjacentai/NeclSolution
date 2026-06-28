@@ -24,7 +24,7 @@
             "name": "What is MCP and how is it different from a regular API?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "MCP (Model Context Protocol) is a standardized way for AI agents to call tools and access data. It's like an API spec specifically designed for LLM-calling. The difference from a regular API: MCPs declare their tools in a way Claude can discover and use without per-app coding."
+                "text": "MCP (Model Context Protocol) is a standardized way for AI agents to discover and call tools. Unlike a regular API, an MCP server declares its tools — names, descriptions, and input schemas — so a model can use them without any per-app integration code."
             }
         },
         {
@@ -32,7 +32,7 @@
             "name": "Do I need to know Python to use this?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. You install via `uvx`, which handles Python automatically. Just add the JSON snippet to `mcp.json` and you're done."
+                "text": "No. You install via `uvx`, which handles Python for you. Add the JSON snippet to `mcp.json`, restart your client, and you are done."
             }
         },
         {
@@ -40,7 +40,7 @@
             "name": "Will Claude rate-limit me on HN?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. HN's API is public and has no enforced rate limits. Even heavy use (hundreds of queries per minute) is fine."
+                "text": "No. HN's Firebase and Algolia APIs are public with no enforced rate limits. Even hundreds of queries per minute are fine."
             }
         },
         {
@@ -48,7 +48,15 @@
             "name": "Does this work in Claude Code (the CLI), not just Claude Desktop?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. Any MCP client supports it — Claude Code, Cursor, Continue, Cody, any custom MCP client."
+                "text": "Yes. Any MCP client supports it — Claude Code, Cursor, Continue, Cody, and custom clients all use the same `mcp.json` shape."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What is the difference between a stdio and an HTTP MCP server?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A stdio server runs as a local subprocess and talks over standard input/output, which is what `necl-hn-mcp` does. An HTTP/SSE server runs remotely over the network. The model sees the tools the same way either way."
             }
         },
         {
@@ -56,7 +64,7 @@
             "name": "Can I use this commercially?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, MIT licensed. You can build paid products on top of it. We appreciate attribution but don't require it."
+                "text": "Yes, it is MIT licensed. You can build paid products on top of it. We appreciate attribution but do not require it."
             }
         },
         {
@@ -64,7 +72,7 @@
             "name": "Is the source code small enough to audit?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes — under 200 lines total. Two files: [hn.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/hn.py) and [server.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/server.py)."
+                "text": "Yes — under 200 lines total across two files: [hn.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/hn.py) and [server.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/server.py)."
             }
         },
         {
@@ -72,7 +80,7 @@
             "name": "How is this different from just hitting the HN API directly?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Direct API hitting requires you to write glue code per app. MCP makes the HN tools discoverable by any AI agent without per-app code — your prompt is enough."
+                "text": "Hitting the API directly means writing and maintaining glue code in every app. An MCP server makes the same tools discoverable by any AI agent — your prompt is the only \"integration\" you write."
             }
         }
     ]
@@ -143,7 +151,7 @@
 
         <h1>Hacker News MCP Server for Claude — Top Stories, Comments &amp; Search Without an API Key</h1>
         <img src="../assets/images/blog/hero-hacker-news-mcp-server-claude-desktop.png" alt="Hacker News MCP Server for Claude — Free, No API Key" class="hero-img" loading="lazy">
-        <p class="lead">We pulled the Hacker News logic out of our internal Telegram bot and shipped it as a standalone MCP server. Now any Claude session can read HN — no API key, no signup, install in 30 seconds.</p>
+        <p class="lead">We pulled the Hacker News logic out of our internal content agent and shipped it as a standalone MCP server. Now any Claude session can read HN — no API key, no signup, install in 30 seconds.</p>
 
         <div class="tldr-box">
             <strong class="tldr-label">TL;DR</strong>
@@ -153,15 +161,44 @@
 <li>Install via <code>uvx</code> in <strong>30 seconds</strong> — no Python venv setup, no PyPI dependency, no config file edits beyond <code>mcp.json</code>.</li>
 <li>Under <strong>200 lines of Python total</strong> — auditable in 5 minutes, MIT-licensed.</li>
 <li>Returns clean structured dicts that LLMs chain in <strong>2-3 tool calls</strong> (<code>search → top story → comments → summary</code>).</li>
-<li>Production-tested: powers our internal HN→content pipeline that's been running <strong>3× daily for 6 months</strong>.</li>
+<li>Production-tested: powers our internal HN→content pipeline that's been running <strong>3× daily for 6 months</strong>. We extracted the MCP from it in about <strong>2 hours</strong>.</li>
 </ul>
 <hr />
+<p>This is our MCP-101 entry point, so we wrote it for two readers: the developer who just wants to give Claude access to Hacker News, and the developer who keeps hearing "MCP" and wants a plain explanation with a working example. You can read it top to bottom or jump to the part you need.</p>
         </div>
 
-        <h2>What is MCP and why should you care</h2>
-<p>Model Context Protocol (MCP), released by Anthropic in late 2024, is a standard for connecting AI agents to external data and tools. Before MCP, every LLM integration with Slack, GitHub, your database, or a third-party API required custom plumbing per app per model. MCP turned all of that into a single shared interface.</p>
-<p>Think of it like USB for AI: one cable, any device.</p>
-<p>For Claude specifically, MCP servers make Claude Desktop and Claude Code dramatically more useful. With MCPs installed, Claude can:</p>
+        <h2>What is MCP, explained from scratch</h2>
+<p>Model Context Protocol (MCP) is a standard, released by Anthropic in late 2024, for connecting AI agents to external data and tools. To understand why it matters, it helps to see the problem it replaced.</p>
+<h3>The problem before MCP</h3>
+<p>Say you want Claude to read your GitHub issues, GPT-4 to query your Postgres, and a third model to post to Slack. Before MCP, each of those connections was custom plumbing. You wrote a GitHub adapter for one model's tool-calling format, a separate Postgres adapter for another, and a Slack adapter for a third. Change the model and you rewrote the adapters. Add a tool and you wrote it three times, once per model.</p>
+<p>This is the classic M×N integration problem: M models times N tools equals a lot of glue code that nobody wants to maintain. Every team building AI features ended up re-implementing the same Slack connector, the same database reader, the same file-system bridge.</p>
+<h3>What the protocol standardizes</h3>
+<p>MCP collapses M×N into M+N. A tool is built once as an MCP <em>server</em>. Any model with an MCP <em>client</em> can use it. The server author never thinks about which model will call them; the model never thinks about how the tool is implemented.</p>
+<p>What the protocol actually pins down:</p>
+<ul>
+<li><strong>Tool discovery.</strong> A client asks a server "what can you do?" and gets back a typed list: tool names, descriptions, and input schemas. The model reads these descriptions to decide what to call.</li>
+<li><strong>Tool invocation.</strong> The client sends a structured call (tool name plus arguments), the server runs it and returns a structured result. Under the hood this is <a href="https://www.jsonrpc.org/specification">JSON-RPC 2.0</a>.</li>
+<li><strong>Other primitives.</strong> Beyond tools, MCP also defines <em>resources</em> (readable data the model can pull in, like files) and <em>prompts</em> (reusable prompt templates a server can offer). Most servers, including ours, start with tools because that is the most common need.</li>
+</ul>
+<p>Think of it like USB for AI: one cable, any device. You do not buy a different cable for every peripheral, and you do not write a different connector for every model.</p>
+<h3>stdio vs HTTP/SSE servers</h3>
+<p>MCP servers run in one of two transport modes, and the difference is mostly about <em>where</em> the server lives.</p>
+<ul>
+<li><strong>stdio (standard input/output).</strong> The server runs as a local subprocess on your machine. The client launches it, then talks to it over stdin/stdout. This is the simplest mode, needs no network, and is ideal for tools that touch your local environment or hit public APIs. <code>necl-hn-mcp</code> uses stdio.</li>
+<li><strong>HTTP / SSE (Server-Sent Events).</strong> The server runs remotely and the client connects over the network. This suits multi-user hosted services, tools behind a company firewall, or anything you do not want every user to install locally.</li>
+</ul>
+<p>Both modes deliver data into the model the same way. The transport is an implementation detail; the tool list and the call/response cycle look identical to the model.</p>
+<h3>How a client discovers and calls a tool</h3>
+<p>A <em>client</em> is the app the model runs inside — Claude Desktop, Claude Code, Cursor, and others all ship MCP clients. The lifecycle is short:</p>
+<ol>
+<li><strong>Launch.</strong> The client reads its config (for example <code>mcp.json</code>), and for each stdio server it spawns the subprocess.</li>
+<li><strong>Handshake + discovery.</strong> The client and server exchange capabilities, then the client asks for the tool list. Now the model knows <code>hn_search</code> exists, what it does, and what arguments it takes.</li>
+<li><strong>Reasoning.</strong> You ask a question. The model decides whether a tool helps, and if so, which one and with what arguments.</li>
+<li><strong>Call + response.</strong> The client sends the call to the server, the server returns a result, the model reads it and keeps reasoning — often calling another tool with the output of the first.</li>
+</ol>
+<p>The point is that you never wrote integration code. You added a few lines to a config file, and the model figured out the rest from the tool descriptions.</p>
+<h2>Why MCP matters for Claude specifically</h2>
+<p>With MCP servers installed, Claude Desktop and Claude Code stop being a chat box and start being an agent wired into your real tools. Claude can:</p>
 <ul>
 <li>Read your filesystem and codebase</li>
 <li>Query your Postgres</li>
@@ -169,37 +206,113 @@
 <li>Search Hacker News (with our server)</li>
 <li>Anything else someone has built a server for</li>
 </ul>
-<p>There are 20,000+ MCP servers in catalogs as of mid-2026. Most are stdio (run locally on your machine), some are HTTP/SSE (run remotely). Both flow data into Claude the same way.</p>
+<p>There are 20,000+ MCP servers in public catalogs as of mid-2026. Most are stdio (run locally), some are HTTP/SSE (run remotely). The ecosystem grew fast precisely because building a server is small work — which we will show you later in this article.</p>
 <h2>Why we built <code>necl-hn-mcp</code></h2>
-<p>We've been running an internal content agent for 6 months — a Telegram bot that aggregates Hacker News three times a day and generates draft posts for the team. It's the engine behind our <a href="https://t.me/necl_company">NeCL Telegram channel</a>. Every post we write riffs off something we noticed on HN that day.</p>
-<p>The HN-fetching logic in that agent was clean enough that pulling it out as a standalone MCP took us <strong>exactly 2 hours</strong>. We tested the full tool chain in Claude Desktop the same evening. Now any AI agent — not just our internal bot — can read HN through the same plumbing.</p>
+<p>We have been running an internal content agent for 6 months — a Telegram bot that aggregates Hacker News three times a day and drafts posts for the team. It is the engine behind our <a href="https://t.me/necl_company">NeCL Telegram channel</a>. Most of what we write riffs off something we noticed on HN that day.</p>
+<p>The HN-fetching logic in that agent was clean enough that pulling it out as a standalone MCP took us <strong>exactly 2 hours</strong>. We tested the full tool chain in Claude Desktop the same evening. Now any AI agent — not just our internal bot — can read HN through the same plumbing. The server is live on <a href="https://mcp.so">mcp.so</a> and <a href="https://glama.ai">Glama</a>.</p>
 <h2>What the 5 tools do</h2>
+<p>Each tool below returns a plain Python dict that serializes to clean JSON. We show a realistic prompt and a trimmed version of what comes back so you can see what the model actually reads.</p>
 <h3><code>hn_top_stories(limit, hours)</code></h3>
-<p>Top N stories from the last N hours, ranked by score. Default: top 10 from last 24h.</p>
-<pre><code>&quot;Show me the top 5 HN stories from the last 6 hours&quot;
+<p>Top N stories from the last N hours, ranked by score. Default: top 10 from the last 24h.</p>
+<blockquote>
+<p>"Show me the top 5 HN stories from the last 6 hours"</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;stories&quot;: [
+    {
+      &quot;id&quot;: 38420000,
+      &quot;title&quot;: &quot;Show HN: I built a local-first MCP server&quot;,
+      &quot;url&quot;: &quot;https://example.com/mcp&quot;,
+      &quot;score&quot;: 412,
+      &quot;by&quot;: &quot;patio11&quot;,
+      &quot;descendants&quot;: 188,
+      &quot;time&quot;: &quot;2026-06-10T08:12:00Z&quot;
+    }
+  ],
+  &quot;count&quot;: 5,
+  &quot;window_hours&quot;: 6
+}
 </code></pre>
 <h3><code>hn_category(category, limit)</code></h3>
 <p>Pull stories from one specific category: <code>top</code>, <code>new</code>, <code>best</code>, <code>ask</code>, <code>show</code>, <code>job</code>.</p>
-<pre><code>&quot;What's in Ask HN right now?&quot;
-&quot;Show me the top 3 Show HN posts about AI agents&quot;
+<blockquote>
+<p>"What's in Ask HN right now?"
+"Show me the top 3 Show HN posts about AI agents"</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;category&quot;: &quot;show&quot;,
+  &quot;stories&quot;: [
+    {
+      &quot;id&quot;: 38421111,
+      &quot;title&quot;: &quot;Show HN: Open-source voice dictation for macOS&quot;,
+      &quot;url&quot;: &quot;https://github.com/...&quot;,
+      &quot;score&quot;: 96,
+      &quot;by&quot;: &quot;necl&quot;,
+      &quot;descendants&quot;: 41
+    }
+  ],
+  &quot;count&quot;: 3
+}
 </code></pre>
 <h3><code>hn_get_story(story_id)</code></h3>
-<p>Full metadata for a single story — title, URL, score, author, comments count, posted time.</p>
-<pre><code>&quot;Get details for HN story 38420000&quot;
+<p>Full metadata for a single story — title, URL, score, author, comment count, posted time.</p>
+<blockquote>
+<p>"Get details for HN story 38420000"</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;id&quot;: 38420000,
+  &quot;title&quot;: &quot;Show HN: I built a local-first MCP server&quot;,
+  &quot;url&quot;: &quot;https://example.com/mcp&quot;,
+  &quot;score&quot;: 412,
+  &quot;by&quot;: &quot;patio11&quot;,
+  &quot;descendants&quot;: 188,
+  &quot;time&quot;: &quot;2026-06-10T08:12:00Z&quot;,
+  &quot;type&quot;: &quot;story&quot;
+}
 </code></pre>
 <h3><code>hn_get_comments(story_id, limit)</code></h3>
-<p>Top-level comments thread for a story, in HN ranking order. Each comment has <code>replies_count</code> so the LLM knows whether there's a deeper discussion.</p>
-<pre><code>&quot;What are people saying about HN story 38420000?&quot;
+<p>Top-level comment thread for a story, in HN ranking order. Each comment carries <code>replies_count</code> so the model knows whether a deeper discussion exists worth fetching.</p>
+<blockquote>
+<p>"What are people saying about HN story 38420000?"</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;story_id&quot;: 38420000,
+  &quot;comments&quot;: [
+    {
+      &quot;id&quot;: 38420042,
+      &quot;by&quot;: &quot;tptacek&quot;,
+      &quot;text&quot;: &quot;stdio transport is the right default for local tools because...&quot;,
+      &quot;replies_count&quot;: 7
+    }
+  ],
+  &quot;count&quot;: 1
+}
 </code></pre>
 <h3><code>hn_search(query, sort, limit)</code></h3>
 <p>Full-text search across HN posts and comments via the Algolia HN API. Sort by <code>relevance</code> or <code>date</code>.</p>
-<pre><code>&quot;Search HN for posts about RAG performance, sorted by date&quot;
-&quot;Find recent HN discussions on Claude vs GPT-4&quot;
+<blockquote>
+<p>"Search HN for posts about RAG performance, sorted by date"
+"Find recent HN discussions on Claude vs GPT-4"</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;query&quot;: &quot;RAG performance&quot;,
+  &quot;sort&quot;: &quot;date&quot;,
+  &quot;hits&quot;: [
+    {
+      &quot;id&quot;: 38419000,
+      &quot;title&quot;: &quot;Ask HN: How do you benchmark RAG performance?&quot;,
+      &quot;points&quot;: 73,
+      &quot;num_comments&quot;: 54,
+      &quot;created_at&quot;: &quot;2026-06-09T19:40:00Z&quot;
+    }
+  ],
+  &quot;total_hits&quot;: 312
+}
 </code></pre>
-<p>Returns a clean shape — <code>{hits, total_hits, query, sort}</code> — instead of raw Algolia.</p>
+<p>The search tool returns a clean shape — <code>{query, sort, hits, total_hits}</code> — instead of the raw, deeply nested Algolia payload. That keeps the model's context small and its tool-chaining cheap.</p>
 <h2>Install in 30 seconds</h2>
-<p>The recommended path uses <code>uvx</code> (modern Python install runner — no venv, no <code>pip install</code>):</p>
-<p>Add to your <code>mcp.json</code> (Claude Desktop, Claude Code, or any MCP client):</p>
+<p>The recommended path uses <code>uvx</code> (a modern Python install runner — no venv, no <code>pip install</code> into a global environment).</p>
+<p>Add this to your <code>mcp.json</code> (Claude Desktop, Claude Code, or any MCP client):</p>
 <pre><code class="language-json">{
   &quot;mcpServers&quot;: {
     &quot;necl-hn&quot;: {
@@ -214,38 +327,174 @@
 }
 </code></pre>
 <p>Restart Claude. Type a HN question. It just works.</p>
-<p>If you don't have <code>uvx</code>: <code>pip install uv</code> or <code>brew install uv</code>.</p>
-<h2>What you can build with this</h2>
-<p>Five practical patterns we've seen people use HN data for:</p>
-<ol>
-<li><strong>Daily content brief</strong> — pull top HN stories, summarize the meta-trends, generate cross-platform posts. This is exactly what our internal content agent does every day before we sit down to write.</li>
-<li><strong>Competitive research bot</strong> — search HN for mentions of competitors. Surface negative comments. Track sentiment over time.</li>
-<li><strong>Trend detector</strong> — monitor <code>new</code> and <code>best</code> categories on a cron. Alert when a topic spikes (e.g. a new framework hits front page).</li>
-<li><strong>Newsletter pipeline</strong> — keyword search over a time window. Cluster results. Generate an editorial digest.</li>
-<li><strong>Customer-discovery agent</strong> — search Ask HN for problems your product solves. Generate cold-outreach drafts.</li>
-</ol>
-<p>Each of these used to require glue code to hit the HN API directly. Now it's one Claude conversation.</p>
-<h2>Why no API key</h2>
-<p>HN's Firebase API and Algolia HN search are both fully public. No registration, no rate limits worth worrying about. We deliberately picked HN as the pilot MCP for exactly this reason — most MCP authors immediately complicate distribution with OAuth flows and API key setup. Skipping that gives us install rate.</p>
-<p>This matters if you're building MCPs yourself: <strong>start with public-data tools first</strong>. Save the OAuth dance for v2.</p>
-<h2>How an MCP server actually works (technical detail)</h2>
-<p>Our server is ~150 lines of Python:</p>
+<p>If you do not have <code>uvx</code> yet: <code>pip install uv</code> or <code>brew install uv</code>.</p>
+<h2>MCP vs function calling vs plugins</h2>
+<p>These three terms get mixed up constantly. They overlap, but they sit at different layers.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Function calling</th>
+<th>Plugins (legacy)</th>
+<th>MCP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What it is</td>
+<td>A model's raw ability to emit a structured tool call</td>
+<td>Vendor-specific app integrations (e.g. early ChatGPT plugins)</td>
+<td>An open protocol for exposing tools, resources, and prompts</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>One model's API</td>
+<td>One vendor's product</td>
+<td>Cross-model, cross-client</td>
+</tr>
+<tr>
+<td>Who defines the tool</td>
+<td>You, inline in each API request</td>
+<td>The plugin author, per platform spec</td>
+<td>The server author, once, for everyone</td>
+</tr>
+<tr>
+<td>Reuse across apps</td>
+<td>None — rewrite per app</td>
+<td>Limited to that platform</td>
+<td>High — any MCP client can use the server</td>
+</tr>
+<tr>
+<td>Transport</td>
+<td>In the API call</td>
+<td>HTTP via vendor manifest</td>
+<td>stdio or HTTP/SSE</td>
+</tr>
+<tr>
+<td>Best for</td>
+<td>A single app you control end to end</td>
+<td>(Largely superseded)</td>
+<td>Tools you want many agents and clients to reuse</td>
+</tr>
+</tbody>
+</table>
+<p>The short version: function calling is the <em>mechanism</em> a model uses to request a tool. MCP is the <em>standard</em> for packaging and discovering those tools so you write them once. <code>necl-hn-mcp</code> is an MCP server; when Claude uses it, function calling is what happens under the hood.</p>
+<h2>How to build your own MCP server</h2>
+<p>The fastest path in Python is <a href="https://github.com/modelcontextprotocol/python-sdk">FastMCP</a>, the high-level layer in the official MCP SDK. You write plain async functions, decorate them, and the SDK handles the protocol, schema generation, and stdio loop. Here is the same three-file shape we used for <code>necl-hn-mcp</code>.</p>
+<h3>1. The data client (<code>hn.py</code>)</h3>
+<p>Keep your API logic separate from the MCP layer. This makes the tools testable and the server file thin.</p>
+<pre><code class="language-python"># hn.py — async client for the public HN APIs
+import httpx
+
+FIREBASE = &quot;https://hacker-news.firebaseio.com/v0&quot;
+ALGOLIA = &quot;https://hn.algolia.com/api/v1&quot;
+
+async def get_item(item_id: int) -&gt; dict:
+    async with httpx.AsyncClient() as c:
+        r = await c.get(f&quot;{FIREBASE}/item/{item_id}.json&quot;)
+        r.raise_for_status()
+        return r.json()
+
+async def top_story_ids(limit: int) -&gt; list[int]:
+    async with httpx.AsyncClient() as c:
+        r = await c.get(f&quot;{FIREBASE}/topstories.json&quot;)
+        r.raise_for_status()
+        return r.json()[:limit]
+
+async def search(query: str, sort: str, limit: int) -&gt; dict:
+    path = &quot;search_by_date&quot; if sort == &quot;date&quot; else &quot;search&quot;
+    async with httpx.AsyncClient() as c:
+        r = await c.get(f&quot;{ALGOLIA}/{path}&quot;,
+                        params={&quot;query&quot;: query, &quot;hitsPerPage&quot;: limit})
+        r.raise_for_status()
+        return r.json()
+</code></pre>
+<h3>2. The tools (<code>server.py</code>)</h3>
+<p>The decorator is the whole trick. <code>@mcp.tool()</code> reads your function's name, docstring, and type hints, and turns them into the schema the model discovers. The docstring is not decoration — it is what the model reads to decide when to call the tool, so write it like a prompt.</p>
+<pre><code class="language-python"># server.py — expose HN functions as MCP tools
+from mcp.server.fastmcp import FastMCP
+import hn
+
+mcp = FastMCP(&quot;necl-hn&quot;)
+
+@mcp.tool()
+async def hn_top_stories(limit: int = 10, hours: int = 24) -&gt; dict:
+    &quot;&quot;&quot;Get the top Hacker News stories from the last N hours, ranked by score.&quot;&quot;&quot;
+    ids = await hn.top_story_ids(limit)
+    stories = [await hn.get_item(i) for i in ids]
+    return {&quot;stories&quot;: stories, &quot;count&quot;: len(stories), &quot;window_hours&quot;: hours}
+
+@mcp.tool()
+async def hn_get_comments(story_id: int, limit: int = 10) -&gt; dict:
+    &quot;&quot;&quot;Get the top-level comments for a Hacker News story, in ranking order.&quot;&quot;&quot;
+    story = await hn.get_item(story_id)
+    kid_ids = (story.get(&quot;kids&quot;) or [])[:limit]
+    comments = []
+    for cid in kid_ids:
+        c = await hn.get_item(cid)
+        comments.append({
+            &quot;id&quot;: c[&quot;id&quot;],
+            &quot;by&quot;: c.get(&quot;by&quot;),
+            &quot;text&quot;: c.get(&quot;text&quot;, &quot;&quot;),
+            &quot;replies_count&quot;: len(c.get(&quot;kids&quot;) or []),
+        })
+    return {&quot;story_id&quot;: story_id, &quot;comments&quot;: comments, &quot;count&quot;: len(comments)}
+
+@mcp.tool()
+async def hn_search(query: str, sort: str = &quot;relevance&quot;, limit: int = 10) -&gt; dict:
+    &quot;&quot;&quot;Full-text search across HN posts and comments. sort = 'relevance' or 'date'.&quot;&quot;&quot;
+    raw = await hn.search(query, sort, limit)
+    hits = [{
+        &quot;id&quot;: h.get(&quot;objectID&quot;),
+        &quot;title&quot;: h.get(&quot;title&quot;),
+        &quot;points&quot;: h.get(&quot;points&quot;),
+        &quot;num_comments&quot;: h.get(&quot;num_comments&quot;),
+        &quot;created_at&quot;: h.get(&quot;created_at&quot;),
+    } for h in raw.get(&quot;hits&quot;, [])]
+    return {&quot;query&quot;: query, &quot;sort&quot;: sort, &quot;hits&quot;: hits,
+            &quot;total_hits&quot;: raw.get(&quot;nbHits&quot;, 0)}
+</code></pre>
+<h3>3. The entrypoint (<code>__main__.py</code>)</h3>
+<pre><code class="language-python"># __main__.py — run the server over stdio
+from server import mcp
+
+def main() -&gt; None:
+    mcp.run()  # defaults to stdio transport
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<p>That is the entire shape. Add the remaining tools the same way, point your <code>mcp.json</code> at the package, and restart your client. Two design notes from building ours:</p>
 <ul>
-<li><code>hn.py</code> — async HTTP client wrapping Firebase HN + Algolia HN APIs.</li>
-<li><code>server.py</code> — FastMCP wrapper that exposes each function as an MCP tool with typed signatures.</li>
-<li><code>__main__.py</code> — entrypoint that runs <code>mcp.run()</code> over stdio.</li>
+<li><strong>Return small, clean dicts.</strong> The model pays for every token of tool output. Strip the API's nested junk down to the fields a reader actually needs, the way <code>hn_search</code> above flattens the Algolia hit.</li>
+<li><strong>Treat docstrings and type hints as the interface.</strong> They become the tool description and input schema. Vague docstrings lead to the model calling the wrong tool.</li>
 </ul>
-<p>When Claude calls a tool:</p>
+<h2>What you can build with this</h2>
+<p>Six concrete patterns we have seen people apply HN data to.</p>
 <ol>
-<li>Claude Desktop spawns <code>uvx --from git+... necl-hn-mcp</code> as a subprocess.</li>
-<li>The subprocess listens on stdin for JSON-RPC requests, replies on stdout.</li>
-<li>Our tool fetches HN data, formats it into a clean dict, returns.</li>
-<li>Claude reads the response, continues reasoning.</li>
+<li><strong>Daily content brief.</strong> Pull top HN stories, summarize the meta-trends, draft cross-platform posts. This is exactly what our internal content agent does every morning before we sit down to write.</li>
+<li><strong>Competitive research bot.</strong> Search HN for mentions of competitors, surface critical comments, and track how sentiment moves over weeks.</li>
+<li><strong>Trend detector.</strong> Monitor <code>new</code> and <code>best</code> on a cron. Alert when a topic spikes — a new framework hitting the front page, say — before it shows up in newsletters.</li>
+<li><strong>Newsletter pipeline.</strong> Keyword search over a time window, cluster the results, and have the model draft an editorial digest with links.</li>
+<li><strong>Customer-discovery agent.</strong> Search Ask HN for the exact problem your product solves, then draft cold-outreach that references the real thread.</li>
+<li><strong>Hiring and ecosystem radar.</strong> Watch the <code>job</code> category and "Who is hiring" threads for roles, stacks, and companies in your niche, and summarize what is in demand this month.</li>
 </ol>
-<p>That's the whole protocol. No magic.</p>
+<p>Each of these used to require glue code to hit the HN API directly. Now it is one Claude conversation with the right tools attached.</p>
+<h2>Why no API key</h2>
+<p>HN's Firebase API and Algolia HN search are both fully public. No registration, no key, no rate limits worth worrying about — we ran 200+ requests/minute during testing without a single throttle. We deliberately picked HN as the pilot MCP for exactly this reason.</p>
+<p>This is a real lesson for anyone shipping MCPs: <strong>start with public-data tools first</strong>. Most authors complicate distribution on day one with OAuth flows and key setup, which kills install rate. Save the OAuth dance for v2, after people already have your server running.</p>
+<h2>How an MCP server actually works (under the hood)</h2>
+<p>Our server is the ~150 lines you saw above, split across three files: the HN client, the FastMCP tool wrapper, and the stdio entrypoint. When Claude uses it, this is the cycle:</p>
+<ol>
+<li>Claude Desktop spawns <code>uvx --from git+... necl-hn-mcp</code> as a subprocess at startup.</li>
+<li>The subprocess speaks JSON-RPC over stdin/stdout — it reads requests on stdin and writes replies on stdout.</li>
+<li>On a tool call, our function fetches HN data, trims it to a clean dict, and returns it.</li>
+<li>Claude reads the response and keeps reasoning — frequently chaining <code>hn_search → hn_get_story → hn_get_comments</code> to go from a vague query to a summarized discussion in two or three calls.</li>
+</ol>
+<p>That is the whole protocol. No magic, no hosted service, nothing leaves your machine except the public HN requests.</p>
 <h2>Pair this with our Skill</h2>
-<p>If you're using <code>necl-hn-mcp</code> for content research, pair it with <a href="https://github.com/adjacentai/necl-skills/tree/main/necl-content-poster"><code>necl-content-poster</code></a> — our Claude Skill that turns one draft into three platform-tuned posts (Telegram RU, LinkedIn EN, Threads EN).</p>
-<p>End-to-end pipeline: HN MCP finds the story → content-poster writes the three posts → you publish.</p>
+<p>If you are using <code>necl-hn-mcp</code> for content research, pair it with <a href="https://github.com/adjacentai/necl-skills/tree/main/necl-content-poster"><code>necl-content-poster</code></a> — our Claude Skill that turns one draft into three platform-tuned posts (Telegram RU, LinkedIn EN, Threads EN).</p>
+<p>End-to-end pipeline: the HN MCP finds the story, the content-poster Skill writes the three posts, you publish. The MCP supplies the data; the Skill supplies the writing process. They are deliberately split so you can use either on its own.</p>
 <h2>See also</h2>
 <ul>
 <li><a href="/blog/claude-skills-cross-platform-content-generator.html">Claude Skills + Cross-Platform Content Generator</a> — pair this MCP with our content Skill</li>
@@ -259,36 +508,40 @@
         <h2>FAQ</h2>
         <div class="faq-item">
             <p><strong>What is MCP and how is it different from a regular API?</strong></p>
-            <p>MCP (Model Context Protocol) is a standardized way for AI agents to call tools and access data. It&#x27;s like an API spec specifically designed for LLM-calling. The difference from a regular API: MCPs declare their tools in a way Claude can discover and use without per-app coding.</p>
+            <p>MCP (Model Context Protocol) is a standardized way for AI agents to discover and call tools. Unlike a regular API, an MCP server declares its tools — names, descriptions, and input schemas — so a model can use them without any per-app integration code.</p>
         </div>
         <div class="faq-item">
             <p><strong>Do I need to know Python to use this?</strong></p>
-            <p>No. You install via `uvx`, which handles Python automatically. Just add the JSON snippet to `mcp.json` and you&#x27;re done.</p>
+            <p>No. You install via `uvx`, which handles Python for you. Add the JSON snippet to `mcp.json`, restart your client, and you are done.</p>
         </div>
         <div class="faq-item">
             <p><strong>Will Claude rate-limit me on HN?</strong></p>
-            <p>No. HN&#x27;s API is public and has no enforced rate limits. Even heavy use (hundreds of queries per minute) is fine.</p>
+            <p>No. HN&#x27;s Firebase and Algolia APIs are public with no enforced rate limits. Even hundreds of queries per minute are fine.</p>
         </div>
         <div class="faq-item">
             <p><strong>Does this work in Claude Code (the CLI), not just Claude Desktop?</strong></p>
-            <p>Yes. Any MCP client supports it — Claude Code, Cursor, Continue, Cody, any custom MCP client.</p>
+            <p>Yes. Any MCP client supports it — Claude Code, Cursor, Continue, Cody, and custom clients all use the same `mcp.json` shape.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>What is the difference between a stdio and an HTTP MCP server?</strong></p>
+            <p>A stdio server runs as a local subprocess and talks over standard input/output, which is what `necl-hn-mcp` does. An HTTP/SSE server runs remotely over the network. The model sees the tools the same way either way.</p>
         </div>
         <div class="faq-item">
             <p><strong>Can I use this commercially?</strong></p>
-            <p>Yes, MIT licensed. You can build paid products on top of it. We appreciate attribution but don&#x27;t require it.</p>
+            <p>Yes, it is MIT licensed. You can build paid products on top of it. We appreciate attribution but do not require it.</p>
         </div>
         <div class="faq-item">
             <p><strong>Is the source code small enough to audit?</strong></p>
-            <p>Yes — under 200 lines total. Two files: [hn.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/hn.py) and [server.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/server.py).</p>
+            <p>Yes — under 200 lines total across two files: [hn.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/hn.py) and [server.py](https://github.com/adjacentai/necl-hn-mcp/blob/main/src/necl_hn_mcp/server.py).</p>
         </div>
         <div class="faq-item">
             <p><strong>How is this different from just hitting the HN API directly?</strong></p>
-            <p>Direct API hitting requires you to write glue code per app. MCP makes the HN tools discoverable by any AI agent without per-app code — your prompt is enough.</p>
+            <p>Hitting the API directly means writing and maintaining glue code in every app. An MCP server makes the same tools discoverable by any AI agent — your prompt is the only &quot;integration&quot; you write.</p>
         </div>
 
         <div class="cta-box">
             <p>Need a custom MCP server wired to your internal APIs, databases, or SaaS tools? We build them. .</p>
-            <a href="/#contact" class="btn" onclick="gtag('event','click_contact',{location:'blog_cta'})">Get in touch</a>
+            <a href="https://neclco.com/#contact" class="btn">Tell us about your project</a>
         </div>
     </article>
 

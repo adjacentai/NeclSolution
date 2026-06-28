@@ -146,6 +146,20 @@
         .svc-d { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1rem; }
         .svc-p { font-size: 0.85rem; font-weight: 600; color: var(--accent); margin-top: auto; }
 
+        /* PRICING STRIP */
+        .pricing-strip { margin-top: 2rem; background: var(--accent-light); border-radius: var(--r); padding: 2rem; text-align: center; }
+        .pricing-strip h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.4rem; }
+        .pricing-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+        .pricing-row > div { display: flex; flex-direction: column; gap: 0.2rem; padding: 0 0.8rem; border-left: 1px solid rgba(147,112,219,0.25); }
+        .pricing-row > div:first-child { border-left: none; }
+        .pricing-n { font-size: 1.25rem; font-weight: 800; color: var(--accent); letter-spacing: -0.5px; }
+        .pricing-l { font-size: 0.78rem; color: var(--text-dim); line-height: 1.4; }
+        .pricing-note { font-size: 0.82rem; color: var(--text-dim); margin-top: 1.4rem; }
+        @media (max-width: 768px) {
+            .pricing-row { grid-template-columns: 1fr 1fr; gap: 1.2rem 0.5rem; }
+            .pricing-row > div:nth-child(3) { border-left: none; }
+        }
+
         /* OPEN SOURCE */
         .oss-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
         .oss-tag { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--accent); font-weight: 600; background: var(--accent-light); padding: 0.25rem 0.6rem; border-radius: 5px; }
@@ -284,8 +298,7 @@
             <h1>Your AI team — without hiring <span>an AI team</span></h1>
             <p>We build production-grade RAG systems, voice agents, and AI automation that pay for themselves in weeks.</p>
             <div class="hero-cta">
-                <a href="https://t.me/ownerai" class="btn btn-p" target="_blank" rel="noopener noreferrer" onclick="gtag('event','click_telegram',{location:'hero'})">Write on Telegram</a>
-                <a href="#contact" class="btn btn-s" onclick="gtag('event','click_contact',{location:'hero'})">Get in touch</a>
+                <a href="#contact" class="btn btn-p" onclick="gtag('event','click_contact',{location:'hero'})">Get in touch</a>
             </div>
             <div class="hero-stats">
                 <div><span class="stat-n">30+</span><span class="stat-l">Projects Shipped</span></div>
@@ -324,13 +337,24 @@
                 <a href="https://t.me/ownerai" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);" onclick="gtag('event','click_telegram',{location:'service_card',service:'custom-pipelines'})">
                     <h3 class="svc-t">Custom AI Pipelines</h3>
                     <p class="svc-d">End-to-end development. Python, FastAPI, LangGraph, Docker. Your idea — production-ready in 2 weeks.</p>
-                    <span class="svc-p">From $100/hour</span>
+                    <span class="svc-p">Production-ready in 2 weeks</span>
                 </a>
                 <a href="https://t.me/ownerai" target="_blank" rel="noopener noreferrer" class="card" style="text-decoration:none;color:var(--text);" onclick="gtag('event','click_telegram',{location:'service_card',service:'claude-code-mcp'})">
                     <h3 class="svc-t">Claude Code, Skills &amp; MCP</h3>
                     <p class="svc-d">Custom MCP servers wired to your APIs, Claude Skills for your team's workflows, full agent workspaces. Our open-source MCPs are live on Smithery, mcp.so, and skills.sh.</p>
                     <span class="svc-p">Idea to marketplace in days</span>
                 </a>
+            </div>
+
+            <div class="pricing-strip">
+                <h3>Simple, transparent pricing</h3>
+                <div class="pricing-row">
+                    <div><span class="pricing-n">from $800</span><span class="pricing-l">Ready-made products &amp; bots</span></div>
+                    <div><span class="pricing-n">from $3,000</span><span class="pricing-l">Fixed-price custom project</span></div>
+                    <div><span class="pricing-n">from $5,000</span><span class="pricing-l">Enterprise / on-premise</span></div>
+                    <div><span class="pricing-n">$100/hr</span><span class="pricing-l">Consulting &amp; team training</span></div>
+                </div>
+                <p class="pricing-note">Every project gets a fixed quote after a free 15-minute call. No hourly creep, no surprises.</p>
             </div>
         </section>
 
@@ -501,7 +525,7 @@
                 </div>
                 <div class="faq-item">
                     <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">What does pricing look like?<span class="faq-arrow">+</span></button>
-                    <div class="faq-a"><p>Projects start at $3K. Enterprise from $5K. Every project gets a fixed-price quote after a 15-min discovery call — no surprises, no hourly billing creep.</p></div>
+                    <div class="faq-a"><p>Ready-made products and bots start at $800. Fixed-price custom projects from $3K. Enterprise and on-premise from $5K. Consulting and team training at $100/hour. Every project gets a fixed quote after a free 15-minute call — no surprises, no hourly billing creep.</p></div>
                 </div>
                 <div class="faq-item">
                     <button class="faq-q" onclick="this.parentElement.classList.toggle('open')">Do I pay for AI API keys separately?<span class="faq-arrow">+</span></button>

@@ -24,47 +24,63 @@
             "name": "What's the difference between a Claude Skill and a Claude Project?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Projects are conversation containers with custom instructions. Skills are *behavior modules* that Claude applies automatically across any conversation in projects where they're installed."
+                "text": "Projects are conversation containers with custom instructions you set once. Skills are behavior modules Claude applies automatically across any conversation in a project where they're installed."
             }
         },
         {
             "@type": "Question",
-            "name": "Will this Skill work for my industry / niche?",
+            "name": "Where do Skills get installed — project or global?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes — the Skill is content-agnostic. You plug in your company context (audience, tone, products, CTAs) via the template. The structural rules (hooks, twist, no AI-markers) work for any domain."
+                "text": "Either. Project-level Skills live in `.claude/skills/` and ship in your repo for the whole team. Global Skills live in `~/.claude/skills/` and are available in every project on your machine."
             }
         },
         {
             "@type": "Question",
-            "name": "Does this work with non-English languages?",
+            "name": "How does Claude decide when to use a Skill?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The Telegram output is Russian by default (our team's native market). LinkedIn and Threads are English. The Skill is forkable — you can swap any language combination by editing the SKILL.md."
+                "text": "It reads each Skill's `description` field at session start and matches it against your request. A description with concrete trigger phrases fires reliably; a vague one stays dormant."
             }
         },
         {
             "@type": "Question",
-            "name": "Can I use this in Cursor or other Claude-compatible IDEs?",
+            "name": "Will this Skill work for my industry or niche?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. Claude Skills are part of the Claude Code spec, which Cursor, Continue, and Cody also implement."
+                "text": "Yes. The Skill is content-agnostic. You plug in your audience, tone, products, and CTAs through the `company-context.md` template, and the structural rules (hooks, twist, no AI-markers) hold for any domain."
             }
         },
         {
             "@type": "Question",
-            "name": "Will Anthropic charge for Skills?",
+            "name": "Does it work with non-English languages?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Skills are free to create and use. Some platforms (like Smithery) may distribute premium Skills with paid tiers, but the underlying mechanism is free."
+                "text": "By default it writes Telegram in Russian and LinkedIn plus Threads in English — our team's market. The Skill is a single `SKILL.md`, so you can fork it and swap any language combination."
             }
         },
         {
             "@type": "Question",
-            "name": "How do I get my own Skill into the Claude marketplace?",
+            "name": "Can I use this in Cursor or other Claude-compatible tools?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Push a public GitHub repo with `SKILL.md` files. Skillsmp.com and claudeskills.info auto-index them within 24-48 hours. We wrote the full publishing playbook in [our other post](/blog/publish-mcp-server-claude-skill-marketplaces-2026.html)."
+                "text": "Yes. The Skill format is part of the Claude Code spec, and the `npx skills add` CLI installs it into Cursor, OpenCode, Codex, and 70+ other agents."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "Is it really free? Will Anthropic start charging for Skills?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The Skill is free and MIT-licensed — use, fork, ship. Creating and using Skills costs nothing; the mechanism is part of Claude Code. Some marketplaces may sell premium Skills, but the format itself is free."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I publish my own Skill to the marketplaces?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Push a public GitHub repo with your `SKILL.md` files, and add a `.claude-plugin/marketplace.json` to make it a native plugin marketplace. Directories like skills.sh and Smithery index public repos automatically. We wrote the full walkthrough in [our publishing playbook](/blog/publish-mcp-server-claude-skill-marketplaces-2026.html)."
             }
         }
     ]
@@ -140,190 +156,319 @@
         <div class="tldr-box">
             <strong class="tldr-label">TL;DR</strong>
             <ul>
-<li><strong>Claude Skills</strong> are markdown files (<code>SKILL.md</code>) that Claude reads automatically when relevant. Think of them as <strong>packaged expertise</strong> Claude can switch on.</li>
-<li>They live in <code>.claude/skills/</code> in your project (or <code>~/.claude/skills/</code> globally).</li>
-<li>We built <strong><code>necl-content-poster</code></strong> — a free Skill that turns one draft into three platform-tuned posts: Telegram (RU), LinkedIn (EN), Threads (EN).</li>
-<li>It encodes <strong>8 proven hook formulas</strong>, <strong>anti-AI-marker phrase ban lists</strong>, and <strong>6-block LinkedIn structure</strong> with mandatory "twist" line.</li>
-<li>Install in 30 seconds: copy the folder into <code>.claude/skills/</code>. Use immediately.</li>
+<li><strong>Claude Skills</strong> are markdown files (<code>SKILL.md</code>) that Claude reads automatically when a request matches their <code>description</code>. They are packaged expertise Claude switches on without you re-prompting.</li>
+<li>They install at <strong>project level</strong> (<code>.claude/skills/</code>) or <strong>globally</strong> (<code>~/.claude/skills/</code>), and use <strong>progressive disclosure</strong>: Claude reads the short description first, the full <code>SKILL.md</code> only when needed, and bundled <code>references/</code> files only when the task calls for them.</li>
+<li>We built <strong><code>necl-content-poster</code></strong> — a free, MIT-licensed Skill that turns one draft into three platform-tuned posts: Telegram (RU), LinkedIn (EN), Threads (EN).</li>
+<li>It encodes <strong>8 hook archetypes</strong>, a <strong>banned-phrases list</strong> that strips AI-marker language, a <strong>6-block LinkedIn structure</strong> with a mandatory twist line, and a <strong>one-inference rule</strong> for Threads.</li>
+<li>Install in under <strong>30 seconds</strong> with <code>claude plugin install necl-content-poster@necl-skills</code> or <code>npx skills add adjacentai/necl-skills</code>. Drop in a <code>company-context.md</code> and the posts sound like you.</li>
 </ul>
 <hr />
         </div>
 
         <h2>What are Claude Skills?</h2>
-<p>Anthropic released Claude Skills as a way to give Claude <strong>persistent specialist behavior</strong> without you re-prompting every time.</p>
-<p>The mechanic is dead simple:</p>
+<p>Anthropic released Claude Skills to give Claude <strong>persistent specialist behavior</strong> without you re-explaining the same rules every session. A Skill is a folder. Inside it is one file — <code>SKILL.md</code> — that holds the instructions Claude should follow when the situation matches.</p>
+<p>The mechanic is simple:</p>
 <ol>
-<li>You create a folder like <code>.claude/skills/my-skill/</code></li>
-<li>Inside, a single file <code>SKILL.md</code> with YAML frontmatter and markdown instructions</li>
-<li>Claude reads ALL available skills' frontmatter at session start</li>
-<li>When you ask something that matches a Skill's <code>description</code> field, Claude applies it automatically</li>
+<li>You create a folder like <code>.claude/skills/my-skill/</code>.</li>
+<li>Inside, a <code>SKILL.md</code> with YAML frontmatter and markdown instructions.</li>
+<li>At session start, Claude reads the <strong>frontmatter</strong> (name and description) of every available Skill.</li>
+<li>When your request matches a Skill's <code>description</code>, Claude pulls in the full file and applies it.</li>
 </ol>
-<p>No slash command. No <code>/skill use</code>. No setup. The Skill is just <em>there</em> when you need it.</p>
-<p>This is fundamentally different from prompts you copy-paste each time. Prompts are ephemeral; Skills are persistent specialists Claude knows about across every session in that project.</p>
-<h2>Why Skills are better than prompt libraries</h2>
-<p>Most teams accumulate folders of "good prompts" — <code>linkedin-post-prompt.md</code>, <code>pricing-email-prompt.md</code>, etc. The problem: you have to remember they exist and copy-paste each one.</p>
-<p>Skills fix this with three changes:</p>
+<p>No slash command. No <code>/skill use</code>. No manual loading. The Skill is just <em>there</em> when the work calls for it, and dormant when it doesn't.</p>
+<p>This is a different model from prompts you paste each time. Prompts are ephemeral — you have to remember they exist and copy them in. Skills are persistent specialists Claude already knows about across every session in that project.</p>
+<h3>The SKILL.md mechanic</h3>
+<p>A <code>SKILL.md</code> has two parts. The top is YAML frontmatter between <code>---</code> fences. The body is plain markdown.</p>
+<p>The frontmatter carries the two fields that matter most:</p>
+<ul>
+<li><strong><code>name</code></strong> — a short, kebab-case identifier (<code>necl-content-poster</code>).</li>
+<li><strong><code>description</code></strong> — one or two sentences describing <em>when</em> to use the Skill, ideally with trigger phrases.</li>
+</ul>
+<p>The <code>description</code> is the part Claude reads to decide whether a Skill applies. A vague description means the Skill never fires. A description that names concrete triggers ("Use when the user wants posts across channels — 'write a post', 'cross-post'") fires reliably. Write the <code>description</code> for the matcher, not for a human reader.</p>
+<p>Everything below the frontmatter is the actual instruction set: structure rules, examples, checklists, banned phrases. Claude only loads this body when the Skill activates.</p>
+<h3>Project vs global install</h3>
+<p>Skills live in one of two places:</p>
+<ul>
+<li><strong>Project-level — <code>.claude/skills/</code></strong> — checked into the repo, shared with the team, scoped to that project. Best for workflows specific to one product or codebase.</li>
+<li><strong>Global — <code>~/.claude/skills/</code></strong> — available in every project on your machine. Best for personal workflows you want everywhere, like a content Skill or a commit-message Skill.</li>
+</ul>
+<p>For teams, project-level wins: the Skill ships in git, so prompt-craft becomes a versioned artifact instead of a Slack thread titled "latest version of the prompt."</p>
+<h3>Progressive disclosure</h3>
+<p>Skills are built so Claude reads only what it needs, in three layers:</p>
 <ol>
-<li><strong>Discoverability</strong> — Claude reads frontmatter automatically. You write naturally, the Skill activates.</li>
-<li><strong>Versioning</strong> — they live in your project's git repo. Team changes track. No more Slack-threads of "the latest version of the prompt".</li>
-<li><strong>Composability</strong> — Claude can apply multiple Skills in one response. A pricing email might use both a <code>pricing-rules</code> Skill and a <code>cold-email-voice</code> Skill.</li>
+<li><strong>Metadata</strong> — name + description. Loaded for every Skill, every session. Cheap.</li>
+<li><strong><code>SKILL.md</code> body</strong> — loaded only when the Skill activates. Holds the full instructions.</li>
+<li><strong><code>references/</code></strong> — extra files (long tables, style guides, examples) the Skill body points to. Loaded only when the task reaches for them.</li>
 </ol>
-<p>For solo builders this saves minutes per day. For teams, it makes prompt-craft a shipping artifact rather than tribal knowledge.</p>
+<p>This keeps the context window lean. You can ship a Skill with 5,000 words of reference material and Claude pays the token cost only on the rare request that needs it. The top layer stays tiny, so dozens of Skills can coexist without bloating every session.</p>
+<h2>Why Skills beat a prompt library</h2>
+<p>Most teams accumulate folders of "good prompts" — <code>linkedin-post-prompt.md</code>, <code>pricing-email-prompt.md</code>, and so on. The problem: you have to remember they exist and paste each one by hand.</p>
+<p>Skills fix that with three changes:</p>
+<ol>
+<li><strong>Discoverability</strong> — Claude reads the frontmatter automatically. You write naturally; the Skill activates on its own.</li>
+<li><strong>Versioning</strong> — Skills live in your project's git repo. Team edits track. No more hunting for the current version.</li>
+<li><strong>Composability</strong> — Claude can apply several Skills in one response. A pricing email might pull a <code>pricing-rules</code> Skill and a <code>cold-email-voice</code> Skill at once.</li>
+</ol>
+<p>For solo builders this saves minutes a day. For teams, it turns prompt-craft into a shipping artifact rather than tribal knowledge.</p>
+<h2>How to write your first SKILL.md</h2>
+<p>You can build a working Skill in a few minutes. Here is a small, annotated one that turns rough notes into a clean standup update.</p>
+<pre><code class="language-markdown">---
+name: standup-writer
+description: &gt;
+  Turn rough notes into a 3-line standup update (Yesterday / Today / Blockers).
+  Use when the user pastes work notes and asks for a standup, status, or daily update.
+author: Your Name
+license: MIT
+version: 0.1.0
+---
+
+# Standup Writer
+
+Take messy work notes and return a tight standup in exactly three lines.
+
+## When to apply
+- &quot;Write my standup&quot;
+- &quot;Turn these notes into a status update&quot;
+- User pastes a list of what they did and wants it formatted.
+
+## Output format
+- **Yesterday:** one line, past tense, concrete outcomes only.
+- **Today:** one line, the single most important thing.
+- **Blockers:** one line, or &quot;None.&quot;
+
+## Rules
+- No filler (&quot;worked on&quot;, &quot;looked into&quot;). Name the result.
+- Keep each line under 120 characters.
+- If notes are empty, ask what they did instead of inventing work.
+</code></pre>
+<p>Three things make this Skill work, and they apply to any Skill you write:</p>
+<ul>
+<li><strong>The <code>description</code> names triggers.</strong> "standup", "status", "daily update" — these are the words Claude matches on. Without them the Skill stays dormant.</li>
+<li><strong>The body is rules, not prose.</strong> Short imperatives Claude can follow ("Name the result," "under 120 characters") beat paragraphs of explanation.</li>
+<li><strong>It handles the empty case.</strong> "If notes are empty, ask" stops Claude from fabricating output — the most common failure in content Skills.</li>
+</ul>
+<p>Save that as <code>~/.claude/skills/standup-writer/SKILL.md</code>, open Claude Code, and ask "write my standup" with some notes. The Skill fires on its own.</p>
 <h2>Why we built <code>necl-content-poster</code></h2>
-<p>We run a Telegram channel (<a href="https://t.me/necl_company">@NeCL_company</a>), a LinkedIn personal profile, a Threads account, and a Twitter/X account. Each has different rules:</p>
+<p>We run a Telegram channel (<a href="https://t.me/necl_company">@necl_company</a>), a LinkedIn profile, a Threads account, and an X account. Each one has its own rules:</p>
 <ul>
-<li><strong>Telegram (RU):</strong> warm, founder-shares-cool-stuff. Brand mentions OK.</li>
-<li><strong>LinkedIn (EN):</strong> decision-makers reading on mobile. Anti-hype voice. 1200-1800 characters.</li>
-<li><strong>Threads (EN):</strong> one inference, screenshot-bait, 15-50 words.</li>
+<li><strong>Telegram (RU):</strong> warm, founder-shares-cool-stuff. Brand mentions welcome.</li>
+<li><strong>LinkedIn (EN):</strong> decision-makers reading on mobile. Calm, anti-hype. 1,200–1,800 characters.</li>
+<li><strong>Threads (EN):</strong> one inference, screenshot-bait, 15–50 words.</li>
 </ul>
-<p>Writing three posts manually from one idea is <strong>45 minutes</strong> of tone-tuning. We did the math — we were posting maybe twice a week because of that friction.</p>
-<p>We codified our cross-posting workflow into a Skill. Now: one draft → all three posts in 30 seconds.</p>
+<p>Writing three posts by hand from one idea is roughly <strong>45 minutes</strong> of tone-tuning. We did the math — that friction was holding us to maybe two posts a week.</p>
+<p>So we codified the cross-posting workflow into a Skill. Now one draft becomes all three posts in about 30 seconds. The Skill lives in the <a href="https://github.com/adjacentai/necl-skills"><code>adjacentai/necl-skills</code></a> repo, which doubles as a Claude Code plugin marketplace — it carries a <code>.claude-plugin/marketplace.json</code>, so the Skill installs natively. It is also published on <a href="https://skills.sh">skills.sh</a> and Smithery.</p>
 <h2>What's inside the Skill</h2>
-<p>The Skill encodes three things we figured out the hard way:</p>
-<h3>1. Hook archetypes (8 of them)</h3>
-<p>LinkedIn algorithm rewards posts that pass the "see more" cut. To pass that cut, the first 1-2 lines must stop a scroller. We codified 8 hook patterns that work:</p>
+<p>The Skill encodes three things we worked out the hard way.</p>
+<h3>1. The 8 hook archetypes</h3>
+<p>The LinkedIn algorithm rewards posts that survive the "see more" cut. To survive it, the first one or two lines have to stop a scroller. We codified eight hook patterns that do, and the Skill makes Claude pick exactly one and commit — no mushy mixed hooks:</p>
 <ul>
-<li><strong>Shock-stat:</strong> "After 4 years with ChatGPT, it still doesn't know who I am."</li>
-<li><strong>Counter-narrative:</strong> "Speed is no longer your competitive advantage."</li>
-<li><strong>Confession:</strong> "I used to do 10-hour days. The result? Full burnout."</li>
-<li><strong>Provocation:</strong> "Most 'AI productivity hacks' are just theater."</li>
-<li><strong>Dated story:</strong> "Last Tuesday, our agent stack burned $400 in 90 minutes."</li>
-<li><strong>Question:</strong> "What if cache hit rate is now a moat?"</li>
-<li><strong>List teaser:</strong> "5 things I stopped doing after we hit $50K MRR."</li>
-<li><strong>Comparison:</strong> "I tried 3 frameworks. Only one survived production."</li>
+<li><strong>Shock-stat</strong> — "After 4 years with ChatGPT, it still doesn't know who I am."</li>
+<li><strong>Counter-narrative</strong> — "Speed is no longer your competitive advantage."</li>
+<li><strong>Confession</strong> — "I used to do 10-hour days. The result? Full burnout."</li>
+<li><strong>Provocation</strong> — "Most 'AI productivity hacks' are just theater."</li>
+<li><strong>Dated story</strong> — "Last Tuesday, our agent stack burned $400 in 90 minutes."</li>
+<li><strong>Question</strong> — "What if cache hit rate is now a moat?"</li>
+<li><strong>List teaser</strong> — "5 things I stopped doing after we hit $50K MRR."</li>
+<li><strong>Comparison</strong> — "I tried 3 frameworks. Only one survived production."</li>
 </ul>
-<p>The Skill makes Claude pick ONE archetype and commit to it. No mushy mixed hooks.</p>
-<h3>2. Banned phrases (anti-AI-marker rules)</h3>
-<p>LinkedIn audience identifies GPT-text in two seconds. Banned in our Skill:</p>
+<h3>2. The banned-phrases rule</h3>
+<p>A LinkedIn audience spots GPT-text in about two seconds and scrolls past. The Skill carries a banned list and rewrites any line that hits it:</p>
 <ul>
-<li>"In an era where…"</li>
-<li>"Let's dive in"</li>
-<li>"It's not just X — it's Y"</li>
-<li>"navigating the landscape"</li>
-<li>"leverage", "unlock", "unleash", "game-changer", "paradigm shift"</li>
-<li>"at the intersection of"</li>
+<li>"In an era where…", "In today's fast-paced world", "Let's dive in"</li>
+<li>"It's not just X — it's Y" (the em-dash sandwich)</li>
+<li>"navigating the landscape", "harness the power of", "at the intersection of"</li>
+<li>"unlock", "unleash", "leverage", "game-changer", "paradigm shift"</li>
 </ul>
-<p>If a draft would have any of these, the Skill rewrites the line. We learned this list by reading hundreds of GPT-written LinkedIn posts and noting which patterns repelled engagement.</p>
+<p>We built this list by reading hundreds of GPT-written posts and noting which patterns repelled engagement. If a draft would contain any of them, the Skill rewrites the line before it reaches you.</p>
 <h3>3. Per-platform structure rules</h3>
-<p><strong>LinkedIn:</strong> Hook → Context → Twist → Useful Core → Close + specific question → optional PS. The Twist (the line that flips the obvious reading) is mandatory. Skipping it produces a blog post, not a LinkedIn post.</p>
-<p><strong>Threads:</strong> ONE inference, 15-50 words, screenshot-bait or argue-bait or nod-bait. No padding. If you can split into two posts, you cut harder.</p>
-<p><strong>Telegram (RU):</strong> warm, founder-tone, emojis as semantic markers (3-7 per post), light brand mentions OK, soft CTA in question form at the end.</p>
-<h2>Install in 30 seconds</h2>
-<p>The fastest path uses the <a href="https://skills.sh">skills.sh CLI</a> — works with Claude Code, OpenCode, Codex, Cursor, and 70+ other agents:</p>
+<p><strong>LinkedIn — the 6-block structure:</strong></p>
+<ol>
+<li><strong>Hook</strong> — one or two lines, visible before the "see more" cut. One archetype, committed.</li>
+<li><strong>Context</strong> — two or three short lines, anchored in specific facts, names, or numbers.</li>
+<li><strong>Twist</strong> — the reframe that flips the obvious reading. This is the keystone; skipping it produces a blog post, not a LinkedIn post.</li>
+<li><strong>Useful core</strong> — a short list, micro-framework, or two-to-three concrete lessons.</li>
+<li><strong>Close + one specific question</strong> — name a number, a role, or a decision. Never "thoughts?"</li>
+<li><strong>PS (optional)</strong> — a small aside, counter-point, or softener.</li>
+</ol>
+<p><strong>Threads — the one-inference rule:</strong> one thought, distilled. Not three connected beats, not an essay. 15–50 words, under 30 when possible. If it could split into two posts, cut harder. No bullets, emojis, hashtags, or CTAs.</p>
+<p><strong>Telegram (RU):</strong> warm founder-tone, emojis as semantic markers (3–7 per post, line-starts only), light brand mentions welcome, a soft CTA in question form at the end. Plain text, no markdown. 80–220 words.</p>
+<h3>The company-context.md mechanic</h3>
+<p>Before its first run, the Skill looks for a <code>company-context.md</code> in your project root or <code>.claude/</code> folder and reads it. The file carries your brand voice, audience per platform, tone rules, banned phrases, CTAs, common topics, reference accounts, and a few of your best-performing posts to mirror.</p>
+<p>If the file is missing, the Skill asks you for the essentials instead of inventing a brand. We ship a <a href="https://github.com/adjacentai/necl-skills/blob/main/necl-content-poster/templates/company-context.template.md">template</a> — fill in the fields, save, done. Without context, posts read generic. With it, they sound like you.</p>
+<h2>Install in under 30 seconds</h2>
+<h3>Option 1 — native Claude Code plugin (recommended)</h3>
+<p>The repo is a Claude Code plugin marketplace. Add it once; every current and future NeCL Skill becomes installable with one command:</p>
+<pre><code class="language-bash"># add the NeCL marketplace (once)
+claude plugin marketplace add https://github.com/adjacentai/necl-skills
+
+# install the skill
+claude plugin install necl-content-poster@necl-skills
+</code></pre>
+<p>Updates flow through the plugin system — no re-cloning when we ship improvements.</p>
+<h3>Option 2 — <code>npx skills add</code> (works across 70+ agents)</h3>
+<p>The <a href="https://skills.sh">skills.sh CLI</a> installs into any supported agent — Claude Code, OpenCode, Codex, Cursor, and more:</p>
 <pre><code class="language-bash"># project-level
 npx skills add adjacentai/necl-skills
 
-# or global (available in any project)
+# or globally for all your projects
 npx skills add adjacentai/necl-skills -g
 </code></pre>
-<p>That's it. The CLI drops the skill into the right folder for your agent automatically. Then in Claude Code:</p>
+<p>Then, in Claude Code, confirm it loaded:</p>
 <pre><code>What Skills are available?
 </code></pre>
-<p>You should see <code>necl-content-poster</code> in the list. Now just describe what you want:</p>
+<p>You should see <code>necl-content-poster</code> in the list. From there, just describe what you want:</p>
 <pre><code>Write a post about our new RAG system that cut due-diligence from 2 months to 15 minutes.
 </code></pre>
-<p>You'll get TG/LinkedIn/Threads versions in one shot.</p>
-<h2>Plug in your company context</h2>
-<p>Before first use, create a <code>company-context.md</code> in your project root with:</p>
-<ul>
-<li>Brand name + tagline</li>
-<li>Audience per platform</li>
-<li>Tone-of-voice rules</li>
-<li>CTAs to use (contact form, DM, website)</li>
-<li>Reference accounts whose voice you admire</li>
-<li>2-5 of your own best-performing posts (the Skill will mirror their patterns)</li>
-</ul>
-<p>We ship a <a href="https://github.com/adjacentai/necl-skills/blob/main/necl-content-poster/templates/company-context.template.md">template</a> — fill in 10 fields, save, done. Without context, posts are generic. With context, they sound like <em>you</em>.</p>
+<p>You get all three versions in one shot.</p>
 <h2>Real example output</h2>
 <p><strong>Input:</strong></p>
 <blockquote>
-<p>Just shipped a RAG system for an investment fund. Due-diligence reviews went from 2 months per deal to 15 minutes. 258 deals processed in the first quarter.</p>
+<p>Just shipped a RAG system for an investment fund. Due-diligence reviews went from 2 months per deal to 15 minutes. 258 deals processed in the first quarter. Runs on-premise.</p>
 </blockquote>
-<p><strong>Telegram (RU) output:</strong></p>
+<p><strong>Telegram (RU):</strong></p>
 <blockquote>
-<p>📊 За первый квартал — 258 сделок прошло через нашу RAG-систему.
-Раньше каждая сделка = 2 месяца ручного due-diligence в фонде. Теперь — 15 минут.
-✅ Загружают пачку PDF → агент находит риски, инвест-тезис, цифры.
+<p>📊 За первый квартал — 258 сделок прошло через нашу RAG-систему.</p>
+<p>Раньше каждая сделка = 2 месяца ручного due-diligence в фонде. Теперь — 15 минут.</p>
+<p>✅ Загружают пачку PDF → агент находит риски, инвест-тезис, цифры.
 ✅ Аналитик читает summary, лезет только в спорные места.
-Если у вас тонна документов и одни и те же вопросы — пишите в комментарии, разберём.</p>
+✅ Конфиденциально — модель локальная, ничего не уходит в облако.</p>
+<p>Если у вас тонна документов и одни и те же вопросы — пишите в комментарии, разберём.</p>
 </blockquote>
-<p><strong>LinkedIn (EN) output (excerpt):</strong></p>
+<p><strong>LinkedIn (EN), excerpt:</strong></p>
 <blockquote>
-<p>Last quarter, we shipped a RAG system that turned a 2-month due-diligence process into 15 minutes per deal. 258 deals went through it in Q1.
-The lesson isn't "AI is fast." Every team knows that by now. The lesson is that the bottleneck in most knowledge work isn't thinking — it's the retrieval layer between the question and the source paragraph.
-[...]</p>
+<p>Last quarter, we shipped a RAG system that turned a 2-month due-diligence process into 15 minutes per deal. 258 deals went through it in Q1.</p>
+<p>The lesson isn't "AI is fast." Every team knows that by now. The bottleneck in most knowledge work isn't thinking — it's the retrieval layer between the question and the source paragraph.</p>
 </blockquote>
-<p><strong>Threads (EN) output:</strong></p>
+<p><strong>Threads (EN):</strong></p>
 <blockquote>
-<p>Replaced 2 months of analyst work with 15 minutes of retrieval.
-The bottleneck in knowledge work was never thinking. It was finding the paragraph that has the answer.</p>
+<p>Replaced 2 months of analyst work with 15 minutes of retrieval.</p>
+<p>The bottleneck in knowledge work was never thinking. It was finding the paragraph that has the answer.</p>
 </blockquote>
-<p>Three posts, one input, 30 seconds. Each anchored to the same fact (258 deals, 2 months → 15 min), but pitched to its platform.</p>
-<h2>Skills vs Prompts vs MCPs — when to use which</h2>
+<p>Three posts, one input, about 30 seconds. Each anchored to the same facts (258 deals, 2 months → 15 minutes, on-premise), pitched to its platform.</p>
+<h2>More example outputs (illustrative)</h2>
+<p>The Skill is content-agnostic. The same structure works in any industry. Here are two illustrative inputs and their LinkedIn hooks plus Threads lines (made up to show range, not from a client).</p>
+<h3>Example — e-commerce</h3>
+<p><strong>Input:</strong> "Built an AI returns-triage system for a DTC brand. Refund decisions dropped from 3 days to under a minute. Support tickets down 40%."</p>
+<p><strong>LinkedIn hook (Dated story):</strong></p>
+<blockquote>
+<p>Three days. That's how long a refund used to sit in this brand's queue before anyone touched it.</p>
+<p>We wired an AI triage step at the front. Refund decisions now land in under a minute, and support tickets are down 40%. Same policy, same team — just no human reading every "where is my order" twice.</p>
+</blockquote>
+<p><strong>Threads (one inference):</strong></p>
+<blockquote>
+<p>Most support backlogs aren't a staffing problem. They're a routing problem. Sort the easy 80% automatically and the queue stops being a queue.</p>
+</blockquote>
+<h3>Example — B2B SaaS</h3>
+<p><strong>Input:</strong> "Added semantic search to our docs. Support deflection up, ticket volume on 'how do I' questions fell by a third."</p>
+<p><strong>LinkedIn hook (Counter-narrative):</strong></p>
+<blockquote>
+<p>More documentation didn't reduce our support tickets. Better retrieval did.</p>
+<p>We left the docs the same and swapped keyword search for semantic search. "How do I" tickets fell by a third. People weren't missing answers — they were missing the page.</p>
+</blockquote>
+<p><strong>Threads (one inference):</strong></p>
+<blockquote>
+<p>Your docs are probably fine. Your search is the bottleneck. Users don't read what they can't find.</p>
+</blockquote>
+<p>Same skeleton — hook, anchored context, a twist, a sharp Threads line — applied to different domains.</p>
+<h2>Skills vs Prompts vs MCPs vs Custom GPTs</h2>
+<p>Four different tools, four different jobs. They are not competitors; they sit at different layers.</p>
 <table>
 <thead>
 <tr>
 <th>Tool</th>
+<th>What it is</th>
 <th>Best for</th>
+<th>How it activates</th>
 <th>Distribution</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Prompts</strong></td>
+<td>Text you paste in</td>
 <td>One-off requests</td>
-<td>Copy-paste from your prompt library</td>
+<td>You paste it, every time</td>
+<td>Copy-paste from a prompt library</td>
 </tr>
 <tr>
-<td><strong>Skills</strong></td>
-<td>Persistent specialist workflows in Claude</td>
-<td><code>.claude/skills/</code> folder, version-controlled</td>
+<td><strong>Claude Skills</strong></td>
+<td>A <code>SKILL.md</code> with instructions</td>
+<td>Persistent specialist workflows</td>
+<td>Auto, when the request matches the <code>description</code></td>
+<td><code>.claude/skills/</code> or <code>~/.claude/skills/</code>, version-controlled, plugin marketplaces</td>
 </tr>
 <tr>
-<td><strong>MCPs</strong></td>
-<td>Giving Claude access to external data/tools</td>
-<td><code>mcp.json</code> config, runs as subprocess</td>
+<td><strong>MCP servers</strong></td>
+<td>A running process exposing tools/data</td>
+<td>Giving Claude live access to external systems</td>
+<td>Called when Claude needs the tool</td>
+<td><code>mcp.json</code> config, runs as a subprocess</td>
+</tr>
+<tr>
+<td><strong>ChatGPT Custom GPTs</strong></td>
+<td>A configured GPT instance</td>
+<td>A standalone, shareable assistant on ChatGPT</td>
+<td>You open that specific GPT</td>
+<td>ChatGPT GPT Store, OpenAI-only</td>
 </tr>
 </tbody>
 </table>
-<p>Most teams underuse Skills. Prompts get copy-pasted, MCPs handle infrastructure — but the persistent-expertise layer in between gets neglected. That's where the daily friction lives.</p>
+<p>The short version: a <strong>prompt</strong> is a one-time instruction. A <strong>Skill</strong> is a reusable instruction Claude reaches for on its own. An <strong>MCP</strong> gives Claude hands — access to data and tools outside the chat. A <strong>Custom GPT</strong> is a packaged assistant locked to ChatGPT. Most teams overuse prompts, set up MCPs for infrastructure, and skip the persistent-expertise layer in between — which is exactly where the daily friction lives.</p>
+<h2>Common mistakes when writing Skills</h2>
+<p>A few patterns we see kill Skills before they earn their keep:</p>
+<ul>
+<li><strong>A vague <code>description</code>.</strong> "Helps with content" never matches a real request. Name concrete triggers and verbs ("write a post", "cross-post").</li>
+<li><strong>Writing for a human, not the matcher.</strong> The <code>description</code> is read by the model deciding whether to fire the Skill. Front-load the <em>when</em>, not the <em>what</em>.</li>
+<li><strong>Dumping everything into <code>SKILL.md</code>.</strong> Long reference tables and examples belong in <code>references/</code> so they load only when needed. A bloated body costs tokens on every activation.</li>
+<li><strong>No empty/edge case handling.</strong> Without an instruction like "if input is missing, ask," Claude invents content. Always tell it what to do when the input is thin.</li>
+<li><strong>Soft rules.</strong> "Try to keep it short" gets ignored. "Under 120 characters per line" gets followed. Give numbers and hard limits.</li>
+<li><strong>No examples.</strong> One worked input → output in the Skill anchors the model better than three paragraphs of guidance.</li>
+<li><strong>Overlapping Skills with identical triggers.</strong> If two Skills both claim "write a post," activation gets unpredictable. Keep <code>description</code> scopes distinct.</li>
+</ul>
 <h2>See also</h2>
 <ul>
 <li><a href="https://github.com/adjacentai/necl-skills/tree/main/necl-content-poster">necl-content-poster Skill on GitHub</a> — install + source</li>
 <li><a href="/blog/publish-mcp-server-claude-skill-marketplaces-2026.html">Our publishing playbook</a> — how to ship your own Skill to every marketplace</li>
-<li><a href="/blog/hacker-news-mcp-server-claude-desktop.html">necl-hn-mcp</a> — pair with this for full HN → posts pipeline</li>
-<li><a href="/blog/stop-using-gpt4-for-everything.html">Stop using GPT-4 for everything</a></li>
+<li><a href="/blog/hacker-news-mcp-server-claude-desktop.html">necl-hn-mcp</a> — pair it with this for a full HN → posts pipeline</li>
+<li><a href="/blog/stop-using-gpt4-for-everything.html">Stop using GPT-4 for everything</a> — picking the right model per task</li>
 </ul>
 
         <h2>FAQ</h2>
         <div class="faq-item">
             <p><strong>What&#x27;s the difference between a Claude Skill and a Claude Project?</strong></p>
-            <p>Projects are conversation containers with custom instructions. Skills are *behavior modules* that Claude applies automatically across any conversation in projects where they&#x27;re installed.</p>
+            <p>Projects are conversation containers with custom instructions you set once. Skills are behavior modules Claude applies automatically across any conversation in a project where they&#x27;re installed.</p>
         </div>
         <div class="faq-item">
-            <p><strong>Will this Skill work for my industry / niche?</strong></p>
-            <p>Yes — the Skill is content-agnostic. You plug in your company context (audience, tone, products, CTAs) via the template. The structural rules (hooks, twist, no AI-markers) work for any domain.</p>
+            <p><strong>Where do Skills get installed — project or global?</strong></p>
+            <p>Either. Project-level Skills live in `.claude/skills/` and ship in your repo for the whole team. Global Skills live in `~/.claude/skills/` and are available in every project on your machine.</p>
         </div>
         <div class="faq-item">
-            <p><strong>Does this work with non-English languages?</strong></p>
-            <p>The Telegram output is Russian by default (our team&#x27;s native market). LinkedIn and Threads are English. The Skill is forkable — you can swap any language combination by editing the SKILL.md.</p>
+            <p><strong>How does Claude decide when to use a Skill?</strong></p>
+            <p>It reads each Skill&#x27;s `description` field at session start and matches it against your request. A description with concrete trigger phrases fires reliably; a vague one stays dormant.</p>
         </div>
         <div class="faq-item">
-            <p><strong>Can I use this in Cursor or other Claude-compatible IDEs?</strong></p>
-            <p>Yes. Claude Skills are part of the Claude Code spec, which Cursor, Continue, and Cody also implement.</p>
+            <p><strong>Will this Skill work for my industry or niche?</strong></p>
+            <p>Yes. The Skill is content-agnostic. You plug in your audience, tone, products, and CTAs through the `company-context.md` template, and the structural rules (hooks, twist, no AI-markers) hold for any domain.</p>
         </div>
         <div class="faq-item">
-            <p><strong>Will Anthropic charge for Skills?</strong></p>
-            <p>Skills are free to create and use. Some platforms (like Smithery) may distribute premium Skills with paid tiers, but the underlying mechanism is free.</p>
+            <p><strong>Does it work with non-English languages?</strong></p>
+            <p>By default it writes Telegram in Russian and LinkedIn plus Threads in English — our team&#x27;s market. The Skill is a single `SKILL.md`, so you can fork it and swap any language combination.</p>
         </div>
         <div class="faq-item">
-            <p><strong>How do I get my own Skill into the Claude marketplace?</strong></p>
-            <p>Push a public GitHub repo with `SKILL.md` files. Skillsmp.com and claudeskills.info auto-index them within 24-48 hours. We wrote the full publishing playbook in [our other post](/blog/publish-mcp-server-claude-skill-marketplaces-2026.html).</p>
+            <p><strong>Can I use this in Cursor or other Claude-compatible tools?</strong></p>
+            <p>Yes. The Skill format is part of the Claude Code spec, and the `npx skills add` CLI installs it into Cursor, OpenCode, Codex, and 70+ other agents.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>Is it really free? Will Anthropic start charging for Skills?</strong></p>
+            <p>The Skill is free and MIT-licensed — use, fork, ship. Creating and using Skills costs nothing; the mechanism is part of Claude Code. Some marketplaces may sell premium Skills, but the format itself is free.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>How do I publish my own Skill to the marketplaces?</strong></p>
+            <p>Push a public GitHub repo with your `SKILL.md` files, and add a `.claude-plugin/marketplace.json` to make it a native plugin marketplace. Directories like skills.sh and Smithery index public repos automatically. We wrote the full walkthrough in [our publishing playbook](/blog/publish-mcp-server-claude-skill-marketplaces-2026.html).</p>
         </div>
 
         <div class="cta-box">
             <p>Want a custom Claude Skill tuned to your team's workflow? We build them — extraction interview, draft, ship to your repo. .</p>
-            <a href="/#contact" class="btn" onclick="gtag('event','click_contact',{location:'blog_cta'})">Get in touch</a>
+            <a href="https://neclco.com/#contact" class="btn">Tell us about your project</a>
         </div>
     </article>
 

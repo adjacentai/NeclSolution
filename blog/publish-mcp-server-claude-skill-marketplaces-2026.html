@@ -24,7 +24,7 @@
             "name": "Do I need to be on PyPI or npm to publish an MCP server?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. Use `uvx --from git+https://github.com/you/repo.git your-package` in the install instructions. Works without any package registry publish."
+                "text": "For most catalogs, no — use `uvx --from git+https://github.com/you/repo.git your-package` in the install instructions and skip the registry. The exception is the **official** registry (registry.modelcontextprotocol.io), which requires a published PyPI or npm package to verify ownership."
             }
         },
         {
@@ -32,7 +32,15 @@
             "name": "Is Smithery still worth it for stdio MCPs?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Not unless you deploy your server publicly. For local-only stdio MCPs, an `.mcpb` bundle gets you the same Claude Desktop one-click install without the hosting bill."
+                "text": "Only if you're willing to deploy your server as a hosted HTTP service, since Smithery is hosted-only for MCP now. For local stdio servers, ship an `.mcpb` bundle instead — you get the same Claude Desktop one-click install with no hosting bill."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I publish to the official MCP registry without a PR?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The registry doesn't take PRs. Publish your package to PyPI/npm, install the `mcp-publisher` CLI, authenticate with GitHub, name your server `io.github.<owner>/<name>`, and run `mcp-publisher publish`. Validation is automated."
             }
         },
         {
@@ -40,15 +48,23 @@
             "name": "How long until catalogs actually surface my work?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Forms and PRs: 1-7 days for human review. Cascade indexers (mcp.so picking up from awesome-list, AI search picking up from Google): 1-3 weeks for first surface."
+                "text": "Forms and PRs: 1–7 days for human review. Auto-index (Skills catalogs reading `SKILL.md`): 24–48 hours. Cascade effects (mcp.so picking up from an awesome-list, AI search picking up from Google): 1–3 weeks for first surface."
             }
         },
         {
             "@type": "Question",
-            "name": "Will publishing open source actually drive paid work?",
+            "name": "What's the difference between monorepo and one-repo-per-artifact?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "For us, yes — every README ends with a contact link tagged `?utm_source=marketplace`. We treat catalog impressions as cold outreach with brand context already established."
+                "text": "Skills catalogs index per `SKILL.md`, so a monorepo gives you multiple listings — keep skills together. MCP catalogs index per repo URL, so a monorepo collapses several servers into one listing — give each MCP its own repo."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How does skills.sh listing work if there's no submit form?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "It's telemetry-driven. The first `npx skills add owner/repo` install event creates the listing automatically. Seed it by installing your own skill once."
             }
         },
         {
@@ -56,15 +72,15 @@
             "name": "Can I publish private MCP servers and Skills?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "No. All public catalogs require public GitHub repos. For client-private work, you'd run your own internal catalog or share the bundle file directly."
+                "text": "No. The public catalogs require public GitHub repos. For client-private work, run your own internal catalog with a `.claude-plugin/marketplace.json`, or share the `.mcpb` bundle file directly."
             }
         },
         {
             "@type": "Question",
-            "name": "What about Cursor, Continue, Cody marketplaces?",
+            "name": "Will publishing open source actually drive paid work?",
             "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "They have their own extension marketplaces that don't index public GitHub. You'd submit there separately. We cover those in a future post."
+                "text": "That's our whole thesis for doing it. The catalogs supply discovery, and a README that ends with a `https://neclco.com/#contact` link converts a slice of those readers into conversations. We treat each listing as cold outreach with the brand context already established."
             }
         }
     ]
@@ -140,56 +156,242 @@
         <div class="tldr-box">
             <strong class="tldr-label">TL;DR</strong>
             <ul>
-<li>There are <strong>13 public catalogs</strong> for MCP servers and Claude Skills in 2026. Most accept submissions in 5-15 minutes.</li>
-<li>Smithery moved to <strong>hosted-only</strong>: stdio servers can't publish via CLI anymore — use Anthropic's <code>.mcpb</code> bundle instead.</li>
-<li><strong>Skills</strong> auto-index through <code>SKILL.md</code> files in public GitHub repos. <strong>MCP servers</strong> mostly need manual submission per platform.</li>
-<li>Optimal repo strategy: <strong>monorepo for Skills</strong> (catalogs parse each <code>SKILL.md</code> separately), <strong>one repo per MCP</strong> (catalogs index by URL, monorepos lose visibility).</li>
-<li>Realistic effort: <strong>5-7 hours</strong> total publishing across all platforms, then <strong>1-2 weeks</strong> for indexers to crawl and surface your work.</li>
+<li>There are <strong>13 public catalogs</strong> for MCP servers and Claude Skills in 2026. Most accept a submission in <strong>5–15 minutes</strong> per platform.</li>
+<li>Smithery moved to <strong>hosted-only</strong> for MCP: stdio servers can't publish via the CLI anymore. Skills still publish through a GitHub URL.</li>
+<li><strong>Skills</strong> auto-index from <code>SKILL.md</code> files in public GitHub repos. <strong>MCP servers</strong> mostly need a manual submission per platform, and the official registry needs a published PyPI/npm package plus the <code>mcp-publisher</code> CLI.</li>
+<li>Optimal repo strategy: <strong>monorepo for Skills</strong> (catalogs parse each <code>SKILL.md</code> separately), <strong>one repo per MCP</strong> (catalogs index by repo URL, so monorepos lose visibility).</li>
+<li>Realistic effort: <strong>5–7 hours</strong> to publish across every platform, then <strong>1–2 weeks</strong> for indexers to crawl and surface your work.</li>
+<li>We shipped two of our own — <strong><code>necl-hn-mcp</code></strong> and <strong><code>necl-content-poster</code></strong> — across these catalogs using the exact sequence below.</li>
 </ul>
 <hr />
         </div>
 
         <h2>Why this matters</h2>
-<p>Building MCP servers and Claude Skills is the easy part. Getting them in front of the <strong>2.5M+ Claude users</strong> is the hard part — and most builders skip it entirely, push to GitHub, and wonder why nobody finds their work.</p>
-<p>We at NeCL publish open-source tooling as a way to earn inbound for our paid AI engineering work. Every MCP we ship is also a marketing surface. We measured this directly: our last two opensource releases (a Telegram bot framework and an HN MCP) brought in <strong>7 inbound leads</strong> in the first month, all tagged with <code>utm_source=marketplace</code>. The catalogs distribute the artifact; our README converts the curious into booked conversations.</p>
-<p>This is the exact playbook we run internally, sanitized for anyone who wants to follow it. We've shipped four open-source artifacts this quarter using these same steps.</p>
+<p>Building MCP servers and Claude Skills is the easy part. Getting them in front of Claude users is the hard part — and most builders skip it entirely, push to GitHub, and wonder why nobody finds their work.</p>
+<p>We at NeCL publish open-source tooling as a way to earn inbound for our paid AI engineering work. Every MCP we ship is also a marketing surface. The catalogs distribute the artifact; our README turns a curious reader into a booked conversation.</p>
+<p>This is the exact playbook we run internally, written up for anyone who wants to follow it. None of it is theory — we shipped <code>necl-hn-mcp</code> and <code>necl-content-poster</code> through these same steps this quarter, and the closing section covers what actually happened.</p>
 <h2>What you'll need</h2>
 <ul>
-<li>A public GitHub repo with: <code>README.md</code>, <code>LICENSE</code> (MIT/Apache), and the actual server or skill files.</li>
-<li>For MCP: <code>server.json</code> and <code>smithery.yaml</code> manifests + a <code>pyproject.toml</code>/<code>package.json</code>.</li>
-<li>For Skill: <code>SKILL.md</code> with YAML frontmatter (<code>name</code>, <code>description</code>, <code>author</code>).</li>
-<li>~6 hours of submission time spread across a week.</li>
+<li>A public GitHub repo with: <code>README.md</code>, a <code>LICENSE</code> (MIT/Apache-2.0), and the actual server or skill files.</li>
+<li>For MCP: a <code>server.json</code> manifest, an optional <code>smithery.yaml</code>, and a <code>pyproject.toml</code> or <code>package.json</code>.</li>
+<li>For the official registry specifically: a package published to <strong>PyPI or npm</strong> (the registry validates ownership against it).</li>
+<li>For a Skill: a <code>SKILL.md</code> with YAML frontmatter (<code>name</code>, <code>description</code>, <code>author</code>).</li>
+<li>~6 hours of submission time, comfortably spread across a week.</li>
 </ul>
-<h2>The 13 catalogs (in order of ROI)</h2>
-<h3>For MCP servers (5 main + community lists)</h3>
-<ol>
-<li><strong>mcp.so</strong> — biggest aggregator (20,222+ servers). Submit URL form. Indexes downstream from <code>awesome-mcp-servers</code>. Highest impression volume.</li>
-<li><strong>registry.modelcontextprotocol.io</strong> — official Anthropic registry. JSON manifest via GitHub PR. Maximum credibility, 1-7 days review.</li>
-<li><strong>glama.ai/mcp</strong> — curated catalog with use-case focus. Submission form. 2-5 day review.</li>
-<li><strong>awesome-mcp-servers</strong> (<code>github.com/punkpeye/awesome-mcp-servers</code>) — community awesome-list. PR with a single line. Feeds downstream catalogs.</li>
-<li><strong>Smithery.ai</strong> — was the CLI publisher, now hosted-only. <strong>Skip for stdio servers</strong> unless you're ready to deploy to Railway/Fly.io. Use <code>.mcpb</code> bundle instead (see below).</li>
-</ol>
-<h3>For Claude Skills (5 main)</h3>
-<ol>
-<li><strong>skillsmp.com</strong> — main aggregator (658+ skills). Auto-indexes public repos with <code>SKILL.md</code>. Submit URL to skip the queue.</li>
-<li><strong>claudeskills.info</strong> — open-source-only catalog. Submit form or auto-index.</li>
-<li><strong>claudemarketplaces.com</strong> — multi-type directory (Skills + MCP + plugins). Submit form, 1-7 days review.</li>
-<li><strong>claudepluginhub.com</strong> — lets you create your <strong>own branded sub-marketplace</strong>. Major SEO win — branded URL like <code>claudepluginhub.com/yourname</code>.</li>
-<li><strong>daymade/claude-code-skills</strong> — curated awesome-list. PR with a single line.</li>
-</ol>
-<h3>The Smithery problem</h3>
-<p>In 2026, Smithery deprecated stdio MCP publishing. The CLI now requires either:
-- A live HTTP/SSE server URL (you host it on Cloudflare/Railway/Fly.io)
-- An <code>.mcpb</code> bundle file from Anthropic's <code>mcpb</code> CLI</p>
-<p>For most open-source MCP authors, the <code>.mcpb</code> bundle is the right answer:</p>
+<h2>The 13 catalogs at a glance</h2>
+<table>
+<thead>
+<tr>
+<th>Catalog</th>
+<th>Type</th>
+<th>Submission method</th>
+<th>Review time</th>
+<th>Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>mcp.so</td>
+<td>MCP</td>
+<td>URL form</td>
+<td>minutes–2 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>registry.modelcontextprotocol.io</td>
+<td>MCP</td>
+<td><code>mcp-publisher</code> CLI</td>
+<td>minutes (automated)</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>glama.ai/mcp</td>
+<td>MCP</td>
+<td>Auto-crawl + form</td>
+<td>2–5 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>awesome-mcp-servers (punkpeye)</td>
+<td>MCP</td>
+<td>GitHub PR</td>
+<td>1–7 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>Smithery (hosted)</td>
+<td>MCP</td>
+<td>Connect repo, deploy</td>
+<td>minutes–1 day</td>
+<td>Free tier</td>
+</tr>
+<tr>
+<td>mcpmarket.com</td>
+<td>MCP</td>
+<td>URL form</td>
+<td>1–5 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>skillsmp.com</td>
+<td>Skills</td>
+<td>Auto-index + URL form</td>
+<td>24–48 h</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>claudeskills.info</td>
+<td>Skills</td>
+<td>Auto-index + form</td>
+<td>1–3 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>claudemarketplaces.com</td>
+<td>Both</td>
+<td>Form</td>
+<td>1–7 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>claudepluginhub.com</td>
+<td>Both</td>
+<td>Form + branded page</td>
+<td>1–5 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>daymade/claude-code-skills</td>
+<td>Skills</td>
+<td>GitHub PR (monorepo)</td>
+<td>1–7 days</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>Smithery (Skills)</td>
+<td>Skills</td>
+<td>GitHub URL</td>
+<td>minutes</td>
+<td>Free</td>
+</tr>
+<tr>
+<td>skills.sh</td>
+<td>Skills</td>
+<td>Telemetry (no form)</td>
+<td>instant on first install</td>
+<td>Free</td>
+</tr>
+</tbody>
+</table>
+<p>Every catalog below is free to list on. The detail that changes per platform is <em>how</em> you get in and <em>how long</em> you wait.</p>
+<hr />
+<h2>MCP server catalogs</h2>
+<h3>mcp.so</h3>
+<p>The biggest aggregator (20,000+ servers). It pulls listings from several upstream sources, including <code>awesome-mcp-servers</code>, so a server often appears here even before you submit directly.</p>
+<p><strong>How to submit:</strong> Open the "Submit" form at mcp.so/submit, paste your GitHub repo URL, and fill in name, category, and a one-line description. It reads your README and <code>server.json</code> for the rest.</p>
+<p><strong>Review time:</strong> Often minutes for the automated parse; up to ~2 days if a human spot-checks it.</p>
+<p><strong>Common rejection reasons:</strong> Dead repo URL, missing README, no clear install instruction, or a description that doesn't say what the server actually does.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>registry.modelcontextprotocol.io</h3>
+<p>The official Anthropic-backed registry. This is the credibility anchor — downstream catalogs and AI search trust it. It does <strong>not</strong> accept pull requests.</p>
+<p><strong>How to submit:</strong> You publish through the <code>mcp-publisher</code> CLI, and it requires a package already live on <strong>PyPI or npm</strong>, plus a server name in the form <code>io.github.&lt;owner&gt;/&lt;name&gt;</code>.</p>
+<pre><code class="language-bash"># 1. Publish your package first (PyPI or npm)
+#    e.g. for Python: uv build &amp;&amp; uv publish
+# 2. Install and authenticate the publisher
+npm install -g @modelcontextprotocol/publisher
+mcp-publisher login github
+# 3. Publish the registry entry from your repo
+mcp-publisher publish
+</code></pre>
+<p>The name namespace ties the entry to your GitHub account, which is how the registry verifies ownership — there's no manual approval queue.</p>
+<p><strong>Review time:</strong> Minutes. Validation is automated against your package and GitHub identity.</p>
+<p><strong>Common rejection reasons:</strong> No published package to validate against, a name that doesn't match the <code>io.github.&lt;owner&gt;/&lt;name&gt;</code> format, or a <code>server.json</code> that fails schema validation.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>glama.ai/mcp</h3>
+<p>A curated catalog organized by use case, with quality scoring and security checks per server. It crawls GitHub automatically, so you may already have a stub here.</p>
+<p><strong>How to submit:</strong> Use the claim/submit form to attach your repo, or wait for the crawler. Glama runs an inspection (does the server build, does it expose tools cleanly) and assigns a quality grade.</p>
+<p><strong>Review time:</strong> 2–5 days, because the inspection is more thorough than a simple parse.</p>
+<p><strong>Common rejection reasons:</strong> Server fails Glama's automated build/inspection, missing license, or tools that error on a basic handshake.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>awesome-mcp-servers (punkpeye)</h3>
+<p>The community awesome-list at <code>github.com/punkpeye/awesome-mcp-servers</code>. It feeds several downstream catalogs, so a merged line here cascades outward.</p>
+<p><strong>How to submit:</strong> Open a pull request adding one line to the right category, in the repo's exact format (link, emoji language/runtime tags, one-sentence description). There's an <strong>agent fast-track</strong>: put <code>🤖🤖🤖</code> in the PR title to flag it for the maintainer's automated review path.</p>
+<p><strong>Review time:</strong> 1–7 days, faster with the fast-track tag.</p>
+<p><strong>Common rejection reasons:</strong> Wrong category, format that breaks the list's lint, duplicate entry, or a description that's marketing copy instead of a plain summary.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>Smithery (hosted-only for MCP)</h3>
+<p>Smithery was the go-to CLI publisher for stdio servers. In 2026 it moved to <strong>hosted-only</strong> for MCP — it won't take a plain stdio server anymore. To list an MCP, you connect your repo and Smithery deploys it as a hosted HTTP server.</p>
+<p><strong>How to submit:</strong> Connect your GitHub repo in the Smithery dashboard, add a <code>smithery.yaml</code>, and let it build and deploy. The server then runs on Smithery's infrastructure with a hosted endpoint.</p>
+<p><strong>Review time:</strong> Minutes to ~1 day, dominated by the build/deploy step.</p>
+<p><strong>Common rejection reasons:</strong> The server can't run as a hosted HTTP service (it assumes local stdio only), a missing or invalid <code>smithery.yaml</code>, or a failed build.</p>
+<p><strong>Cost:</strong> Free tier for hosting; you may hit limits at scale.</p>
+<blockquote>
+<p>If your MCP is a local-only stdio tool, the cleaner path for one-click install is Anthropic's <code>.mcpb</code> bundle (below) rather than fighting Smithery's hosting model.</p>
+</blockquote>
+<h3>mcpmarket.com</h3>
+<p>A general MCP directory with category browsing and search. Useful for incremental impressions and a backlink.</p>
+<p><strong>How to submit:</strong> Submit your repo URL through the site's form with a name, category, and short description.</p>
+<p><strong>Review time:</strong> 1–5 days, usually a light human check.</p>
+<p><strong>Common rejection reasons:</strong> Duplicate of an existing listing, vague description, or a repo with no install instructions.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>The <code>.mcpb</code> bundle (for local stdio servers)</h3>
+<p>Because Smithery dropped stdio, the right answer for most local MCP authors is Anthropic's <code>mcpb</code> bundler. It packages your server into a single <code>.mcpb</code> file users drag into Claude Desktop for a one-click install.</p>
 <pre><code class="language-bash">npm install -g @anthropic-ai/mcpb
 cd your-mcp-repo
 mcpb init   # generates manifest.json
-mcpb pack   # creates .mcpb bundle
+mcpb pack   # creates the .mcpb bundle
 </code></pre>
-<p>Drop the bundle into Claude Desktop → Settings → Developer for instant install. Attach it to a GitHub Release for download links.</p>
+<p>Drop the bundle into <strong>Claude Desktop → Settings → Developer</strong> for instant install, and attach it to a GitHub Release so people have a download link. This isn't a catalog, but it removes the hosting requirement that catalogs like Smithery now impose.</p>
+<hr />
+<h2>Claude Skills catalogs</h2>
+<h3>skillsmp.com</h3>
+<p>The main Skills aggregator (hundreds of skills listed). It auto-indexes public repos that contain <code>SKILL.md</code> files, so a monorepo of skills shows up as multiple entries.</p>
+<p><strong>How to submit:</strong> Either wait for the crawler, or paste your repo URL into the submit form to jump the queue.</p>
+<p><strong>Review time:</strong> 24–48 hours for the auto-index; faster if you submit the URL directly.</p>
+<p><strong>Common rejection reasons:</strong> Missing or malformed <code>SKILL.md</code> frontmatter (no <code>name</code>/<code>description</code>), private repo, or no license.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>claudeskills.info</h3>
+<p>An open-source-only Skills catalog with clean categorization. It auto-indexes from GitHub and also takes a manual submission.</p>
+<p><strong>How to submit:</strong> Submit the repo URL through the form, or let the crawler pick up your <code>SKILL.md</code>.</p>
+<p><strong>Review time:</strong> 1–3 days.</p>
+<p><strong>Common rejection reasons:</strong> Closed-source or unclear license, <code>SKILL.md</code> with no usable <code>description</code>, or a skill that's really just a prompt with no instructions.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>claudemarketplaces.com</h3>
+<p>A multi-type directory covering Skills, MCP servers, and plugins together. Good for reaching people who browse by "what can I add to Claude" rather than by artifact type.</p>
+<p><strong>How to submit:</strong> Use the form, pick the type (Skill / MCP / plugin), and paste the repo URL with a description.</p>
+<p><strong>Review time:</strong> 1–7 days, human-reviewed.</p>
+<p><strong>Common rejection reasons:</strong> Wrong type selected, thin description, or a repo that doesn't make clear what installs and how.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>claudepluginhub.com</h3>
+<p>A directory that also lets you create your <strong>own branded sub-marketplace</strong> — a page like <code>claudepluginhub.com/yourname</code> that groups all your artifacts. That branded URL is a real SEO and credibility asset.</p>
+<p><strong>How to submit:</strong> Register, create your namespace/page, then add each Skill or plugin to it via the form.</p>
+<p><strong>Review time:</strong> 1–5 days.</p>
+<p><strong>Common rejection reasons:</strong> Incomplete profile, missing artifact metadata, or duplicate submissions across namespaces.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>daymade/claude-code-skills</h3>
+<p>A curated <strong>monorepo marketplace</strong> on GitHub. Unlike a one-line awesome-list, this one hosts the skills, so the PR is heavier.</p>
+<p><strong>How to submit:</strong> Fork the repo, <strong>copy your skill folder</strong> into it, <strong>add an entry to its <code>marketplace.json</code></strong>, <strong>add a row to the README</strong> table, then open a full pull request. The maintainer reviews the actual skill, not just a link.</p>
+<p><strong>Review time:</strong> 1–7 days, depending on review depth.</p>
+<p><strong>Common rejection reasons:</strong> Skill folder doesn't follow the repo's layout, <code>marketplace.json</code> entry malformed, missing README row, or the skill overlaps an existing one without adding value.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>Smithery (Skills)</h3>
+<p>Smithery dropped stdio MCP, but it still publishes <strong>Skills</strong> through a GitHub URL. This is the path our own skill uses.</p>
+<p><strong>How to submit:</strong> Point Smithery at your public repo / <code>SKILL.md</code> URL. No hosting required, unlike its MCP path.</p>
+<p><strong>Review time:</strong> Minutes.</p>
+<p><strong>Common rejection reasons:</strong> Private repo, missing <code>SKILL.md</code>, or invalid frontmatter.</p>
+<p><strong>Cost:</strong> Free.</p>
+<h3>skills.sh</h3>
+<p>A telemetry-driven catalog tied to the <code>skills</code> CLI (which works with Claude Code, Cursor, Codex, OpenCode, and 70+ agents). There is <strong>no submit form</strong>.</p>
+<p><strong>How to submit:</strong> You don't. The <strong>first time anyone runs <code>npx skills add owner/repo</code></strong>, the listing is created automatically from that install event. So to seed it, install your own skill once:</p>
+<pre><code class="language-bash">npx skills add adjacentai/necl-skills
+</code></pre>
+<p>That single command registers the listing. From then on, installs and usage feed the catalog's ranking.</p>
+<p><strong>Review time:</strong> Instant — the listing exists the moment the first install fires.</p>
+<p><strong>Common rejection reasons:</strong> None in the usual sense; if nobody installs, nothing lists. A broken repo simply won't resolve.</p>
+<p><strong>Cost:</strong> Free.</p>
+<hr />
 <h2>Repo strategy — monorepo vs separate repos</h2>
-<p><strong>This matters more than people think.</strong> Each catalog indexes differently:</p>
+<p>This decision matters more than people expect, because each catalog indexes differently.</p>
 <table>
 <thead>
 <tr>
@@ -205,46 +407,110 @@ mcpb pack   # creates .mcpb bundle
 <td>✅ Multiple entries from one repo</td>
 </tr>
 <tr>
-<td>Smithery (Skills)</td>
-<td>per <code>SKILL.md</code> folder URL</td>
+<td>Smithery (Skills), skills.sh</td>
+<td>per <code>SKILL.md</code> / install</td>
 <td>✅ Multiple entries</td>
 </tr>
 <tr>
 <td>mcp.so, glama.ai</td>
 <td>per repo URL</td>
-<td>❌ One entry per repo — monorepo hides skills</td>
+<td>❌ One entry per repo — monorepo hides extra servers</td>
 </tr>
 <tr>
-<td>awesome-listы</td>
-<td>manual lines</td>
-<td>✅ You add as many lines as you want</td>
+<td>awesome-lists, daymade</td>
+<td>manual lines / folders</td>
+<td>✅ Add as many entries as you want</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Conclusion:</strong>
-- <strong>Skills:</strong> one monorepo with multiple <code>SKILL.md</code> folders. Catalogs parse each one individually.
-- <strong>MCP servers:</strong> one repo per server. Monorepo MCPs get one combined listing on mcp.so and lose visibility.</p>
+<p><strong>Conclusion:</strong></p>
+<ul>
+<li><strong>Skills:</strong> one monorepo with multiple <code>SKILL.md</code> folders. The Skills catalogs parse each folder individually, so you get many listings from one repo.</li>
+<li><strong>MCP servers:</strong> one repo per server. The MCP catalogs index by repo URL, so a monorepo collapses several servers into a single listing and buries the rest.</li>
+</ul>
+<h2>The <code>.claude-plugin/marketplace.json</code> trick</h2>
+<p>Here's the move most builders miss. Claude Code can subscribe to a <strong>plugin marketplace</strong> that is just a GitHub repo with a <code>.claude-plugin/marketplace.json</code> file at its root. Your skills repo can <em>be</em> that marketplace.</p>
+<p>Add the file:</p>
+<pre><code class="language-json">{
+  &quot;name&quot;: &quot;necl-skills&quot;,
+  &quot;owner&quot;: { &quot;name&quot;: &quot;NeCL&quot;, &quot;url&quot;: &quot;https://neclco.com&quot; },
+  &quot;plugins&quot;: [
+    {
+      &quot;name&quot;: &quot;necl-content-poster&quot;,
+      &quot;source&quot;: &quot;./necl-content-poster&quot;,
+      &quot;description&quot;: &quot;Turn one draft into Telegram, LinkedIn, and Threads posts.&quot;
+    }
+  ]
+}
+</code></pre>
+<p>Then anyone adds your whole catalog to Claude Code in one command:</p>
+<pre><code class="language-bash">/plugin marketplace add adjacentai/necl-skills
+/plugin install necl-content-poster@necl-skills
+</code></pre>
+<p>Why this is worth the five minutes: it turns your repo into a <strong>subscription channel</strong>. Every future skill you commit to that repo becomes installable by everyone who already subscribed, with no resubmission to any catalog. You publish once to the catalogs for discovery, and the <code>marketplace.json</code> becomes your owned distribution channel for everything that comes after.</p>
+<h2>Anatomy of a README that converts</h2>
+<p>A marketplace listing is a click-through to your README. That page does two jobs: get the install, and turn the installer into inbound. Most READMEs do neither because they read like internal docs.</p>
+<p>What we put in every one, in order:</p>
+<ol>
+<li><strong>One-line value, above the fold.</strong> What it does and who it's for, in a single sentence — before any badge wall. Catalogs often scrape this exact line for the listing description.</li>
+<li><strong>A copy-paste install block that works first try.</strong> The biggest install killer is an install snippet that needs editing. For MCP we use a no-package-registry path so it works the moment they paste it:</li>
+</ol>
+<p><code>json
+   {
+     "mcpServers": {
+       "necl-hn": {
+         "command": "uvx",
+         "args": ["--from", "git+https://github.com/adjacentai/necl-hn-mcp.git", "necl-hn-mcp"]
+       }
+     }
+   }</code></p>
+<ol>
+<li><strong>A "try it" example with real prompts.</strong> Two or three lines a user can paste into Claude immediately. People install things they can picture using.</li>
+<li><strong>A short tool/feature table.</strong> Scannable, not paragraphs. Names, inputs, one-line purpose.</li>
+<li><strong>Brand attribution that's present but not loud.</strong> "Built by NeCL" near the top, linked. The README is the only place you control on every catalog.</li>
+<li><strong>A <code>Need a custom one?</code> section near the bottom</strong> with a single contact link to <code>https://neclco.com/#contact</code>. This is the conversion line. One CTA, no alternatives.</li>
+<li><strong>License and a one-line "auditable in X lines" note</strong> for trust. Small, readable source code is itself a selling point.</li>
+</ol>
+<p>The pattern is simple: the top of the README earns the install, the bottom earns the inbound, and there's nothing in the middle that makes someone hesitate.</p>
 <h2>The 5-step launch sequence</h2>
 <ol>
-<li><strong>Prep (1 hour):</strong> Write your README with <code>Built by [Your Brand]</code> everywhere. Add a <code>Need a custom one?</code> section with a contact link.</li>
-<li><strong>Push to public GitHub (15 min):</strong> Two repos — <code>your-skills/</code> and <code>your-mcp-name/</code>. Add topics for GitHub Search discoverability.</li>
-<li><strong>Submit forms (30 min):</strong> Hit mcp.so, glama.ai, claudemarketplaces.com, skillsmp.com, claudeskills.info — one tab each.</li>
-<li><strong>Open PRs (45 min):</strong> awesome-mcp-servers, daymade/claude-code-skills, registry.modelcontextprotocol.io. Each is a 5-line PR.</li>
-<li><strong>Wait 1-2 weeks</strong> for indexers to cascade. Downstream AI-search catalogs and Google will surface you organically after the cascade settles.</li>
+<li><strong>Prep (1 hour):</strong> Write the README using the anatomy above. Add the <code>.claude-plugin/marketplace.json</code> to your skills repo. Confirm the install snippet works from a clean machine.</li>
+<li><strong>Push to public GitHub (15 min):</strong> Two repos — <code>your-skills/</code> (monorepo) and <code>your-mcp-name/</code> (one per server). Add GitHub topics like <code>mcp</code>, <code>claude</code>, <code>claude-skill</code> for search discoverability.</li>
+<li><strong>Submit the forms (30 min):</strong> mcp.so, glama.ai, mcpmarket.com, claudemarketplaces.com, claudepluginhub.com, skillsmp.com, claudeskills.info — one browser tab each, paste the URL, done.</li>
+<li><strong>Run the CLIs and PRs (1–1.5 h):</strong> <code>mcp-publisher publish</code> for the official registry, <code>npx skills add owner/repo</code> to seed skills.sh, then PRs to awesome-mcp-servers (with the <code>🤖🤖🤖</code> fast-track) and daymade/claude-code-skills (full folder + <code>marketplace.json</code> + README row).</li>
+<li><strong>Wait 1–2 weeks</strong> for indexers to cascade. Downstream catalogs pick up from the awesome-lists, and AI search picks up from Google once the listings settle.</li>
 </ol>
-<h2>What we shipped</h2>
-<p>At NeCL we just published two pilot pieces with this exact playbook:</p>
+<h2>Common mistakes</h2>
 <ul>
-<li><strong><code>necl-content-poster</code></strong> — Claude Skill that turns one draft into Telegram (RU) + LinkedIn (EN) + Threads (EN) posts. <a href="https://github.com/adjacentai/necl-skills">github.com/adjacentai/necl-skills</a></li>
-<li><strong><code>necl-hn-mcp</code></strong> — Hacker News MCP server for AI agents. No API key required. <a href="https://github.com/adjacentai/necl-hn-mcp">github.com/adjacentai/necl-hn-mcp</a></li>
+<li><strong>Monorepo of MCP servers.</strong> The MCP catalogs index by repo URL, so all but one server vanish from the listing. One repo per MCP.</li>
+<li><strong>Splitting Skills into separate repos.</strong> The opposite mistake — Skills catalogs parse per <code>SKILL.md</code>, so a monorepo gets you more listings, not fewer. Keep skills together.</li>
+<li><strong>Trying to push a stdio server to Smithery.</strong> It won't take it anymore. Use the hosted path only if you actually want to host, otherwise ship an <code>.mcpb</code> bundle.</li>
+<li><strong>Opening a PR to the official registry.</strong> It doesn't accept PRs. You need a published PyPI/npm package and the <code>mcp-publisher</code> CLI.</li>
+<li><strong>An install snippet that needs editing.</strong> Every manual edit drops your install rate. Use a path (like <code>uvx --from git+...</code>) that runs on paste.</li>
+<li><strong>Marketing copy in awesome-list descriptions.</strong> Maintainers reject hype. Write a plain, factual one-liner that says what it does.</li>
+<li><strong>No license file.</strong> Several catalogs auto-reject repos without a clear license. Add MIT or Apache-2.0 on day one.</li>
+<li><strong>Forgetting the contact line.</strong> A README with no CTA is a missed lead. The whole point of publishing open source for a studio is the inbound at the bottom of the page.</li>
 </ul>
-<p>Both are MIT-licensed. Both built from production patterns we already use internally. Both have the brand attribution wired through every catalog.</p>
+<h2>What we shipped</h2>
+<p>We ran this exact playbook on two of our own artifacts this quarter:</p>
+<ul>
+<li><strong><code>necl-hn-mcp</code></strong> — a Hacker News MCP server for AI agents. Five tools, <strong>no API key</strong>, around <strong>200 lines of Python</strong>, MIT-licensed. <a href="https://github.com/adjacentai/necl-hn-mcp">github.com/adjacentai/necl-hn-mcp</a></li>
+<li><strong><code>necl-content-poster</code></strong> — a Claude Skill that turns one draft into Telegram (RU) + LinkedIn (EN) + Threads (EN) posts. Lives in our skills monorepo. <a href="https://github.com/adjacentai/necl-skills">github.com/adjacentai/necl-skills</a></li>
+</ul>
+<p>Both are MIT-licensed and built straight from production patterns we already use internally.</p>
+<h2>What we learned shipping our own</h2>
+<p>A few things only became obvious once we'd actually pushed <code>necl-hn-mcp</code> and <code>necl-content-poster</code> through the catalogs:</p>
+<p><strong>The MCP and Skill paths barely overlap.</strong> The MCP went to mcp.so, Glama, and Smithery's hosted track; the Skill went to Smithery's GitHub-URL track and skills.sh. Treating them as one workflow wastes time — they have different manifests, different reviewers, and different failure modes.</p>
+<p><strong>Smithery's split is the gotcha.</strong> Our stdio HN server couldn't go the old Smithery route, so we used the hosted path there and leaned on the <code>.mcpb</code> bundle for local install. The Skill, meanwhile, published to Smithery fine through its GitHub URL. Same brand, two completely different Smithery experiences.</p>
+<p><strong>skills.sh needs you to install your own thing first.</strong> There's no form, so the listing didn't exist until we ran <code>npx skills add adjacentai/necl-skills</code> ourselves. Easy to miss if you're waiting for a submission button that never appears.</p>
+<p><strong>The official registry is the most friction and the most worth it.</strong> Getting a package onto PyPI and running <code>mcp-publisher</code> took the longest, but it's the entry every downstream catalog and AI search trusts most. We'd do it first next time, not last.</p>
+<p><strong>The README does the selling, not the catalog.</strong> Listings are a one-line description and a link. Every install decision and every inbound lead happened on the README page, which is why we treat it as the real landing page and the catalogs as traffic.</p>
 <h2>See also</h2>
 <ul>
 <li><a href="/blog/hacker-news-mcp-server-claude-desktop.html">Hacker News MCP for Claude — Free, No API Key</a> — the pilot MCP from this playbook</li>
 <li><a href="/blog/claude-skills-cross-platform-content-generator.html">Claude Skills + Cross-Platform Content Generator</a> — the pilot Skill from this playbook</li>
-<li><a href="https://github.com/adjacentai/necl-skills">necl-content-poster on GitHub</a> — full Skill repo</li>
 <li><a href="https://github.com/adjacentai/necl-hn-mcp">necl-hn-mcp on GitHub</a> — full MCP repo</li>
+<li><a href="https://github.com/adjacentai/necl-skills">necl-content-poster on GitHub</a> — full Skill repo</li>
 <li><a href="/blog/stop-using-gpt4-for-everything.html">Stop Using GPT-4 for Everything</a> — related: AI cost optimization</li>
 <li><a href="/blog/what-is-necl.html">What is NeCL</a> — about the studio</li>
 </ul>
@@ -252,32 +518,40 @@ mcpb pack   # creates .mcpb bundle
         <h2>FAQ</h2>
         <div class="faq-item">
             <p><strong>Do I need to be on PyPI or npm to publish an MCP server?</strong></p>
-            <p>No. Use `uvx --from git+https://github.com/you/repo.git your-package` in the install instructions. Works without any package registry publish.</p>
+            <p>For most catalogs, no — use `uvx --from git+https://github.com/you/repo.git your-package` in the install instructions and skip the registry. The exception is the **official** registry (registry.modelcontextprotocol.io), which requires a published PyPI or npm package to verify ownership.</p>
         </div>
         <div class="faq-item">
             <p><strong>Is Smithery still worth it for stdio MCPs?</strong></p>
-            <p>Not unless you deploy your server publicly. For local-only stdio MCPs, an `.mcpb` bundle gets you the same Claude Desktop one-click install without the hosting bill.</p>
+            <p>Only if you&#x27;re willing to deploy your server as a hosted HTTP service, since Smithery is hosted-only for MCP now. For local stdio servers, ship an `.mcpb` bundle instead — you get the same Claude Desktop one-click install with no hosting bill.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>How do I publish to the official MCP registry without a PR?</strong></p>
+            <p>The registry doesn&#x27;t take PRs. Publish your package to PyPI/npm, install the `mcp-publisher` CLI, authenticate with GitHub, name your server `io.github.&lt;owner&gt;/&lt;name&gt;`, and run `mcp-publisher publish`. Validation is automated.</p>
         </div>
         <div class="faq-item">
             <p><strong>How long until catalogs actually surface my work?</strong></p>
-            <p>Forms and PRs: 1-7 days for human review. Cascade indexers (mcp.so picking up from awesome-list, AI search picking up from Google): 1-3 weeks for first surface.</p>
+            <p>Forms and PRs: 1–7 days for human review. Auto-index (Skills catalogs reading `SKILL.md`): 24–48 hours. Cascade effects (mcp.so picking up from an awesome-list, AI search picking up from Google): 1–3 weeks for first surface.</p>
         </div>
         <div class="faq-item">
-            <p><strong>Will publishing open source actually drive paid work?</strong></p>
-            <p>For us, yes — every README ends with a contact link tagged `?utm_source=marketplace`. We treat catalog impressions as cold outreach with brand context already established.</p>
+            <p><strong>What&#x27;s the difference between monorepo and one-repo-per-artifact?</strong></p>
+            <p>Skills catalogs index per `SKILL.md`, so a monorepo gives you multiple listings — keep skills together. MCP catalogs index per repo URL, so a monorepo collapses several servers into one listing — give each MCP its own repo.</p>
+        </div>
+        <div class="faq-item">
+            <p><strong>How does skills.sh listing work if there&#x27;s no submit form?</strong></p>
+            <p>It&#x27;s telemetry-driven. The first `npx skills add owner/repo` install event creates the listing automatically. Seed it by installing your own skill once.</p>
         </div>
         <div class="faq-item">
             <p><strong>Can I publish private MCP servers and Skills?</strong></p>
-            <p>No. All public catalogs require public GitHub repos. For client-private work, you&#x27;d run your own internal catalog or share the bundle file directly.</p>
+            <p>No. The public catalogs require public GitHub repos. For client-private work, run your own internal catalog with a `.claude-plugin/marketplace.json`, or share the `.mcpb` bundle file directly.</p>
         </div>
         <div class="faq-item">
-            <p><strong>What about Cursor, Continue, Cody marketplaces?</strong></p>
-            <p>They have their own extension marketplaces that don&#x27;t index public GitHub. You&#x27;d submit there separately. We cover those in a future post.</p>
+            <p><strong>Will publishing open source actually drive paid work?</strong></p>
+            <p>That&#x27;s our whole thesis for doing it. The catalogs supply discovery, and a README that ends with a `https://neclco.com/#contact` link converts a slice of those readers into conversations. We treat each listing as cold outreach with the brand context already established.</p>
         </div>
 
         <div class="cta-box">
             <p>Need help building or distributing your own MCP server or Claude Skill? We do this work for hire — from architecture to publishing across all 13 catalogs. .</p>
-            <a href="/#contact" class="btn" onclick="gtag('event','click_contact',{location:'blog_cta'})">Get in touch</a>
+            <a href="https://neclco.com/#contact" class="btn">Tell us about your project</a>
         </div>
     </article>
 
