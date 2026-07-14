@@ -1,0 +1,28 @@
+# NeCL — Neural Engineering & Cognitive Logic
+
+> AI engineering studio. Production RAG systems, AI agents, MCP servers,
+> Telegram bots, and automation pipelines for SaaS. Fixed-price projects
+> from $3,000, products from $800. https://neclco.com
+
+## Key pages
+
+- [Home](https://neclco.com/): services, live products, open-source, cases, pricing, contact form
+- [Blog](https://neclco.com/blog/): engineering write-ups on MCP, Claude Skills, RAG, and AI cost optimization
+
+## Blog articles
+
+- [Claude Skills + Free Cross-Platform Content Skill | NeCL](https://neclco.com/blog/claude-skills-cross-platform-content-generator.html): Claude Skills turn Claude into a persistent specialist. Our free Skill writes Telegram + LinkedIn + Threads posts from one draft. MIT licensed.
+- [AI Desktop Assistant for macOS & Windows — Voice + Screenshot | Cream Mic](https://neclco.com/blog/cream-mic-ai-desktop-assistant.html): Lightweight AI desktop assistant for macOS & Windows. Voice questions, screenshot analysis, real-time answers. Interview prep, coding help, research. By NeCL.
+- [Open-Source Whisper Voice Dictation for macOS — Offline, 18 Languages | Cream Typer](https://neclco.com/blog/cream-typer-open-source-voice-dictation-macos.html): Open-source local Whisper voice dictation for macOS. Tap Caps Lock, speak any language, get any other. ~300 lines of Python, fully offline, MIT-licensed.
+- [Hacker News MCP for Claude — Free, No API Key | NeCL](https://neclco.com/blog/hacker-news-mcp-server-claude-desktop.html): Free open-source MCP for Claude that adds Hacker News tools — top stories, comments, full-text search. No API key. Install in 30 seconds.
+- [White-Label AI Image Editor for Real Estate, Interior Design & Brands | Pickachu](https://neclco.com/blog/pickachu-bot-ai-image-editor.html): AI image editor for realtors, interior designers, and brands. White-label deployment under your name on Gemini 3 Pro. Real unit economics, proven margins.
+- [How to Publish MCP Servers &amp; Claude Skills in 2026 | NeCL](https://neclco.com/blog/publish-mcp-server-claude-skill-marketplaces-2026.html): 13 catalogs, 5-7 hours of submission work, 1-2 weeks for indexers. The exact playbook NeCL uses to ship open-source MCPs and Skills.
+- [ResumeQuick: AI Resume Builder Used by 2,000+ People in 12 Languages | NeCL Blog](https://neclco.com/blog/resumequick-ai-resume-builder.html): Describe yourself — get an ATS-optimized resume in 2 minutes. Plus mock interviews, job matching, career planning. 2,000+ users. 12 languages. Free to start.
+- [How to Reduce OpenAI Costs 60% with Semantic Routing | NeCL](https://neclco.com/blog/stop-using-gpt4-for-everything.html): Cut your OpenAI bill 60% with semantic routing — route easy queries to cheap models, hard ones to GPT-4. LLM cost optimization pipeline from NeCL production.
+- [What Is NeCL? AI Engineering for SaaS — Systems, Not Wrappers | NeCL Blog](https://neclco.com/blog/what-is-necl.html): NeCL is an AI engineering studio that builds production-grade RAG, agents, and AI-native backends for SaaS companies. Engineered for scale, shipped in 2 weeks. From $5,000.
+
+## Open source
+
+- [necl-hn-mcp](https://github.com/adjacentai/necl-hn-mcp): Hacker News MCP server for AI agents, no API key
+- [necl-skills](https://github.com/adjacentai/necl-skills): Claude Code skills marketplace (cross-platform content generation)
+- [cream-typer](https://github.com/adjacentai/cream-typer): local Whisper voice dictation for macOS
