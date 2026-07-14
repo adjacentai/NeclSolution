@@ -278,7 +278,7 @@
 </ul>
 <p>There are 20,000+ MCP servers in public catalogs as of mid-2026. Most are stdio (run locally), some are HTTP/SSE (run remotely). The ecosystem grew fast precisely because building a server is small work — which we will show you later in this article.</p>
 <h2>Why we built <code>necl-hn-mcp</code></h2>
-<p>We have been running an internal content agent for 6 months — a Telegram bot that aggregates Hacker News three times a day and drafts posts for the team. It is the engine behind our <a href="https://t.me/necl_company">NeCL Telegram channel</a>. Most of what we write riffs off something we noticed on HN that day.</p>
+<p>We have been running an internal content agent for 6 months — a Telegram bot that aggregates Hacker News three times a day and drafts posts for the team. It is the engine behind our <a href="https://telegram.me/necl_company">NeCL Telegram channel</a>. Most of what we write riffs off something we noticed on HN that day.</p>
 <p>The HN-fetching logic in that agent was clean enough that pulling it out as a standalone MCP took us <strong>exactly 2 hours</strong>. We tested the full tool chain in Claude Desktop the same evening. Now any AI agent — not just our internal bot — can read HN through the same plumbing. The server is live on <a href="https://mcp.so">mcp.so</a> and <a href="https://glama.ai">Glama</a>.</p>
 <h2>What the 5 tools do</h2>
 <p>Each tool below returns a plain Python dict that serializes to clean JSON. We show a realistic prompt and a trimmed version of what comes back so you can see what the model actually reads.</p>
