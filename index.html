@@ -149,16 +149,11 @@
         /* PRICING STRIP */
         .pricing-strip { margin-top: 2rem; background: var(--accent-light); border-radius: var(--r); padding: 2rem; text-align: center; }
         .pricing-strip h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.4rem; }
-        .pricing-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
-        .pricing-row > div { display: flex; flex-direction: column; gap: 0.2rem; padding: 0 0.8rem; border-left: 1px solid rgba(147,112,219,0.25); }
-        .pricing-row > div:first-child { border-left: none; }
+        .pricing-row { display: flex; justify-content: center; gap: 1rem; }
+        .pricing-row > div { display: flex; flex-direction: column; gap: 0.2rem; padding: 0 0.8rem; }
         .pricing-n { font-size: 1.25rem; font-weight: 800; color: var(--accent); letter-spacing: -0.5px; }
         .pricing-l { font-size: 0.78rem; color: var(--text-dim); line-height: 1.4; }
         .pricing-note { font-size: 0.82rem; color: var(--text-dim); margin-top: 1.4rem; }
-        @media (max-width: 768px) {
-            .pricing-row { grid-template-columns: 1fr 1fr; gap: 1.2rem 0.5rem; }
-            .pricing-row > div:nth-child(3) { border-left: none; }
-        }
 
         /* OPEN SOURCE */
         .oss-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem; }
