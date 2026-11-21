@@ -8,7 +8,7 @@ Website for NeCL — AI Engineering Studio.
 
 ```
 index.html          Main landing page (hero, services, products,
-                    open-source cards, cases, process, FAQ, lead form)
+                    process, pricing + lead form, FAQ)
 blog/
   index.html        Blog listing
   *.html            Individual posts
@@ -108,8 +108,9 @@ Do NOT bother with: `llms.txt`, "AI-friendly" chunking, artificial brand mention
 ## Tech
 
 Static HTML + CSS + JS. Hosted on GitHub Pages. No build step, no framework.
-Lead form via Web3Forms (no backend). Live GitHub star counts on the
-open-source cards via the public GitHub API (fails silently if rate-limited).
+Lead form via Web3Forms (no backend). Homepage styles are inline in
+`index.html`: carbon-fibre background drawn with CSS gradients, white text,
+purple accent (`#9370DB`).
 
 ## Contact
 

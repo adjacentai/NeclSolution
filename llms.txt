@@ -6,7 +6,7 @@
 
 ## Key pages
 
-- [Home](https://neclco.com/): services, live products, open-source, cases, pricing, contact form
+- [Home](https://neclco.com/): services, live products, process, pricing, contact form, FAQ
 - [Blog](https://neclco.com/blog/): engineering write-ups on MCP, Claude Skills, RAG, and AI cost optimization
 
 ## Blog articles
