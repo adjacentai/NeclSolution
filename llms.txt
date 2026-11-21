@@ -1,8 +1,8 @@
 # NeCL — Neural Engineering & Cognitive Logic
 
 > AI engineering studio. Production RAG systems, AI agents, MCP servers,
-> Telegram bots, and automation pipelines for SaaS. Fixed-price projects
-> from $3,000, products from $800. https://neclco.com
+> and automation pipelines for SaaS. Fixed-price projects from $5,000.
+> https://neclco.com
 
 ## Key pages
 

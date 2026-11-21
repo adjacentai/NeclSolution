@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — 2026-11-21
+
+- Homepage meta description, og:description and JSON-LD `knowsAbout`: Telegram bots removed.
+- `llms.txt` summary: price "from $3,000, products from $800" replaced with "from $5,000"; Telegram bots removed.
+
 ## 0.1.0 — 2026-11-21
 
 - Homepage redesign: carbon background, white text, purple accent.
