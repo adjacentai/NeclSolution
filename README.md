@@ -108,9 +108,10 @@ Do NOT bother with: `llms.txt`, "AI-friendly" chunking, artificial brand mention
 ## Tech
 
 Static HTML + CSS + JS. Hosted on GitHub Pages. No build step, no framework.
-Lead form via Web3Forms (no backend). Homepage styles are inline in
-`index.html`: carbon-fibre background drawn with CSS gradients, white text,
-purple accent (`#9370DB`).
+Lead form via Web3Forms (no backend). Every page keeps its styles inline in
+its own `<style>` block; homepage, blog and legal pages share one palette:
+carbon-fibre background drawn with CSS gradients, white text, purple accent
+(`#9370DB`).
 
 ## Contact
 

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0 — 2026-11-21
+
+- Blog (index and 9 posts), Privacy and Terms moved to the homepage palette: carbon background, white text, purple accent, dark nav, logo "NeC" + purple "L".
+- Hard-coded light spots replaced: inline code background, TL;DR / highlight boxes, grey "or leave your details" links. Article links set to `#b9a0ee`; `<hr>` gets a thin border-colour line in the three posts that use it.
+
 ## 0.1.1 — 2026-11-21
 
 - Homepage meta description, og:description and JSON-LD `knowsAbout`: Telegram bots removed.
