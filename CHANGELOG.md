@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.2.1 — 2026-11-23
+
+- PODME removed from the site: homepage product card (link to podme.online) and `assets/images/podme_logo.png`.
+
 ## 0.2.0 — 2026-11-21
 
 - Blog (index and 9 posts), Privacy and Terms moved to the homepage palette: carbon background, white text, purple accent, dark nav, logo "NeC" + purple "L".
